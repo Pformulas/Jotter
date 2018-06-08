@@ -1,0 +1,239 @@
+/* 为了方便，先用 * 代替全部 */
+* {
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    background-color: #F2F2F2;
+    letter-spacing: 1px;
+}
+
+label {
+    display: block;
+}
+
+input {
+    display: inline-block;
+    width: 300px;
+    height: 50px;
+    margin: 20px 5px;
+    font-size: 16px;
+    background: none;
+    outline: 0;
+    border: 1px dashed #666666;
+    border-radius: 16px;
+    text-indent: 16px;
+}
+
+input:focus {
+    border: 1px solid palevioletred;
+}
+
+/* 顶部导航栏 */
+.navBar {
+    width: 100%;
+    height: 75px;
+}
+
+.navBar .navBtn {
+    list-style: none;
+    width: max-content;
+    height: inherit;
+    margin: 25px auto 0;
+}
+
+.navBar .navBtn li {
+    float: left;
+    margin: auto 20px;
+    color: palevioletred;
+    font-size: 22px;
+    line-height: 50px;
+    cursor: pointer;
+}
+
+.navBar .navBtn li:hover {
+    border-bottom: 4px solid palevioletred;
+}
+
+/* 当导航栏选项卡被选中时就有这个样式 */
+.navBar .navBtn .chosenLi {
+    border-bottom: 6px solid palevioletred;
+    font-weight: bold;
+}
+
+/* 中间重要展示区域 */
+.mainBox {
+    width: 100%;
+}
+
+.mainBox .page {
+    width: 100%;
+    height: 800px;
+}
+
+.welcomePage, .repoPage, .settingPage {
+    padding-top: 60px;
+    box-sizing: border-box;
+}
+
+/* 首页区域 */
+.mainBox .welcomePage .content {
+    width: 70%;
+    height: 70%;
+    margin: 0 auto;
+    text-align: center;
+}
+
+.mainBox .welcomePage .content p {
+    color: #333333;
+    font-size: 26px;
+    margin: 24px 0;
+    letter-spacing: 1px;
+}
+
+.mainBox .welcomePage .content img {
+    width: 480px;
+    margin-bottom: 10px;
+}
+
+/* 按键组 */
+.mainBox .welcomePage .content .operation {
+    width: 50%;
+    margin: 0 auto;
+}
+
+.btn {
+    text-decoration: none;
+    display: inline-block;
+    width: 180px;
+    height: 50px;
+    color: palevioletred;
+    font-size: 18px;
+    text-align: center;
+    letter-spacing: 2px;
+    line-height: 50px;
+    border: 2px solid palevioletred;
+    border-radius: 25px;
+    margin: 18px 16px 0;
+    transition: 100ms;
+}
+
+.btn:hover {
+    color: #F5F5F5;
+    background-color: palevioletred;
+}
+
+.dashed-btn {
+    border: 2px dashed #666666;
+    color: #666666;
+}
+
+.dashed-btn:hover {
+    border: 2px solid palevioletred;
+    color: palevioletred;
+    background: none;
+}
+
+/* 笔记区域 */
+.mainBox .repoPage .account {
+    text-align: center;
+}
+
+.mainBox .repoPage .account img {
+    width: 300px;
+}
+
+/* 设置区域 */
+.mainBox .settingPage {
+    text-align: center;
+}
+
+.mainBox .settingPage > p {
+    font-size: 20px;
+    margin-top: 10px;
+}
+
+.mainBox .settingPage img {
+    width: 300px;
+}
+
+/* 响应式样式 */
+@media screen and (max-width: 640px) {
+    /* 输入框样式 */
+    input {
+        width: 240px;
+        height: 40px;
+        margin: 10px 5px;
+        font-size: 14px;
+        border-radius: 12px;
+        text-indent: 12px;
+    }
+
+    /* 顶部导航栏 */
+    .navBar {
+        height: 60px;
+    }
+
+    .navBar .navBtn {
+        margin: 15px auto 0;
+    }
+
+    .navBar .navBtn li {
+        font-size: 18px;
+        line-height: 36px;
+    }
+
+    /* 当导航栏选项卡被选中时就有这个样式 */
+    .navBar .navBtn .chosenLi {
+        border-bottom: 4px solid palevioletred;
+    }
+
+    /* 中间重要展示区域 */
+    .mainBox .page {
+        height: 512px;
+    }
+
+    .welcomePage, .repoPage, .settingPage {
+        padding-top: 24px;
+    }
+
+    /* 首页区域 */
+    .mainBox .welcomePage .content {
+        width: 90%;
+        height: 70%;
+    }
+
+    .mainBox .welcomePage .content p {
+        font-size: 16px;
+        margin: 18px 0;
+    }
+
+    .mainBox .welcomePage .content img {
+        width: 80%;
+        margin-bottom: 0;
+    }
+
+    /* 按键组 */
+    .mainBox .welcomePage .content .operation {
+        width: 100%;
+    }
+
+    .btn {
+        width: 150px;
+        height: 40px;
+        font-size: 16px;
+        line-height: 40px;
+        border-radius: 20px;
+    }
+
+    /* 笔记区域 */
+    .mainBox .repoPage .account img {
+        width: 240px;
+    }
+
+    /* 设置区域 */
+    .mainBox .settingPage img {
+        width: 240px;
+    }
+}
