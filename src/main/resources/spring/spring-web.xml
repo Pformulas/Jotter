@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:mvc="http://www.springframework.org/schema/mvc"
+	xmlns:aop="http://www.springframework.org/schema/aop"
+	xmlns:tx="http://www.springframework.org/schema/tx"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
+	http://www.springframework.org/schema/beans/spring-beans.xsd
+	http://www.springframework.org/schema/context
+	http://www.springframework.org/schema/context/spring-context.xsd
+	http://www.springframework.org/schema/aop
+	http://www.springframework.org/schema/aop/spring-aop.xsd
+	http://www.springframework.org/schema/tx
+	http://www.springframework.org/schema/tx/spring-tx.xsd
+	http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc.xsd "
+	>
+	
+	
+	<!-- 自动配置处理器适配器、映射器、数据绑定等一系列功能 -->
+	<mvc:annotation-driven></mvc:annotation-driven>
+	
+	<!-- 静态资源默认servlet配置
+		 1.加入对静态资源的处理:js,gif,png
+		 2.允许使用"/"做整体映射
+	 -->
+	<mvc:default-servlet-handler/>
+	
+	<!-- 扫描注解 -->
+	 <context:component-scan base-package="controller"></context:component-scan>
+	
+	<!--配置视图解析器->显示jsp 	-->
+	<bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">  
+		<property name="viewClass" value="org.springframework.web.servlet.view.JstlView"></property>
+	    <!-- 配置视图解析器的前缀和后缀 -->   
+	    <property name="prefix" value="/WEB-INF/"></property>  
+	    <property name="suffix" value=".html"></property>
+	</bean>
+	
+	<!-- 静态资源管理器 -->
+	<mvc:resources location="/js/" mapping="/js/**" />
+	<mvc:resources location="/css/" mapping="/css/**" />
+	<mvc:resources location="/fonts/" mapping="/fonts/**" />
+	<mvc:resources location="/img/" mapping="/img/**" />
+	
+	
+</beans>
