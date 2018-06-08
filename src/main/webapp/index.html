@@ -9,15 +9,16 @@
     <meta name="author" content="水不要鱼">
     <title>Jotter 云笔记</title>
     <link rel="stylesheet" href="./css/index.css">
+    <link rel="stylesheet" href="./css/font-awesome.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Swiper/4.3.2/css/swiper.min.css">
 </head>
 <body>
 <!-- 顶部导航栏 -->
 <div class="navBar">
     <ul class="navBtn">
-        <li class="chosenLi">首页</li>
-        <li>笔记</li>
-        <li>设置</li>
+        <li class="chosenLi"><i class="fa fa-home"></i> 首页</li>
+        <li><i class="fa fa-book"></i> 笔记</li>
+        <li><i class="fa fa-wrench"></i> 设置</li>
     </ul>
 </div>
 
@@ -34,8 +35,9 @@
                         <p>随时随地，想看就看</p>
                         <p>云盘备份，永久留存</p>
                         <div class="operation">
-                            <a href="javascript:" class="btn slideToLoginPageBtn">立即登陆</a>
-                            <a href="javascript:" class="btn slideToRegiterPageBtn dashed-btn">还没有账号</a>
+                            <a href="javascript:" class="btn slideToLoginPageBtn"><i class="fa fa-sign-in"></i> 立即登陆</a>
+                            <a href="javascript:" class="btn slideToRegiterPageBtn dashed-btn"><i
+                                    class="fa fa-plus-square-o"></i> 还没有账号</a>
                         </div>
                     </div>
                 </div>
@@ -46,6 +48,7 @@
                     <div class="swiper-container" id="repoSwiper">
                         <div class="swiper-wrapper">
                             <div class="swiper-slide">
+                                <!-- 注册界面 -->
                                 <div class="page account">
                                     <img src="./images/account.png" alt="account">
                                     <form action="#" id="registerForm">
@@ -59,13 +62,15 @@
                                             <input type="password" name="ensurePassword" placeholder="再次输入密码" maxlength="32" required>
                                         </label>
                                         <label>
-                                            <a href="javascript:" class="btn">注册</a>
+                                            <a href="javascript:" class="btn"><i class="fa fa-plus-square-o"></i> 注册</a>
                                         </label>
-                                        <a href="javascript:" class="btn slideToLoginPageBtn dashed-btn">我要登陆</a>
+                                        <a href="javascript:" class="btn slideToLoginPageBtn dashed-btn"><i
+                                                class="fa fa-sign-in"></i> 我要登陆</a>
                                     </form>
                                 </div>
                             </div>
                             <div class="swiper-slide">
+                                <!-- 登陆界面 -->
                                 <div class="page account">
                                     <img src="./images/account.png" alt="account">
                                     <form action="#" id="loginForm">
@@ -76,13 +81,15 @@
                                             <input type="password" name="password" placeholder="输入密码" maxlength="32" required>
                                         </label>
                                         <label>
-                                            <a href="javascript:" class="btn">登陆</a>
+                                            <a href="javascript:" class="btn"><i class="fa fa-sign-in"></i> 登陆</a>
                                         </label>
-                                        <a href="javascript:" class="btn slideToRegiterPageBtn dashed-btn">我要注册</a>
+                                        <a href="javascript:" class="btn slideToRegiterPageBtn dashed-btn"><i
+                                                class="fa fa-plus-square-o"></i> 我要注册</a>
                                     </form>
                                 </div>
                             </div>
                             <div class="swiper-slide">
+                                <!-- 笔记内容界面 -->
                                 <div class="page content">
 
                                 </div>
@@ -95,7 +102,16 @@
                 <!-- 设置页面 -->
                 <div class="page settingPage">
                     <img src="./images/setting.png" alt="setting">
-                    <p>您正在修改您的个人信息</p>
+                    <div class="detail">
+                        <p><i class="fa fa-user"></i> ：<span>水不要鱼</span></p>
+                        <p><i class="fa fa-vcard"></i> ：<span>(主人，您叫啥~)</span></p>
+                        <p><i class="fa fa-phone"></i> ：<span>(我不会骚扰您的~)</span></p>
+                        <p><i class="fa fa-qq"></i> ：<span>(快来填写吧~)</span></p>
+                        <p><i class="fa fa-envelope"></i> ：<span>(您还没填写哦~)</span></p>
+                        <p><i class="fa fa-commenting"></i> ：<span>(写下您的雄心壮志~)</span></p>
+                        <a href="javascript:" class="btn"><i class="fa fa-pencil"></i> 修改资料</a>
+                    </div>
+                    <!--<p>您正在修改您的个人信息</p>
                     <form action="#">
                         <label>
                             <input type="text" name="username" maxlength="32" placeholder="请输入用户名" required>
@@ -104,14 +120,23 @@
                             <input type="tel" name="phone" maxlength="16" placeholder="请输入手机号">
                         </label>
                         <label>
-                            <input type="email" name="email" maxlength="32" placeholder="请输入邮箱">
+                            <input type="email" name="email" maxlength="32" placeholder="请输入姓名">
+                        </label>
+                        <label>
+                            <input type="email" name="email" maxlength="32" placeholder="请输入 QQ">
+                        </label>
+                        <label>
+                            <input type="email" name="phone" maxlength="32" placeholder="请输入邮箱">
+                        </label>
+                        <label>
+                            <input type="email" name="email" maxlength="32" placeholder="请输入个人简介">
                         </label>
                         <p>验证码：6969</p>
                         <label>
                             <input type="number" name="code" maxlength="4" placeholder="请输入验证码" required>
                         </label>
                         <a href="javascript:" class="btn">修改</a>
-                    </form>
+                    </form>-->
                 </div>
             </div>
         </div>
