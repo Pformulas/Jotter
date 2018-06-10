@@ -65,4 +65,16 @@ public class UserServiceTest {
 
         System.out.println(result);
     }
+
+    @Test
+    public void testUpdateUser() {
+        User user = new User();
+        user.setUsername("madao");
+        user.setIntro("fuck you");
+        user.setQq("1296947");
+
+        ServerResponse result = userService.updateUser(user);
+
+        System.out.println(result);
+    }
 }
