@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="dao.NoteMapper">
+
+    <delete id="deleteByPrimaryKey" parameterType="string">
+        DELETE FROM Jo_Note WHERE note_id=#{noteId}
+    </delete>
+
+    <insert id="insert" parameterType="entity.Note">
+        INSERT INTO Jo_Note (note_id, notebook_id, user_id, note_title, note_detail, note_create_time, note_update_time)
+        VALUES (#{noteId},#{notebookId},#{userId},#{noteTitle},#{noteDetail},
+        now(),now())
+    </insert>
+
+    <insert id="insertSelective" parameterType="entity.Note">
+        INSERT INTO Jo_Note
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="noteId!=null">
+                user_id,
+            </if>
+            <if test="notebookId!=null">
+                notebook_id,
+            </if>
+            <if test="userId!=null">
+                user_id,
+            </if>
+            <if test="noteTitle!=null">
+                note_title,
+            </if>
+            <if test="noteDetail!=null">
+                note_detail,
+            </if>
+            <if test="noteCreateTime != null">
+                note_create_time,
+            </if>
+            <if test="noteUpdateTime != null">
+                note_update_time,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="noteId!=null">
+                #{noteId,jdbcType=VARCHAR},
+            </if>
+            <if test="notebookId!=null">
+                #{notebookId,jdbcType=VARCHAR},
+            </if>
+            <if test="userId!=null">
+                #{userId,jdbcType=VARCHAR},
+            </if>
+            <if test="noteTitle!=null">
+                #{noteTitle,jdbcType=VARCHAR},
+            </if>
+            <if test="noteDetail!=null">
+                #{noteDetail,jdbcType=VARCHAR},
+            </if>
+            <if test="noteCreateTime != null">
+                now(),
+            </if>
+            <if test="noteUpdateTime != null">
+                now(),
+            </if>
+        </trim>
+    </insert>
+
+    <select id="selectByPrimaryKey" parameterType="string" resultType="entity.Note">
+        SELECT
+        notebook_id,user_id,note_title,note_detail,note_create_time,note_update_time
+        FROM Jo_Note WHERE note_id=#{noteId,jdbcType=VARCHAR}
+    </select>
+    <update id="updateByPrimaryKey">
+        UPDATE Jo_Note
+        SET
+        notebook_id=#{notebookId},
+        user_id=#{userId},
+        note_title=#{noteTitle},
+        note_detail=#{noteDetail},
+        note_create_time=#{noteCreateTime},
+        note_update_time=now()
+        where note_id=#{noteId}
+    </update>
+
+    <select id="checkNoteName" resultType="java.lang.Integer">
+        SELECT COUNT(1) FROM Jo_Note WHERE note_title=#{noteTitle}
+    </select>
+</mapper>

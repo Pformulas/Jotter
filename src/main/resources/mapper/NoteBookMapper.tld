@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="dao.NoteBookMapper">
+    <select id="checkNotebookName" resultType="java.lang.Integer">
+        SELECT COUNT(1) FROM Jo_Notebook WHERE notebook_name=#{notebookName}
+    </select>
+
+    <insert id="insertNotebook" parameterType="entity.NoteBook">
+        INSERT notebook_id,user_id,notebook_name,notebook_create_time,notebook_update_book
+        INTO Jo_Notebook VALUES (notebookId,userId,notebookName,now(),now())
+    </insert>
+</mapper>
