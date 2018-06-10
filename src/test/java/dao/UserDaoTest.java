@@ -20,11 +20,26 @@ public class UserDaoTest {
     @Autowired
     UserDao userDao = null;
 
+    /**
+     * 测试：保存一个用户对象
+     */
     @Test
     public void testSaveUser() {
         User user = new User("fish", "1997");
 
         int affect = userDao.saveUser(user);
+
+        System.out.println(affect);
+    }
+
+    /**
+     * 测试：统计用户名个数
+     */
+    @Test
+    public void testCountUsername() {
+        String username = "fish";
+
+        int affect = userDao.countUsername(username);
 
         System.out.println(affect);
     }

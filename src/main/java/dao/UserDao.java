@@ -17,4 +17,12 @@ public interface UserDao {
      * @return 返回影响的行数，0 表示保存失败，1 表示成功
      */
     int saveUser(User user);
+
+    /**
+     * 统计用户名个数
+     *
+     * @param username 用户名
+     * @return 返回个数，由于这里不允许用户名重复，所以最多返回 1 条
+     */
+    int countUsername(String username);
 }
