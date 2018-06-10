@@ -100,4 +100,26 @@ public class UserController {
         // 得到目前登陆信息，然后获取全部信息
         return userService.getInfo((User) session.getAttribute(Const.USER_KEY));
     }
+
+    /**
+     * 更新用户信息 API
+     *
+     * @param session 用户账号信息来源
+     * @return 返回登陆信息
+     */
+    @RequestMapping(
+            value = "/update_info.do",
+            method = {RequestMethod.POST},
+            produces = {"application/json; charset=UTF8"}
+    )
+    @ResponseBody
+    public ServerResponse updateInfo(User user, HttpSession session) {
+        // 获取到现在的用户名
+        String username = ((User) session.getAttribute(Const.USER_KEY)).getUsername();
+
+        user.setUsername(username); // 设置用户名
+
+        // 得到目前登陆信息，然后获取全部信息
+        return userService.updateUser(user);
+    }
 }
