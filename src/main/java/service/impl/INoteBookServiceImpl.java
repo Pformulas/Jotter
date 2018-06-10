@@ -10,6 +10,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import service.INoteBookService;
 
+import java.util.List;
+
 /**
  * Created by rzh on 2018/06/08
  */
@@ -73,4 +75,48 @@ public class INoteBookServiceImpl implements INoteBookService
         //
         return null;
     }
+
+    /**
+     * 根据笔记id查询那个笔记
+     * @param noteId
+     * @return
+     */
+    @Override
+    public ServerResponse<Note> showNote(String noteId) {
+        if(noteId == null){
+            return ServerResponse.getServerResponse(NoteBookResponse.PARAMETER_NULL);
+        }
+        Note note = noteDao.selectNoteByNoteId(noteId);
+        return ServerResponse.getServerResponse(NoteBookResponse.SUCCESS, note);
+    }
+
+    /**
+     * 根据笔记本id查询那个笔记本
+     * @param notebookId
+     * @return
+     */
+    @Override
+    public ServerResponse<NoteBook> showNotebook(String notebookId) {
+        if(notebookId == null){
+            return  ServerResponse.getServerResponse(NoteBookResponse.PARAMETER_NULL);
+        }
+        NoteBook noteBook = noteBookDao.selectNotebookByNotebookId(notebookId);
+        return ServerResponse.getServerResponse(NoteBookResponse.SUCCESS, noteBook);
+    }
+
+    /**
+     * 根据笔记本的id获取所有属于它的笔记本信息
+     * @param notebookId
+     * @return
+     */
+    @Override
+    public ServerResponse<List<Note>> selectNotesByNotebookId(String notebookId) {
+        if(notebookId == null){
+            return  ServerResponse.getServerResponse(NoteBookResponse.PARAMETER_NULL);
+        }
+        List<Note> notes = noteBookDao.selectNotesByNotebookId(notebookId);
+        return  ServerResponse.getServerResponse(NoteBookResponse.SUCCESS, notes);
+    }
+
+
 }

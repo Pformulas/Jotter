@@ -5,6 +5,8 @@ import entity.Note;
 import entity.NoteBook;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 /**
  * Created by rzh on 2018/06/08
  */
@@ -26,4 +28,25 @@ public interface INoteBookService
      * @return
      */
     public ServerResponse<String> deleteNotebook(String notebookName);
+
+    /**
+     * 通过noteId查找一个笔记
+     * @param noteId
+     * @return
+     */
+    public ServerResponse<Note> showNote(String noteId);
+
+    /**
+     * 通过notebookId查找一个笔记本
+     * @param notebookId
+     * @return
+     */
+    public ServerResponse<NoteBook> showNotebook(String notebookId);
+
+    /**
+     * 通过笔记本id查找它所有的笔记
+     * @param notebookId
+     * @return
+     */
+    public ServerResponse<List<Note>> selectNotesByNotebookId(String notebookId);
 }

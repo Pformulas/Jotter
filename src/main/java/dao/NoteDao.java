@@ -1,6 +1,7 @@
 package dao;
 
 import entity.Note;
+import entity.NoteBook;
 
 /**
  * Created by rzh on 2018/06/08
@@ -29,11 +30,11 @@ public interface NoteDao
     int insertSelective(Note record);
 
     /**
-     * 用主键查询
+     * 用noteId查询笔记
      * @param noteId
      * @return
      */
-    Note selectByPrimaryKey(String noteId);
+    Note selectNoteByNoteId(String noteId);
 
     /**
      * 用主键更新

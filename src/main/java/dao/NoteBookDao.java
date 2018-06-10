@@ -1,6 +1,9 @@
 package dao;
 
+import entity.Note;
 import entity.NoteBook;
+
+import java.util.List;
 
 /**
  * Created by rzh on 2018/06/08
@@ -27,4 +30,18 @@ public interface NoteBookDao
      * @return
      */
     int deleteNotebookByName(String notebookName);
+
+    /**
+     * 用notebookId查询笔记本
+     * @param notebookId
+     * @return
+     */
+    NoteBook selectNotebookByNotebookId(String notebookId);
+
+    /**
+     * 用notebookId查询所有属于它的笔记
+     * @param notebookId
+     * @return
+     */
+    List<Note> selectNotesByNotebookId(String notebookId);
 }
