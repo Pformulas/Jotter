@@ -35,4 +35,12 @@ public interface UserDao {
      * @return 返回 User 对象
      */
     User getUserByUsernameAndPassword(@Param("username") String username, @Param("password") String password);
+
+    /**
+     * 更新用户信息
+     *
+     * @param user 要被更新的用户
+     * @return 返回影响的行数
+     */
+    int updateUser(User user);
 }
