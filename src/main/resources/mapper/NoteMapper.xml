@@ -82,4 +82,8 @@
     <select id="checkNoteName" resultType="java.lang.Integer">
         SELECT COUNT(1) FROM Jo_Note WHERE note_title=#{noteTitle}
     </select>
+
+    <delete id="deleteByNoteTitle">
+        DELETE FROM Jo_Note WHERE note_title=#{noteTitle}
+    </delete>
 </mapper>

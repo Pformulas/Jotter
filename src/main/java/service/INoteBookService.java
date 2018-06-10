@@ -19,4 +19,11 @@ public interface INoteBookService
     public ServerResponse<String> insertNoteBook(NoteBook noteBook);
 
     public ServerResponse<String> inserNote(Note note);
+
+    /**
+     * 通过笔记本名称删除笔记本同时删除里面的笔记
+     * @param notebookName
+     * @return
+     */
+    public ServerResponse<String> deleteNotebook(String notebookName);
 }

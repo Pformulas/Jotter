@@ -1,5 +1,6 @@
 package service.impl;
 
+import common.ResponseCode;
 import common.ServerResponse;
 import dao.NoteBookDao;
 import dao.NoteDao;
@@ -31,14 +32,14 @@ public class INoteBookServiceImpl implements INoteBookService
         //检查notebookname是否重复
         int resultCount = noteBookDao.checkNotebookName(noteBook.getNotebookName());
         if(resultCount > 0){
-            return ServerResponse.createByErrorMessage("笔记本名字已存在");
+            return ServerResponse.getServerResponse(ResponseCode.NOTEBOOK_IS_EXISTED);
         }
         //插入
         resultCount = noteBookDao.insertNotebook(noteBook);
         if(resultCount > 0){
-            return ServerResponse.createBySuccessMessage("笔记本创建成功");
+            return ServerResponse.getServerResponse(ResponseCode.NOTEBOOK_CREATE_SUCCESS);
         }
-        return ServerResponse.createByErrorMessage("笔记本创建失败");
+        return ServerResponse.getServerResponse(ResponseCode.NOTEBOOK_CREATE_FAIL);
     }
 
     /**
@@ -51,12 +52,25 @@ public class INoteBookServiceImpl implements INoteBookService
         //检查笔记名
         int resultCount = noteDao.checkNoteName(note.getNoteTitle());
         if(resultCount > 0){
-            return ServerResponse.createByErrorMessage("笔记名已存在");
+            return ServerResponse.getServerResponse(ResponseCode.NOTE_IS_EXISTED);
         }
         resultCount = noteDao.insert(note);
         if(resultCount > 0){
-          return ServerResponse.createBySuccessMessage("笔记新建成功");
+          return ServerResponse.getServerResponse(ResponseCode.NOTE_CREATE_SUCCESS);
         }
-        return ServerResponse.createByErrorMessage("笔记新建失败");
+        return ServerResponse.getServerResponse(ResponseCode.NOTE_CREATE_FAIL);
+    }
+
+    /**
+     * 通过笔记本名称删除笔记本同时删除里面的笔记
+     *
+     * @param notebookName
+     * @return
+     */
+    public ServerResponse<String> deleteNotebook(String notebookName)
+    {
+        //判断这个Notebook是否属于这个用户
+        //
+        return null;
     }
 }
