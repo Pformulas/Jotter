@@ -142,4 +142,32 @@ public class UserServiceImpl implements UserService {
         // 得到想要的数据了，返回出去
         return ServerResponse.getServerResponse(UserResponse.SUCCESS, user);
     }
+
+    /**
+     * 根据 user 对象更新信息
+     *
+     * @param user 用户信息
+     * @return 返回更新情况
+     */
+    public ServerResponse updateUser(User user) {
+        // 判断 user 是否为空，如果得到的是 null，说明找不到相应用户，不过这通常不会发生，除非他的登陆是非法的
+        if (user == null) {
+            return ServerResponse.getServerResponse(UserResponse.NEED_LOGIN);
+        }
+
+        // 判断 user 是否合法
+        boolean usernameIsIllegal = user.getUsername() == null || "".equals(user.getUsername());
+        if (usernameIsIllegal) {
+            return ServerResponse.getServerResponse(UserResponse.NEED_LOGIN);
+        }
+
+        // 判断执行成功没有
+        int affect = userDao.updateUser(user);
+        if (affect <= 0) {
+            return ServerResponse.getServerResponse(UserResponse.UPDATE_INFO_FAILED);
+        }
+
+        // 更新成功
+        return ServerResponse.getServerResponse(UserResponse.SUCCESS);
+    }
 }

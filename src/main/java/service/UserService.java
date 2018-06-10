@@ -44,4 +44,12 @@ public interface UserService {
      * @return 返回用户信息
      */
     public ServerResponse getInfo(User user);
+
+    /**
+     * 根据 user 对象更新信息
+     *
+     * @param user 用户信息
+     * @return 返回更新情况
+     */
+    public ServerResponse updateUser(User user);
 }
