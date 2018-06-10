@@ -2,6 +2,7 @@
 // 大界面的切换器
 const mainSwiper = new Swiper('#mainSwiper', {
     allowTouchMove: false, // 只能通过点击导航栏来切换，不允许直接切换
+    autoHeight: true, // enable auto height
 });
 
 // 笔记界面的切换器
@@ -69,5 +70,25 @@ $(function () {
     const registerBtns = $(".slideToRegiterPageBtn");
     for (let i = 0; i < registerBtns.length; i++) {
         $(registerBtns[i]).click(slideToRegisterPage);
+    }
+
+    // 切换显示资料和修改资料的模块
+    function switchShowOrUpdate() {
+        const detailDiv = $($(".detail")[0]);
+        const formDiv = $($(".form")[0]);
+
+        // 如果它原本是隐藏的，就显示出来，相反，就显示出来
+        if (detailDiv.hasClass("hidden")) {
+            detailDiv.removeClass("hidden");
+            formDiv.addClass("hidden");
+        } else {
+            formDiv.removeClass("hidden");
+            detailDiv.addClass("hidden");
+        }
+    }
+
+    const switchBtns = $(".switchBtn");
+    for (let i = 0; i < switchBtns.length; i++) {
+        $(switchBtns[i]).click(switchShowOrUpdate);
     }
 });
