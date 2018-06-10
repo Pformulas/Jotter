@@ -51,4 +51,18 @@ public class UserServiceTest {
 
         System.out.println(result);
     }
+
+    /**
+     * 测试：用户登陆，用户名和密码必须传入
+     */
+    @Test
+    public void testLogin() {
+        User user = new User();
+        user.setUsername("fish");
+        user.setPassword("1997");
+
+        ServerResponse result = userService.login(user);
+
+        System.out.println(result);
+    }
 }

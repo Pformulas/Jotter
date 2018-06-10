@@ -10,14 +10,20 @@
     </insert>
 
     <!-- int countUsername(String username): 统计用户名个数 -->
-    <select id="countUsername" parameterType="java.lang.String" resultType="int">
-        /*
+    <!--
         注意这里：sql 会自动 trim 后面的空格，也就是 username 后面有空格会被去掉
         举例：
         'fish' == 'fish     '
         'fish' != '   fish    '
         'fish' != '   fish' (只会去掉后面的空格，前面的不会去掉)
-        */
+    -->
+    <select id="countUsername" resultType="int">
         SELECT COUNT(1) FROM `Jo_User` WHERE `username` = #{username}
+    </select>
+
+    <!-- User getUserByUsernameAndPassword(String username, String password): 通过用户名和密码获取相关信息 -->
+    <select id="getUserByUsernameAndPassword" resultType="entity.User">
+        SELECT `user_id`, `name`, `username`, `QQ`, `mail`, `intro` FROM `Jo_User`
+        WHERE username = #{username} AND password = #{password}
     </select>
 </mapper>

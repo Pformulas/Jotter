@@ -28,4 +28,12 @@ public interface UserService {
      * @return true 用户合法，可以使用，false 用户不合法，不能使用
      */
     public ServerResponse isUserValidated(User user);
+
+    /**
+     * 用户登陆，用户名和密码必须传入
+     *
+     * @param user 要登陆的用户
+     * @return 返回登陆信息
+     */
+    public ServerResponse login(User user);
 }

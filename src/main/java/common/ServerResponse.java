@@ -24,6 +24,18 @@ public class ServerResponse<T> implements Serializable {
         this.data = data;
     }
 
+    public int getStatus() {
+        return status;
+    }
+
+    public String getMsg() {
+        return msg;
+    }
+
+    public T getData() {
+        return data;
+    }
+
     /**
      * 判断是否成功，默认状态码都是 ResponseCode 中的 SUCCESS
      * @return true 成功，false 失败

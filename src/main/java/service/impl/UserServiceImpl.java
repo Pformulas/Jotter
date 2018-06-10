@@ -96,4 +96,27 @@ public class UserServiceImpl implements UserService {
         // 所有验证都通过了，返回成功
         return ServerResponse.getServerResponse(UserResponse.SUCCESS);
     }
+
+    /**
+     * 用户登陆，用户名和密码必须传入
+     *
+     * @param user 要登陆的用户
+     * @return 返回登陆信息
+     */
+    public ServerResponse login(User user) {
+        // 判断 user 是否存在，不存在就返回用户提示
+        if (!(isUserValidated(user).getStatus() == UserResponse.USERNAME_IS_EXISTED.getCode())) {
+            return ServerResponse.getServerResponse(UserResponse.LOGIN_ERROR);
+        }
+
+        // 进数据库查询，看看这个用户名和密码有没有对应的记录
+        user = userDao.getUserByUsernameAndPassword(user.getUsername(), user.getPassword());
+        if (user == null) {
+            // 没有记录，说明用户名或密码不对
+            return ServerResponse.getServerResponse(UserResponse.LOGIN_ERROR);
+        }
+
+        // 如果查询到了记录，就说明用户名和密码都对了，登陆成功
+        return ServerResponse.getServerResponse(UserResponse.LOGIN_SUCCESS, user);
+    }
 }

@@ -43,4 +43,17 @@ public class UserDaoTest {
 
         System.out.println(affect);
     }
+
+    /**
+     * 测试：通过用户名和密码获取相关信息
+     */
+    @Test
+    public void testGetUserByUsernameAndPassword() {
+        String username = "fish";
+        String password = "1997";
+
+        User user = userDao.getUserByUsernameAndPassword(username, password);
+
+        System.out.println(user);
+    }
 }

@@ -15,7 +15,9 @@ public enum UserResponse implements ResponseStatus {
     USERNAME_OR_PASSWORD_IS_NULL(-2, "用户名或密码为空"),
     USERNAME_OR_PASSWORD_IS_TOO_LONG(-3, "用户名或密码太长"),
     USERNAME_IS_EXISTED(-4, "用户名已经存在"),
-    REGISTER_FAILED(-5, "注册失败");
+    REGISTER_FAILED(-5, "注册失败"),
+    LOGIN_ERROR(-6, "用户名或密码错误"),
+    LOGIN_SUCCESS(ResponseStatus.SUCCESS_CODE, "登陆成功");
 
     private final int code;
 
