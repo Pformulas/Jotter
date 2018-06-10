@@ -5,7 +5,7 @@ import entity.Note;
 /**
  * Created by rzh on 2018/06/08
  */
-public interface NoteMapper
+public interface NoteDao
 {
     int deleteByPrimaryKey(String noteId);
 

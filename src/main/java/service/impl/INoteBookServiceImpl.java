@@ -1,8 +1,8 @@
 package service.impl;
 
 import common.ServerResponse;
-import dao.NoteBookMapper;
-import dao.NoteMapper;
+import dao.NoteBookDao;
+import dao.NoteDao;
 import entity.Note;
 import entity.NoteBook;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,10 +16,10 @@ import service.INoteBookService;
 public class INoteBookServiceImpl implements INoteBookService
 {
     @Autowired
-    private NoteBookMapper noteBookMapper;
+    private NoteBookDao noteBookDao;
 
     @Autowired
-    private NoteMapper noteMapper;
+    private NoteDao noteDao;
     /**
      * 创建新的notebook文件夹
      *
@@ -29,12 +29,12 @@ public class INoteBookServiceImpl implements INoteBookService
     public ServerResponse<String> insertNoteBook(NoteBook noteBook)
     {
         //检查notebookname是否重复
-        int resultCount = noteBookMapper.checkNotebookName(noteBook.getNotebookName());
+        int resultCount = noteBookDao.checkNotebookName(noteBook.getNotebookName());
         if(resultCount > 0){
             return ServerResponse.createByErrorMessage("笔记本名字已存在");
         }
         //插入
-        resultCount = noteBookMapper.insertNotebook(noteBook);
+        resultCount = noteBookDao.insertNotebook(noteBook);
         if(resultCount > 0){
             return ServerResponse.createBySuccessMessage("笔记本创建成功");
         }
@@ -49,11 +49,11 @@ public class INoteBookServiceImpl implements INoteBookService
     public ServerResponse<String> inserNote(Note note)
     {
         //检查笔记名
-        int resultCount = noteMapper.checkNoteName(note.getNoteTitle());
+        int resultCount = noteDao.checkNoteName(note.getNoteTitle());
         if(resultCount > 0){
             return ServerResponse.createByErrorMessage("笔记名已存在");
         }
-        resultCount = noteMapper.insert(note);
+        resultCount = noteDao.insert(note);
         if(resultCount > 0){
           return ServerResponse.createBySuccessMessage("笔记新建成功");
         }
