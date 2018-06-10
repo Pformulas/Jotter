@@ -59,7 +59,7 @@ public class UserServiceImpl implements UserService {
         }
 
         // 验证注册通过
-        return ServerResponse.getServerResponse(UserResponse.SUCCESS);
+        return ServerResponse.getServerResponse(UserResponse.REGISTER_SUCCESS);
     }
 
     /**
@@ -94,7 +94,7 @@ public class UserServiceImpl implements UserService {
         }
 
         // 所有验证都通过了，返回成功
-        return ServerResponse.getServerResponse(UserResponse.SUCCESS);
+        return ServerResponse.getServerResponse(UserResponse.CHECK_SUCCESS);
     }
 
     /**
@@ -118,5 +118,28 @@ public class UserServiceImpl implements UserService {
 
         // 如果查询到了记录，就说明用户名和密码都对了，登陆成功
         return ServerResponse.getServerResponse(UserResponse.LOGIN_SUCCESS, user);
+    }
+
+    /**
+     * 获取用户信息
+     *
+     * @param user 要被获取的用户
+     * @return 返回用户信息
+     */
+    public ServerResponse getInfo(User user) {
+        // 判断 user 是否为空
+        if (user == null) {
+            return ServerResponse.getServerResponse(UserResponse.NEED_LOGIN);
+        }
+
+        user = userDao.getUserByUsernameAndPassword(user.getUsername(), user.getPassword());
+
+        // 如果得到的是 null，说明找不到相应用户，不过这通常不会发生，除非他的登陆是非法的
+        if (user == null) {
+            return ServerResponse.getServerResponse(UserResponse.NEED_LOGIN);
+        }
+
+        // 得到想要的数据了，返回出去
+        return ServerResponse.getServerResponse(UserResponse.SUCCESS, user);
     }
 }

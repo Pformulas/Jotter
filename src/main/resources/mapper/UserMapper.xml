@@ -23,7 +23,7 @@
 
     <!-- User getUserByUsernameAndPassword(String username, String password): 通过用户名和密码获取相关信息 -->
     <select id="getUserByUsernameAndPassword" resultType="entity.User">
-        SELECT `user_id`, `name`, `username`, `QQ`, `mail`, `intro` FROM `Jo_User`
+        SELECT `user_id`, `name`, `username`, `password`, `QQ`, `mail`, `intro` FROM `Jo_User`
         WHERE username = #{username} AND password = #{password}
     </select>
 </mapper>

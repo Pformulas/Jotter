@@ -36,4 +36,12 @@ public interface UserService {
      * @return 返回登陆信息
      */
     public ServerResponse login(User user);
+
+    /**
+     * 获取用户信息
+     *
+     * @param user 要被获取的用户
+     * @return 返回用户信息
+     */
+    public ServerResponse getInfo(User user);
 }
