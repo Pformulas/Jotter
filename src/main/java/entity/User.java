@@ -1,5 +1,6 @@
 package entity;
 
+import java.util.Date;
 import java.util.UUID;
 
 /**
@@ -22,6 +23,8 @@ public class User {
     private String mail = null;
 
     private String intro = null;
+
+    private Date createTime = null;
 
     public User() {
         this.userId = UUID.randomUUID().toString();
@@ -89,6 +92,14 @@ public class User {
         this.intro = intro;
     }
 
+    public Date getCreateTime() {
+        return createTime;
+    }
+
+    public void setCreateTime(Date createTime) {
+        this.createTime = createTime;
+    }
+
     @Override
     public String toString() {
         return "User{" +
@@ -99,6 +110,7 @@ public class User {
                 ", qq='" + qq + '\'' +
                 ", mail='" + mail + '\'' +
                 ", intro='" + intro + '\'' +
+                ", createTime=" + createTime +
                 '}';
     }
 }

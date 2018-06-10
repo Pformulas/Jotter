@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="dao.UserDao">
+    <insert id="saveUser" parameterType="entity.User">
+        INSERT INTO `Jo_User`(`user_id`, `username`, `password`, `name`, `QQ`, `mail`, `intro`, `create_time`)
+        VALUES(#{userId}, #{username}, #{password}, #{name}, #{qq}, #{mail}, #{intro}, NOW())
+    </insert>
+</mapper>
