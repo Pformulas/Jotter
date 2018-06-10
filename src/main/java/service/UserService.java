@@ -20,4 +20,12 @@ public interface UserService {
      * @return 返回注册情况
      */
     ServerResponse register(User user);
+
+    /**
+     * 专门检验用户是否合法，主要是用户名和密码
+     *
+     * @param user 要被检验的用户
+     * @return true 用户合法，可以使用，false 用户不合法，不能使用
+     */
+    public ServerResponse isUserValidated(User user);
 }

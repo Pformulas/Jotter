@@ -1,7 +1,7 @@
 package service.impl;
 
-import common.ResponseCode;
 import common.ServerResponse;
+import common.response.NoteBookResponse;
 import dao.NoteBookDao;
 import dao.NoteDao;
 import entity.Note;
@@ -32,14 +32,14 @@ public class INoteBookServiceImpl implements INoteBookService
         //检查notebookname是否重复
         int resultCount = noteBookDao.checkNotebookName(noteBook.getNotebookName());
         if(resultCount > 0){
-            return ServerResponse.getServerResponse(ResponseCode.NOTEBOOK_IS_EXISTED);
+            return ServerResponse.getServerResponse(NoteBookResponse.NOTEBOOK_IS_EXISTED);
         }
         //插入
         resultCount = noteBookDao.insertNotebook(noteBook);
         if(resultCount > 0){
-            return ServerResponse.getServerResponse(ResponseCode.NOTEBOOK_CREATE_SUCCESS);
+            return ServerResponse.getServerResponse(NoteBookResponse.NOTEBOOK_CREATE_SUCCESS);
         }
-        return ServerResponse.getServerResponse(ResponseCode.NOTEBOOK_CREATE_FAIL);
+        return ServerResponse.getServerResponse(NoteBookResponse.NOTEBOOK_CREATE_FAIL);
     }
 
     /**
@@ -52,13 +52,13 @@ public class INoteBookServiceImpl implements INoteBookService
         //检查笔记名
         int resultCount = noteDao.checkNoteName(note.getNoteTitle());
         if(resultCount > 0){
-            return ServerResponse.getServerResponse(ResponseCode.NOTE_IS_EXISTED);
+            return ServerResponse.getServerResponse(NoteBookResponse.NOTE_IS_EXISTED);
         }
         resultCount = noteDao.insert(note);
         if(resultCount > 0){
-          return ServerResponse.getServerResponse(ResponseCode.NOTE_CREATE_SUCCESS);
+          return ServerResponse.getServerResponse(NoteBookResponse.NOTE_CREATE_SUCCESS);
         }
-        return ServerResponse.getServerResponse(ResponseCode.NOTE_CREATE_FAIL);
+        return ServerResponse.getServerResponse(NoteBookResponse.NOTE_CREATE_FAIL);
     }
 
     /**
