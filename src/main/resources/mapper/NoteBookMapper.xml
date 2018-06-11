@@ -24,4 +24,5 @@
     <select id="selectNotesByNotebookId" parameterType="String" resultType="entity.Note">
         SELECT * from  Jo_Note WHERE notebook_id = #{notebookId}
     </select>
+    
 </mapper>
