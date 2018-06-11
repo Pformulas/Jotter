@@ -2,6 +2,7 @@ package dao;
 
 import entity.Note;
 import entity.NoteBook;
+import org.apache.ibatis.annotations.Param;
 import org.aspectj.weaver.ast.Not;
 
 import java.util.List;
@@ -60,5 +61,5 @@ public interface NoteBookDao
      */
     int updateNoteBook(NoteBook noteBook);
 
-    int checkNoteBookByUserId(String userId);
+    int checkNoteBookByUserId(@Param("userId") String userId, @Param("notebookId") String notebookId);
 }

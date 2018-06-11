@@ -33,10 +33,9 @@ public class INoteBookServiceImpl implements INoteBookService
      * @param noteBook
      * @return
      */
-    public ServerResponse<String> insertNoteBook(NoteBook noteBook, HttpSession session)
+    public ServerResponse<String> insertNoteBook(NoteBook noteBook, User user)
     {
         //判断用户是否登录
-        User user = (User)session.getAttribute("user");
         if(user == null){
             //用户未登录
             return ServerResponse.getServerResponse(UserResponse.NEED_LOGIN);
@@ -62,29 +61,30 @@ public class INoteBookServiceImpl implements INoteBookService
      * @param note
      * @return
      */
-    public ServerResponse<String> inserNote(Note note,HttpSession session)
+    public ServerResponse<String> inserNote(Note note,User user,String notebookId)
     {
         //判断用户是否登录
-        User user = (User) session.getAttribute("user");
         if (user == null)
         {
             //用户未登录
             return ServerResponse.getServerResponse(UserResponse.NEED_LOGIN);
         }
+        if(notebookId == null){
+            return ServerResponse.getServerResponse(NoteBookResponse.PARAMETER_NULL);
+        }
         //检查这个user是否有这个文件夹
-        int resultCount = noteBookDao.checkNoteBookByUserId(user.getUserId());
-        if(resultCount < 0){
+        int resultCount = noteBookDao.checkNoteBookByUserId(user.getUserId(),notebookId);
+        if(resultCount <= 0){
             //说明恶意登录添加其他人的笔记
             return ServerResponse.getServerResponse(UserResponse.ILLEGAL_ARGUMENT);
         }
-        NoteBook noteBook = (NoteBook) session.getAttribute("notebook");
         //检查笔记名
         resultCount = noteDao.checkNoteName(note.getNoteTitle());
         if(resultCount > 0){
             return ServerResponse.getServerResponse(NoteBookResponse.NOTE_IS_EXISTED);
         }
         note.setUserId(user.getUserId());
-        note.setNotebookId(noteBook.getNotebookId());
+        note.setNotebookId(notebookId);
         note.setNoteId(UUID.randomUUID().toString());
         resultCount = noteDao.insertNote(note);
         //判断是否新建成功

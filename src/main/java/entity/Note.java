@@ -23,7 +23,7 @@ public class Note {
     private Date noteCreateTime = null;
 
     private Date noteUpdateTime = null;
-    
+
     public String getNoteId() {
         return noteId;
     }

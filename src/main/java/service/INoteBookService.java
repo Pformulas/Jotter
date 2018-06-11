@@ -3,6 +3,7 @@ package service;
 import common.ServerResponse;
 import entity.Note;
 import entity.NoteBook;
+import entity.User;
 import org.springframework.stereotype.Service;
 
 import javax.servlet.http.HttpSession;
@@ -19,9 +20,9 @@ public interface INoteBookService
      * @param noteBook
      * @return
      */
-    public ServerResponse<String> insertNoteBook(NoteBook noteBook, HttpSession session);
+    public ServerResponse<String> insertNoteBook(NoteBook noteBook, User user);
 
-    public ServerResponse<String> inserNote(Note note,HttpSession session);
+    public ServerResponse<String> inserNote(Note note,User user,String notebookId);
 
     /**
      * 通过笔记本名称删除笔记本同时删除里面的笔记
