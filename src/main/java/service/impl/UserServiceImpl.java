@@ -74,8 +74,8 @@ public class UserServiceImpl implements UserService {
         }
 
         // 如果用户名或者密码任一个为空，注册失败
-        boolean usernameIsNull = user.getUsername() == null || "".equals(user.getUsername());
-        boolean passwordIsNull = user.getPassword() == null || "".equals(user.getPassword());
+        boolean usernameIsNull = user.getUsername() == null || "".equals(user.getUsername().trim());
+        boolean passwordIsNull = user.getPassword() == null || "".equals(user.getPassword().trim());
         if (usernameIsNull || passwordIsNull) {
             return ServerResponse.getServerResponse(UserResponse.USERNAME_OR_PASSWORD_IS_NULL);
         }

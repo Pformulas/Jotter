@@ -11,21 +11,54 @@ const repoSwiper = new Swiper('#repoSwiper', {
     direction: 'vertical',
 });
 
-$(function () {
-    const SLIDE_SPEED = 800; // 单位：ms
+const SLIDE_SPEED = 800; // 切换速度，单位：ms
 
-    // 清除原来的选择样式，并给指定元素加上样式
-    function removeAndAddClass(ele) {
-        const navBtns = $(".navBtn li");
-        // 先清除原本留有的样式
-        for (let j = 0; j < navBtns.length; j++) {
-            $(navBtns[j]).removeClass("chosenLi");
-        }
-
-        // 再给这个被点击的加上
-        $(ele).addClass("chosenLi");
+// 清除原来的选择样式，并给指定元素加上样式
+function removeAndAddClass(ele) {
+    const navBtns = $(".navBtn li");
+    // 先清除原本留有的样式
+    for (let j = 0; j < navBtns.length; j++) {
+        $(navBtns[j]).removeClass("chosenLi");
     }
 
+    // 再给这个被点击的加上
+    $(ele).addClass("chosenLi");
+}
+
+// 切换到登陆界面
+function slideToLoginPage() {
+    mainSwiper.slideTo(1, SLIDE_SPEED);
+    repoSwiper.slideTo(1, SLIDE_SPEED);
+
+    // 导航栏也要切换
+    removeAndAddClass(navBtns[1]);
+}
+
+// 切换到注册界面
+function slideToRegisterPage() {
+    mainSwiper.slideTo(1, SLIDE_SPEED);
+    repoSwiper.slideTo(0, SLIDE_SPEED);
+
+    // 导航栏也要切换
+    removeAndAddClass(navBtns[1]);
+}
+
+// 切换显示资料和修改资料的模块
+function switchShowOrUpdate() {
+    const detailDiv = $($(".detail")[0]);
+    const formDiv = $($(".form")[0]);
+
+    // 如果它原本是隐藏的，就显示出来，相反，就显示出来
+    if (detailDiv.hasClass("hidden")) {
+        detailDiv.removeClass("hidden");
+        formDiv.addClass("hidden");
+    } else {
+        formDiv.removeClass("hidden");
+        detailDiv.addClass("hidden");
+    }
+}
+
+$(function () {
     // 点击导航栏样式切换
     const navBtns = $(".navBtn li");
     for (let i = 0; i < navBtns.length; i++) {
@@ -42,24 +75,6 @@ $(function () {
         });
     }
 
-    // 切换到登陆界面
-    function slideToLoginPage() {
-        mainSwiper.slideTo(1, SLIDE_SPEED);
-        repoSwiper.slideTo(1, SLIDE_SPEED);
-
-        // 导航栏也要切换
-        removeAndAddClass(navBtns[1]);
-    }
-
-    // 切换到注册界面
-    function slideToRegisterPage() {
-        mainSwiper.slideTo(1, SLIDE_SPEED);
-        repoSwiper.slideTo(0, SLIDE_SPEED);
-
-        // 导航栏也要切换
-        removeAndAddClass(navBtns[1]);
-    }
-
     // 给跳转到登陆界面的按钮绑定事件
     const loginBtns = $(".slideToLoginPageBtn");
     for (let i = 0; i < loginBtns.length; i++) {
@@ -70,21 +85,6 @@ $(function () {
     const registerBtns = $(".slideToRegiterPageBtn");
     for (let i = 0; i < registerBtns.length; i++) {
         $(registerBtns[i]).click(slideToRegisterPage);
-    }
-
-    // 切换显示资料和修改资料的模块
-    function switchShowOrUpdate() {
-        const detailDiv = $($(".detail")[0]);
-        const formDiv = $($(".form")[0]);
-
-        // 如果它原本是隐藏的，就显示出来，相反，就显示出来
-        if (detailDiv.hasClass("hidden")) {
-            detailDiv.removeClass("hidden");
-            formDiv.addClass("hidden");
-        } else {
-            formDiv.removeClass("hidden");
-            detailDiv.addClass("hidden");
-        }
     }
 
     const switchBtns = $(".switchBtn");
