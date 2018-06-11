@@ -43,14 +43,14 @@ public interface INoteBookService
      * @param notebookId
      * @return
      */
-    public ServerResponse<List<Note>> selectNotesByNotebookId(String notebookId);
+    public ServerResponse selectNotesByNotebookId(Integer page, String notebookId);
 
     /**
      * 用户通过他的id获取他的全部笔记本
      * @param userId
      * @return
      */
-    public ServerResponse<List<NoteBook>> selectNoteBooksByUserId(String userId);
+    public ServerResponse selectNoteBooksByUserId(Integer page, String userId);
 
     /**
      * 更新笔记本

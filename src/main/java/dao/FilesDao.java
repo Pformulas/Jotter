@@ -2,6 +2,8 @@ package dao;
 
 import entity.Files;
 
+import java.util.List;
+
 /**
  * 文件操作相关方法
  *
@@ -18,4 +20,25 @@ public interface FilesDao {
      */
     public Integer saveFile(Files files);
 
+    /**
+     * 获取这个userId和type的文件列表
+     * 参数： userId  type
+     * @param files
+     * @return 文件列表
+     */
+    public List<Files> listFile(Files files);
+
+    /**
+     * 根据url删除指定的文件
+     * @param url
+     * @return
+     */
+    public Integer deleteFile(String url);
+
+    /**
+     * 根据url修改fileName
+     * @param files
+     * @return
+     */
+    public Integer updateFilename(Files files);
 }

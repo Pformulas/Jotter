@@ -8,4 +8,21 @@
             VALUES (#{userId}, #{url}, #{type}, #{fileName})
     </insert>
 
+    <select id="listFile" parameterType="entity.Files" resultType="entity.Files">
+        SELECT url, file_name FROM Jo_File WHERE user_id = #{userId} AND type = #{type}
+    </select>
+
+    <delete id="deleteFile">
+        DELETE FROM Jo_File WHERE url = #{url}
+    </delete>
+
+    <update id="updateFilename" parameterType="entity.Files">
+        UPDATE Jo_File
+        <set>
+            <if test="fileName != null">
+                file_name = #{fileName}
+            </if>
+        </set>
+        WHERE url = #{url}
+    </update>
 </mapper>

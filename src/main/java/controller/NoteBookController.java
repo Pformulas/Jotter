@@ -97,9 +97,9 @@ public class NoteBookController
      */
     @ResponseBody
     @RequestMapping(path = "/show_notes_of_notebook.do", produces = {"application/json;charset=UTF8"})
-    public Object showNotesOfNotebook(String notebookId)
+    public Object showNotesOfNotebook(Integer page, String notebookId)
     {
-        return iNoteBookService.selectNotesByNotebookId(notebookId);
+        return iNoteBookService.selectNotesByNotebookId(page, notebookId);
     }
 
     /**
@@ -110,9 +110,9 @@ public class NoteBookController
      */
     @ResponseBody
     @RequestMapping(path = "/show_notebook_of_userId.do", produces = {"application/json;charset=UTF8"})
-    public ServerResponse showNoteBookOfUserId(String userId)
+    public ServerResponse showNoteBookOfUserId(Integer page, String userId)
     {
-        return iNoteBookService.selectNoteBooksByUserId(userId);
+        return iNoteBookService.selectNoteBooksByUserId(page, userId);
     }
 
     /**

@@ -1,5 +1,6 @@
 package service.impl;
 
+import Utils.PageUtil;
 import common.ServerResponse;
 import common.response.NoteBookResponse;
 import common.response.UserResponse;
@@ -131,15 +132,16 @@ public class INoteBookServiceImpl implements INoteBookService
      * @param notebookId
      * @return
      */
-    public ServerResponse<List<Note>> selectNotesByNotebookId(String notebookId) {
+    public ServerResponse selectNotesByNotebookId(Integer page, String notebookId) {
         if(notebookId == null){
             return  ServerResponse.getServerResponse(NoteBookResponse.PARAMETER_NULL);
         }
+        PageUtil.toPage(page);
         List<Note> notes = noteBookDao.selectNotesByNotebookId(notebookId);
         if(notes.size() <= 0){
             return ServerResponse.getServerResponse(NoteBookResponse.RESULT_IS_NULL);
         }
-        return  ServerResponse.getServerResponse(NoteBookResponse.SUCCESS, notes);
+        return  ServerResponse.getServerResponse(NoteBookResponse.SUCCESS, PageUtil.pageInfo(notes));
     }
 
     /**
@@ -147,15 +149,16 @@ public class INoteBookServiceImpl implements INoteBookService
      * @param userId
      * @return
      */
-    public ServerResponse<List<NoteBook>> selectNoteBooksByUserId(String userId) {
+    public ServerResponse selectNoteBooksByUserId(Integer page, String userId) {
         if(userId == null){
             return ServerResponse.getServerResponse(NoteBookResponse.PARAMETER_NULL);
         }
+        PageUtil.toPage(page);
         List<NoteBook> noteBooks = noteBookDao.selectNoteBooksByUserId(userId);
         if(noteBooks.size() <= 0){
             return ServerResponse.getServerResponse(NoteBookResponse.RESULT_IS_NULL);
         }
-        return ServerResponse.getServerResponse(NoteBookResponse.SUCCESS, noteBooks);
+        return ServerResponse.getServerResponse(NoteBookResponse.SUCCESS, PageUtil.pageInfo(noteBooks));
     }
 
     /**
@@ -255,6 +258,7 @@ public class INoteBookServiceImpl implements INoteBookService
         if(note.getNoteId() == null){
             return ServerResponse.getServerResponse(NoteBookResponse.NOTE_ID_NULL);
         }
+        
         Integer check = noteDao.checkNoteByUserId(note);
         if(check <= 0){
             return ServerResponse.getServerResponse(UserResponse.ILLEGAL_ARGUMENT);

@@ -16,6 +16,7 @@ import service.FilesService;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.List;
 import java.util.UUID;
 
 /**
@@ -84,5 +85,36 @@ public class FilesServiceImpl implements FilesService {
         uri = uri.substring(uri.indexOf("File"),uri.length());
 
         return ServerResponse.getServerResponse(FilesResponse.UPFILE_SUCCESS);
+    }
+
+    /**
+     * 查询这个用户的某个类型的文件
+     * @param files
+     * @return
+     */
+    @Override
+    public ServerResponse<List<Files>> listFile(Files files) {
+        return null;
+    }
+
+    /**
+     * 删除指定url的文件
+     * @param url
+     * @return
+     */
+    @Override
+    public ServerResponse deleteFile(String url) {
+        return null;
+    }
+
+    /**
+     * 根据url修改fileName
+     * 参数 url file
+     * @param files
+     * @return
+     */
+    @Override
+    public ServerResponse updateFilename(Files files) {
+        return null;
     }
 }
