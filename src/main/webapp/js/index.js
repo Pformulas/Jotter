@@ -12,6 +12,8 @@ const repoSwiper = new Swiper('#repoSwiper', {
 });
 
 $(function () {
+    let isLogin = false;
+
     // 点击导航栏样式切换
     const navBtns = $(".navBtn li");
 
@@ -97,6 +99,10 @@ $(function () {
 
             if (i === 1) {
                 repoSwiper.slideTo(1, SLIDE_SPEED);
+            }
+
+            if (isLogin === true) {
+                repoSwiper.slideTo(2, SLIDE_SPEED);
             }
         });
     }
@@ -240,6 +246,8 @@ $(function () {
                 alert(resp.msg); // 不管三七二十一，先把消息显示出来
                 if (resp.status === 0) {
                     // 登陆成功
+                    isLogin = true;
+
                     // 设置个人信息到页面上
                     putInfoOnSettingPage(resp.data);
 
