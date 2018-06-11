@@ -39,6 +39,11 @@
                             <a href="javascript:" class="btn slideToRegiterPageBtn dashed-btn"><i
                                     class="fa fa-plus-square-o"></i> 还没有账号</a>
                         </div>
+                        <div class="afterLogin" style="display: none;">
+                            <!-- TODO 这里只是为了测试 -->
+                            <a href="./testFileUpLoad.html" class="btn" id="turnToRepo"><i
+                                    class="fa fa-align-right"></i> 跳转到云盘</a>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -92,8 +97,8 @@
                             </div>
                             <div class="swiper-slide">
                                 <!-- 笔记内容界面 -->
-                                <div class="page content">
-
+                                <div class="page content" style="background-color:#000000;">
+                                    这是仓库！
                                 </div>
                             </div>
                         </div>
@@ -113,19 +118,19 @@
                         <a href="javascript:" class="btn switchBtn"><i class="fa fa-pencil"></i> 修改资料</a>
                     </div>
                     <div class="form hidden">
-                        <form action="#">
+                        <form action="#" id="settingForm">
                             <p><i class="fa fa-user"></i> ：<span class="usernameSpan">水不要鱼</span></p>
                             <label>
-                                <input type="email" id="nameId" name="email" maxlength="32" placeholder="请输入姓名">
+                                <input type="text" id="nameId" name="name" maxlength="32" placeholder="请输入姓名">
                             </label>
                             <label>
-                                <input type="email" id="qqId" name="email" maxlength="32" placeholder="请输入 QQ">
+                                <input type="text" id="qqId" name="qq" maxlength="32" placeholder="请输入 QQ">
                             </label>
                             <label>
-                                <input type="email" id="mailId" name="phone" maxlength="32" placeholder="请输入邮箱">
+                                <input type="email" id="mailId" name="mail" maxlength="32" placeholder="请输入邮箱">
                             </label>
                             <label>
-                                <input type="email" id="introId" name="email" maxlength="32" placeholder="请输入个人简介">
+                                <input type="text" id="introId" name="intro" maxlength="32" placeholder="请输入个人简介">
                             </label>
                             <a href="javascript:" class="btn" id="saveBtn"><i class="fa fa-check"></i> 保存</a>
                             <a href="javascript:" class="btn dashed-btn switchBtn"><i class="fa fa-close"></i> 取消</a>

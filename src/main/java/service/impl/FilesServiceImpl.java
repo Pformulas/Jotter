@@ -45,8 +45,9 @@ public class FilesServiceImpl implements FilesService {
     @Override
     public ServerResponse<String> saveFile(CommonsMultipartFile file, String path, User user) {
 
-        if(file.getSize() == 0){
-            return ServerResponse.getServerResponse(FilesResponse.UP_ISNULL);
+        if( file == null || file.getSize() == 0){
+            return ServerResponse.getServerResponse(FilesResponse.UPFILE_IS_NULL);
+
         }
 
         //判断用户是否登录
@@ -62,7 +63,7 @@ public class FilesServiceImpl implements FilesService {
 
         //如果得到为空，则创建失败
         if(dir == null){
-            ServerResponse.getServerResponse(FilesResponse.UPFILE_FAILURE);
+            return ServerResponse.getServerResponse(FilesResponse.UPFILE_FAILURE);
         }
 
         //得到保存文件的uri
@@ -71,13 +72,14 @@ public class FilesServiceImpl implements FilesService {
         //如果该文件存在，重命名
         if(FileNiceUtil.fileIsExits(uri)){
             //得到新的uri,避免重复;
-            uri = dir +  fileName.substring(0,fileName.lastIndexOf(".")) +
-                    UUID.randomUUID().toString().substring(0,2) + fileName.substring(fileName.lastIndexOf("."),fileName.length());
+            return ServerResponse.getServerResponse(FilesResponse.FILE_IS_EXIST);
+//            uri = dir +  fileName.substring(0,fileName.lastIndexOf(".")) +
+//                    UUID.randomUUID().toString().substring(0,2) + fileName.substring(fileName.lastIndexOf("."),fileName.length());
         }
 
         //如果文件上传失败，返回失败结果
         if(!FileNiceUtil.upFileUtils(file, new File(uri))){
-            ServerResponse.getServerResponse(FilesResponse.UPFILE_FAILURE);
+            return ServerResponse.getServerResponse(FilesResponse.UPFILE_FAILURE);
         }
 
         uri = uri.substring(uri.indexOf("File"),uri.length());
