@@ -36,22 +36,22 @@ public final class Const {
     public static  final int OTHER_TYPE = 0;
 
     //文件保存目录
-    public static final String baseDir = "/File";
+    public static final String BASE_DIR= "/File";
 
     //图片类型后缀
-    public static final String img[] = { "bmp", "jpg", "jpeg", "png", "tiff", "gif", "pcx", "tga", "exif", "fpx", "svg", "psd",
+    public static final String IMG[] = { "bmp", "jpg", "jpeg", "png", "tiff", "gif", "pcx", "tga", "exif", "fpx", "svg", "psd",
             "cdr", "pcd", "dxf", "ufo", "eps", "ai", "raw", "wmf" };
 
     //文档类型后缀
-    public static final String document[] =
+    public static final String DOCUMENT[] =
             { "txt", "doc", "docx", "xls", "htm", "html", "jsp", "rtf", "wpd", "pdf", "ppt" };
 
     //视频类型后缀
-    public static final String video[] =
+    public static final String VIDEO[] =
             { "mp4", "avi", "mov", "wmv", "asf", "navi", "3gp", "mkv", "f4v", "rmvb", "webm" };
 
     //音乐类型后缀
-    public static final String music[] =
+    public static final String MUSIC[] =
             { "mp3", "wma", "wav", "mod", "ra", "cd", "md", "asf", "aac", "vqf", "ape", "mid", "ogg",
             "m4a", "vqf" };
 
