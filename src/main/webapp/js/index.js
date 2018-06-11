@@ -47,12 +47,29 @@ $(function () {
         removeAndAddClass(navBtns[1]);
     }
 
+    // 切换到注册界面
+    function slideToRepoPage() {
+        mainSwiper.slideTo(1, SLIDE_SPEED);
+        repoSwiper.slideTo(2, SLIDE_SPEED);
+
+        // 导航栏也要切换
+        removeAndAddClass(navBtns[1]);
+    }
+
     // 切换到个人信息页面
     function slideToSettingPage() {
         mainSwiper.slideTo(2, SLIDE_SPEED);
 
         // 导航栏也要切换
         removeAndAddClass(navBtns[2]);
+    }
+
+    // 切换到首页
+    function slideToWelcomePage() {
+        mainSwiper.slideTo(0, SLIDE_SPEED);
+
+        // 导航栏也要切换
+        removeAndAddClass(navBtns[0]);
     }
 
     // 切换显示资料和修改资料的模块
@@ -227,8 +244,51 @@ $(function () {
                     putInfoOnSettingPage(resp.data);
 
                     // 修改首页按钮为跳转到笔记界面
-                    
+                    $(".welcomePage .operation").hide();
+                    $(".welcomePage .afterLogin").show();
+
+                    // 跳转到首页
+                    slideToWelcomePage();
+
+                    // 登陆界面和注册界面要被隐藏
+                    slideToRepoPage();
+
+                    // 给跳转到笔记界面设置点击事件
+                    $("#turnToRepo").click(slideToRepoPage);
                 }
+            }
+        });
+    });
+
+    // 得到个人资料
+    function getInfo() {
+        $.ajax({
+            url: "/user/get_info.do",
+            type: "GET",
+            success: function (resp) {
+                putInfoOnSettingPage(resp.data);
+            },
+            error: function () {
+                alert("网络错误！");
+            }
+        });
+    }
+
+    // 修改个人资料
+    $("#saveBtn").click(function () {
+        $.ajax({
+            url: "/user/update_info.do",
+            type: "POST",
+            data: $("#settingForm").serialize(),
+            success: function (resp) {
+                // 修改成功之后刷新前台数据
+                getInfo();
+
+                // 切换界面
+                switchShowOrUpdate();
+            },
+            error: function () {
+                alert("网络错误！");
             }
         });
     });
