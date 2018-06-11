@@ -19,4 +19,41 @@ public final class Const {
 
     // 验证用户名是否存在时用的假密码，或者说临时密码
     public static final String TEMP_PASSWORD = "tempPassword";
+
+    //视频类型码
+    public static  final int VIDEO_TYPE = 1;
+
+    //音乐类型码
+    public static  final int MSUIC_TYPE = 2;
+
+    //图片类型码
+    public static  final int PICTURE_TYPE = 3;
+
+    //文本类型码
+    public static  final int TEXT_TYPE = 4;
+
+    //其他类型码
+    public static  final int OTHER_TYPE = 0;
+
+    //文件保存目录
+    public static final String baseDir = "/File";
+
+    //图片类型后缀
+    public static final String img[] = { "bmp", "jpg", "jpeg", "png", "tiff", "gif", "pcx", "tga", "exif", "fpx", "svg", "psd",
+            "cdr", "pcd", "dxf", "ufo", "eps", "ai", "raw", "wmf" };
+
+    //文档类型后缀
+    public static final String document[] =
+            { "txt", "doc", "docx", "xls", "htm", "html", "jsp", "rtf", "wpd", "pdf", "ppt" };
+
+    //视频类型后缀
+    public static final String video[] =
+            { "mp4", "avi", "mov", "wmv", "asf", "navi", "3gp", "mkv", "f4v", "rmvb", "webm" };
+
+    //音乐类型后缀
+    public static final String music[] =
+            { "mp3", "wma", "wav", "mod", "ra", "cd", "md", "asf", "aac", "vqf", "ape", "mid", "ogg",
+            "m4a", "vqf" };
+
+
 }

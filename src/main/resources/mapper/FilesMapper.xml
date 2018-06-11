@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="dao.FilesDao">
+
+    <insert id="saveFile" parameterType="entity.Files">
+        INSERT INTO Jo_File(user_id, url, type, file_name)
+            VALUES (#{userId}, #{url}, #{type}, #{fileName})
+    </insert>
+
+</mapper>
