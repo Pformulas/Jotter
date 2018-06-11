@@ -1,5 +1,6 @@
 package service.impl;
 
+import Utils.CodeUtil;
 import common.Const;
 import common.ServerResponse;
 import common.response.UserResponse;
@@ -47,7 +48,10 @@ public class UserServiceImpl implements UserService {
         // 用户合法，可以注册
         int affect = 0;
         try {
-            affect = userDao.saveUser(user);
+            // 对密码进行 MD5 加密
+            user.setPassword(CodeUtil.getMD5(user.getPassword()));
+
+            affect = userDao.saveUser(user); // 保存对象
         } catch (Exception e) {
             log.error("用户注册时发生异常：" + user.toString(), e);
         }
@@ -109,6 +113,7 @@ public class UserServiceImpl implements UserService {
         }
 
         // 进数据库查询，看看这个用户名和密码有没有对应的记录
+        user.setPassword(CodeUtil.getMD5(user.getPassword()));
         user = userDao.getUserByUsernameAndPassword(user.getUsername(), user.getPassword());
         if (user == null) {
             // 没有记录，说明用户名或密码不对
@@ -131,7 +136,7 @@ public class UserServiceImpl implements UserService {
             return ServerResponse.getServerResponse(UserResponse.NEED_LOGIN);
         }
 
-        user = userDao.getUserByUsernameAndPassword(user.getUsername(), user.getPassword());
+        user = userDao.getUserByUsername(user.getUsername());
 
         // 如果得到的是 null，说明找不到相应用户，不过这通常不会发生，除非他的登陆是非法的
         if (user == null) {

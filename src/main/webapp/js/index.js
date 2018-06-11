@@ -284,20 +284,22 @@ $(function () {
 
     // 修改个人资料
     $("#saveBtn").click(function () {
-        $.ajax({
-            url: "/user/update_info.do",
-            type: "POST",
-            data: $("#settingForm").serialize(),
-            success: function (resp) {
-                // 修改成功之后刷新前台数据
-                getInfo();
+        if (isLogin) {
+            $.ajax({
+                url: "/user/update_info.do",
+                type: "POST",
+                data: $("#settingForm").serialize(),
+                success: function (resp) {
+                    // 修改成功之后刷新前台数据
+                    getInfo();
 
-                // 切换界面
-                switchShowOrUpdate();
-            },
-            error: function () {
-                alert("网络错误！");
-            }
-        });
+                    // 切换界面
+                    switchShowOrUpdate();
+                },
+                error: function () {
+                    alert("网络错误！");
+                }
+            });
+        }
     });
 });

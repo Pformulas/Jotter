@@ -58,6 +58,18 @@ public class UserDaoTest {
     }
 
     /**
+     * 测试：通过用户名获取相关信息
+     */
+    @Test
+    public void getUserByUsername() {
+        String username = "fish";
+
+        User user = userDao.getUserByUsername(username);
+
+        System.out.println(user);
+    }
+
+    /**
      * 测试：更新用户信息
      */
     @Test

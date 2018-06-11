@@ -5,8 +5,8 @@
 <mapper namespace="dao.UserDao">
     <!-- int saveUser(User user): 保存一个用户对象 -->
     <insert id="saveUser" parameterType="entity.User">
-        INSERT INTO `Jo_User`(`user_id`, `username`, `password`, `name`, `QQ`, `mail`, `intro`, `create_time`)
-        VALUES(#{userId}, #{username}, #{password}, #{name}, #{qq}, #{mail}, #{intro}, NOW())
+        INSERT INTO `Jo_User` (`user_id`, `username`, `password`, `name`, `QQ`, `mail`, `intro`, `create_time`)
+        VALUES (#{userId}, #{username}, #{password}, #{name}, #{qq}, #{mail}, #{intro}, NOW())
     </insert>
 
     <!-- int countUsername(String username): 统计用户名个数 -->
@@ -18,13 +18,37 @@
         'fish' != '   fish' (只会去掉后面的空格，前面的不会去掉)
     -->
     <select id="countUsername" resultType="int">
-        SELECT COUNT(1) FROM `Jo_User` WHERE `username` = #{username}
+        SELECT COUNT(1)
+        FROM `Jo_User`
+        WHERE `username` = #{username}
     </select>
 
     <!-- User getUserByUsernameAndPassword(String username, String password): 通过用户名和密码获取相关信息 -->
     <select id="getUserByUsernameAndPassword" resultType="entity.User">
-        SELECT `user_id`, `name`, `username`, `password`, `QQ`, `mail`, `intro` FROM `Jo_User`
+        SELECT
+            `user_id`,
+            `name`,
+            `username`,
+            `password`,
+            `QQ`,
+            `mail`,
+            `intro`
+        FROM `Jo_User`
         WHERE username = #{username} AND password = #{password}
+    </select>
+
+    <!-- User getUserByUsername(String username): 通过用户名获取相关信息 -->
+    <select id="getUserByUsername" resultType="entity.User">
+        SELECT
+            `user_id`,
+            `name`,
+            `username`,
+            `password`,
+            `QQ`,
+            `mail`,
+            `intro`
+        FROM `Jo_User`
+        WHERE username = #{username}
     </select>
 
     <!-- int updateUser(User user): 更新用户信息 -->

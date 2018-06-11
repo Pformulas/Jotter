@@ -37,6 +37,14 @@ public interface UserDao {
     User getUserByUsernameAndPassword(@Param("username") String username, @Param("password") String password);
 
     /**
+     * 通过用户名获取相关信息
+     *
+     * @param username 用户名
+     * @return 返回 User 对象
+     */
+    User getUserByUsername(String username);
+
+    /**
      * 更新用户信息
      *
      * @param user 要被更新的用户
