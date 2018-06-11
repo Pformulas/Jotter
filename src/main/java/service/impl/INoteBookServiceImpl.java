@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import service.INoteBookService;
 
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -87,6 +88,9 @@ public class INoteBookServiceImpl implements INoteBookService
             return ServerResponse.getServerResponse(NoteBookResponse.PARAMETER_NULL);
         }
         Note note = noteDao.selectNoteByNoteId(noteId);
+        if(note == null){
+            return ServerResponse.getServerResponse(NoteBookResponse.RESULT_IS_NULL);
+        }
         return ServerResponse.getServerResponse(NoteBookResponse.SUCCESS, note);
     }
 
@@ -101,6 +105,9 @@ public class INoteBookServiceImpl implements INoteBookService
             return  ServerResponse.getServerResponse(NoteBookResponse.PARAMETER_NULL);
         }
         NoteBook noteBook = noteBookDao.selectNotebookByNotebookId(notebookId);
+        if(noteBook == null){
+            return ServerResponse.getServerResponse(NoteBookResponse.RESULT_IS_NULL);
+        }
         return ServerResponse.getServerResponse(NoteBookResponse.SUCCESS, noteBook);
     }
 
@@ -115,8 +122,54 @@ public class INoteBookServiceImpl implements INoteBookService
             return  ServerResponse.getServerResponse(NoteBookResponse.PARAMETER_NULL);
         }
         List<Note> notes = noteBookDao.selectNotesByNotebookId(notebookId);
+        if(notes.size() <= 0){
+            return ServerResponse.getServerResponse(NoteBookResponse.RESULT_IS_NULL);
+        }
         return  ServerResponse.getServerResponse(NoteBookResponse.SUCCESS, notes);
     }
 
+    /**
+     * 用户用userId查询他自己的全部笔记本
+     * @param userId
+     * @return
+     */
+    @Override
+    public ServerResponse<List<NoteBook>> selectNoteBooksByUserId(String userId) {
+        if(userId == null){
+            return ServerResponse.getServerResponse(NoteBookResponse.PARAMETER_NULL);
+        }
+        List<NoteBook> noteBooks = noteBookDao.selectNoteBooksByUserId(userId);
+        if(noteBooks.size() <= 0){
+            return ServerResponse.getServerResponse(NoteBookResponse.RESULT_IS_NULL);
+        }
+        return ServerResponse.getServerResponse(NoteBookResponse.SUCCESS, noteBooks);
+    }
+
+    /**
+     * 更新笔记本，需要userId, notebookName, notebookId
+     * @param noteBook
+     * @return
+     */
+    @Override
+    public ServerResponse updateNoteBook(NoteBook noteBook) {
+        if(noteBook == null){
+            return ServerResponse.getServerResponse(NoteBookResponse.PARAMETER_NULL);
+        }
+        System.out.println(noteBook);
+        if(noteBook.getNotebookId() == null){
+            return ServerResponse.getServerResponse(NoteBookResponse.NOTEBOOK_ID_NULL);
+        }
+        if(noteBook.getNotebookName() == null){
+            return ServerResponse.getServerResponse(NoteBookResponse.NOTEBOOK_NAME_NULL);
+        }
+        if(noteBook.getUserId() == null){
+            return ServerResponse.getServerResponse(NoteBookResponse.USER_ID_NULL);
+        }
+        Integer result = noteBookDao.updateNoteBook(noteBook);
+        if (result <= 0){
+            return ServerResponse.getServerResponse(NoteBookResponse.UPDATE_ID_NULL);
+        }
+        return ServerResponse.getServerResponse(NoteBookResponse.SUCCESS);
+    }
 
 }

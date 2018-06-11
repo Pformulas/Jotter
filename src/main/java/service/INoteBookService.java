@@ -49,4 +49,19 @@ public interface INoteBookService
      * @return
      */
     public ServerResponse<List<Note>> selectNotesByNotebookId(String notebookId);
+
+    /**
+     * 用户通过他的id获取他的全部笔记本
+     * @param userId
+     * @return
+     */
+    public ServerResponse<List<NoteBook>> selectNoteBooksByUserId(String userId);
+
+    /**
+     * 更新笔记本
+     * 需要userid, notebookName, notebookId
+     * @param noteBook
+     * @return
+     */
+    public ServerResponse updateNoteBook(NoteBook noteBook);
 }

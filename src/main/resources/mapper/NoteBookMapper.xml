@@ -24,5 +24,25 @@
     <select id="selectNotesByNotebookId" parameterType="String" resultType="entity.Note">
         SELECT * from  Jo_Note WHERE notebook_id = #{notebookId}
     </select>
-    
+
+    <!-- 通过userId查找笔记本 -->
+    <select id="selectNoteBooksByUserId" parameterType="String" resultType="entity.NoteBook">
+        SELECT * FROM Jo_Notebook WHERE user_id = #{userId}
+    </select>
+
+    <update id="updateNoteBook" parameterType="entity.NoteBook">
+        UPDATE Jo_Notebook
+        <set>
+            <if test="userId != null">
+                user_id = #{userId},
+            </if>
+            <if test="notebookName != null">
+                notebook_name = #{notebookName},
+            </if>
+            <if test="1 == 1">
+                notebook_update_time = NOW(),
+            </if>
+        </set>
+        WHERE notebook_id = #{notebookId}
+    </update>
 </mapper>

@@ -81,4 +81,21 @@ public class NoteBookController
     public Object showNotesOfNotebook(String notebookId){
         return iNoteBookService.selectNotesByNotebookId(notebookId);
     }
+
+    /**
+     * 获取这个用户的所有笔记本
+     * @param userId
+     * @return
+     */
+    @ResponseBody
+    @RequestMapping(path = "show_notebook_of_userId.do", produces = {"application/json;charset=UTF8"})
+    public ServerResponse showNoteBookOfUserId(String userId){
+        return iNoteBookService.selectNoteBooksByUserId(userId);
+    }
+
+    @ResponseBody
+    @RequestMapping(path = "update_notebook", produces = {"application/json;charset=UTF8"})
+    public ServerResponse updateNotebook(NoteBook noteBook){
+        return iNoteBookService.updateNoteBook(noteBook);
+    }
 }

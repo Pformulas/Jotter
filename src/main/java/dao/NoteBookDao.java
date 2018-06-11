@@ -2,6 +2,7 @@ package dao;
 
 import entity.Note;
 import entity.NoteBook;
+import org.aspectj.weaver.ast.Not;
 
 import java.util.List;
 
@@ -44,4 +45,18 @@ public interface NoteBookDao
      * @return
      */
     List<Note> selectNotesByNotebookId(String notebookId);
+
+    /**
+     * 用userId查询所有他自己的笔记本
+     * @param userId
+     * @return
+     */
+    List<NoteBook> selectNoteBooksByUserId(String userId);
+
+    /**
+     * 更新笔记本
+     * @param noteBook
+     * @return
+     */
+    int updateNoteBook(NoteBook noteBook);
 }

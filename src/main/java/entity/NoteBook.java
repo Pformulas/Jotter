@@ -20,10 +20,6 @@ public class NoteBook {
 
     private Date notebookUpdateTime = null;
 
-    public NoteBook() {
-        this.notebookId = UUID.randomUUID().toString();
-    }
-
     public String getNotebookId() {
         return notebookId;
     }
