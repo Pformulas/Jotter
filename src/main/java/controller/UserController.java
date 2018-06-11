@@ -97,8 +97,16 @@ public class UserController {
     )
     @ResponseBody
     public ServerResponse getInfo(HttpSession session) {
-        // 得到目前登陆信息，然后获取全部信息
-        return userService.getInfo((User) session.getAttribute(Const.USER_KEY));
+        // 通过 session 信息获取用户信息
+        ServerResponse result = userService.getInfo((User) session.getAttribute(Const.USER_KEY));
+
+        // 如果获取成功，就把信息更新到 session 中
+        if (result.isSuccess()) {
+            session.setAttribute(Const.USER_KEY, result.getData());
+        }
+
+        // 将情况返回给前台
+        return result;
     }
 
     /**

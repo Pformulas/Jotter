@@ -15,7 +15,7 @@ $(function () {
     // 点击导航栏样式切换
     const navBtns = $(".navBtn li");
 
-    const SLIDE_SPEED = 800; // 切换速度，单位：ms
+    const SLIDE_SPEED = 800; // 切换菜单速度，单位：ms
 
     // 清除原来的选择样式，并给指定元素加上样式
     function removeAndAddClass(ele) {
@@ -45,6 +45,14 @@ $(function () {
 
         // 导航栏也要切换
         removeAndAddClass(navBtns[1]);
+    }
+
+    // 切换到个人信息页面
+    function slideToSettingPage() {
+        mainSwiper.slideTo(2, SLIDE_SPEED);
+
+        // 导航栏也要切换
+        removeAndAddClass(navBtns[2]);
     }
 
     // 切换显示资料和修改资料的模块
@@ -88,6 +96,7 @@ $(function () {
         $(registerBtns[i]).click(slideToRegisterPage);
     }
 
+    // 给切换按钮添加事件
     const switchBtns = $(".switchBtn");
     for (let i = 0; i < switchBtns.length; i++) {
         $(switchBtns[i]).click(switchShowOrUpdate);
@@ -171,6 +180,55 @@ $(function () {
             },
             error: function () {
                 showError("网络错误。。。");
+            }
+        });
+    });
+
+    // 将信息填充到设置页面
+    function putInfoOnSettingPage(data) {
+        // 获取设置页面的控件，进行设置
+        if (data.username != null) {
+            $("#usernameSpan").text(data.username);
+        }
+
+        if (data.name != null) {
+            $("#nameSpan").text(data.name);
+            $("#nameId").val(data.name);
+        }
+
+        if (data.qq != null) {
+            $("#qqSpan").text(data.qq);
+            $("#qqId").val(data.qq);
+        }
+
+        if (data.mail != null) {
+            $("#mailSpan").text(data.mail);
+            $("#mailId").val(data.mail);
+        }
+
+        if (data.intro != null) {
+            $("#introSpan").text(data.intro);
+            $("#introId").val(data.intro);
+        }
+    }
+
+    // 登录功能
+    $("#loginBtn").click(function () {
+        // 发送请求登陆
+        $.ajax({
+            url: "/user/login.do",
+            type: "POST",
+            data: $("#loginForm").serialize(),
+            success: function (resp) {
+                alert(resp.msg); // 不管三七二十一，先把消息显示出来
+                if (resp.status === 0) {
+                    // 登陆成功
+                    // 设置个人信息到页面上
+                    putInfoOnSettingPage(resp.data);
+
+                    // 修改首页按钮为跳转到笔记界面
+                    
+                }
             }
         });
     });
