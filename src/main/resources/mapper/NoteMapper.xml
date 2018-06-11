@@ -68,16 +68,6 @@
         FROM Jo_Note WHERE note_id=#{noteId,jdbcType=VARCHAR}
     </select>
 
-    <select id="selectNotebookByNotebookId" parameterType="String" resultType="entity.NoteBook">
-        SELECT
-        notebook_id, user_id, notebook_name, notebook_create_time, notebook_update_time
-        FROM Jo_Notebook WHERE notebook_id=#{notebookId}
-    </select>
-    
-    <select id="selectNotesByNotebookId" parameterType="String" resultType="entity.Note">
-        SELECT * from  Jo_Note WHERE notebook_id = #{notebookId}
-    </select>
-
     <update id="updateByPrimaryKey">
         UPDATE Jo_Note
         SET
