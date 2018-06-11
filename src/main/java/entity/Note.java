@@ -23,12 +23,7 @@ public class Note {
     private Date noteCreateTime = null;
 
     private Date noteUpdateTime = null;
-
-    public Note() {
-        // 避免每一次都写一次 UUID
-        this.noteId = UUID.randomUUID().toString();
-    }
-
+    
     public String getNoteId() {
         return noteId;
     }
