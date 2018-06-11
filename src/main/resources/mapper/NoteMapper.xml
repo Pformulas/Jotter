@@ -12,55 +12,6 @@
         now(),now())
     </insert>
 
-    <insert id="insertNoteSelective" parameterType="entity.Note">
-        INSERT INTO Jo_Note
-        <trim prefix="(" suffix=")" suffixOverrides=",">
-            <if test="noteId!=null">
-                user_id,
-            </if>
-            <if test="notebookId!=null">
-                notebook_id,
-            </if>
-            <if test="userId!=null">
-                user_id,
-            </if>
-            <if test="noteTitle!=null">
-                note_title,
-            </if>
-            <if test="noteDetail!=null">
-                note_detail,
-            </if>
-            <if test="noteCreateTime != null">
-                note_create_time,
-            </if>
-            <if test="noteUpdateTime != null">
-                note_update_time,
-            </if>
-        </trim>
-        <trim prefix="values (" suffix=")" suffixOverrides=",">
-            <if test="noteId!=null">
-                #{noteId,jdbcType=VARCHAR},
-            </if>
-            <if test="notebookId!=null">
-                #{notebookId,jdbcType=VARCHAR},
-            </if>
-            <if test="userId!=null">
-                #{userId,jdbcType=VARCHAR},
-            </if>
-            <if test="noteTitle!=null">
-                #{noteTitle,jdbcType=VARCHAR},
-            </if>
-            <if test="noteDetail!=null">
-                #{noteDetail,jdbcType=VARCHAR},
-            </if>
-            <if test="noteCreateTime != null">
-                now(),
-            </if>
-            <if test="noteUpdateTime != null">
-                now(),
-            </if>
-        </trim>
-    </insert>
 
     <!--  -->
     <select id="selectNoteByNoteId" parameterType="string" resultType="entity.Note">

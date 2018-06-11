@@ -183,7 +183,6 @@ public class INoteBookServiceImpl implements INoteBookService
         return ServerResponse.getServerResponse(NoteBookResponse.SUCCESS);
     }
 
-    @Override
     public ServerResponse updateNote(Note note) {
         if(note == null){
             return ServerResponse.getServerResponse(NoteBookResponse.PARAMETER_NULL);
@@ -216,7 +215,6 @@ public class INoteBookServiceImpl implements INoteBookService
      * @param note
      * @return
      */
-    @Override
     public ServerResponse moveNoteTo(Note note) {
         if(note == null){
             return ServerResponse.getServerResponse(NoteBookResponse.PARAMETER_NULL);
@@ -247,7 +245,6 @@ public class INoteBookServiceImpl implements INoteBookService
      * @param note
      * @return
      */
-    @Override
     public ServerResponse deleteNote(Note note) {
         if(note == null){
             return ServerResponse.getServerResponse(NoteBookResponse.PARAMETER_NULL);
@@ -269,7 +266,6 @@ public class INoteBookServiceImpl implements INoteBookService
         return ServerResponse.getServerResponse(NoteBookResponse.SUCCESS);
     }
 
-    @Override
     public ServerResponse<Integer> deleteNotebook(NoteBook noteBook) {
         if(noteBook == null){
             return ServerResponse.getServerResponse(NoteBookResponse.PARAMETER_NULL);

@@ -24,13 +24,6 @@ public interface NoteDao
     int insertNote(Note record);
 
     /**
-     * 动态插入note
-     * @param record
-     * @return
-     */
-    int insertNoteSelective(Note record);
-
-    /**
      * 用noteId查询笔记
      * @param noteId
      * @return
