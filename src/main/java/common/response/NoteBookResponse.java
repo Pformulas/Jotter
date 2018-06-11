@@ -22,7 +22,10 @@ public enum NoteBookResponse implements ResponseStatus {
     UPDATE_ID_NULL(11, "更新失败"),
     NOTEBOOK_ID_NULL(12, "笔记本id为空"),
     NOTEBOOK_NAME_NULL(13, "笔记本名字为空"),
-    USER_ID_NULL(14, "用户信息不完整");
+    USER_ID_NULL(14, "用户信息不完整"),
+    NOTE_ID_NULL(15, "笔记id为空"),
+    NOTE_TITLE_NULL(16, "笔记标题为空"),
+    NOTE_DETAIL_NULL(17, "笔记内容为空");
 
     private final int code;
 

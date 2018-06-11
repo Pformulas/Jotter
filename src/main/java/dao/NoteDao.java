@@ -2,6 +2,7 @@ package dao;
 
 import entity.Note;
 import entity.NoteBook;
+import org.omg.CORBA.INTERNAL;
 
 /**
  * Created by rzh on 2018/06/08
@@ -51,10 +52,30 @@ public interface NoteDao
     int checkNoteName(String noteTitle);
 
     /**
-     * 用notetitle删除
-     * @param noteTitle
+     * 更新note
+     * @param note
      * @return
      */
-    int deleteByNoteTitle(String noteTitle);
+    Integer updateNote(Note note);
 
+    /**
+     * 移动一个笔记，从一个分组到另外一个分组
+     * @param note
+     * @return
+     */
+    Integer moveNoteTo(Note note);
+
+    /**
+     * 查看这个用户是否拥有这个笔记
+     * @param note
+     * @return
+     */
+    Integer checkNoteByUserId(Note note);
+
+    /**
+     * 删除这个笔记本下的所有笔记
+     * @param notebookId
+     * @return
+     */
+    Integer deleteAllNoteByNotebookId(String notebookId);
 }

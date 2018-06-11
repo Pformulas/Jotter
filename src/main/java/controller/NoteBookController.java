@@ -115,10 +115,69 @@ public class NoteBookController
         return iNoteBookService.selectNoteBooksByUserId(userId);
     }
 
+    /**
+     * 更新笔记本 需要参数  userId notebookId notebookname
+     * @param noteBook
+     * @return
+     */
     @ResponseBody
-    @RequestMapping(path = "/update_notebook", produces = {"application/json;charset=UTF8"})
+    @RequestMapping(path = "/update_notebook.do", produces = {"application/json;charset=UTF8"})
     public ServerResponse updateNotebook(NoteBook noteBook)
     {
         return iNoteBookService.updateNoteBook(noteBook);
     }
+
+    /**
+     * 更新笔记 需要参数 userId notebookid noteid notetitle notedetail
+     * @param note
+     * @return
+     */
+    @ResponseBody
+    @RequestMapping(path = "/update_note.do", produces = {"application/json;charset=UTF8"})
+    public ServerResponse updateNote(Note note)
+    {
+        return iNoteBookService.updateNote(note);
+    }
+
+
+    /**
+     * 将一个笔记从一个笔记本移动到另外一个笔记本
+     * 参数：  userId,notebookId,noteId
+     * @param note
+     * @return
+     */
+    @ResponseBody
+    @RequestMapping(path = "/move_note_to.do", produces = {"application/json;charset=UTF8"})
+    public ServerResponse moveNoteTo(Note note)
+    {
+        return iNoteBookService.moveNoteTo(note);
+    }
+
+    /**
+     * 删除一个笔记
+     * 参数： userId  noteId
+     * @param note
+     * @return
+     */
+    @ResponseBody
+    @RequestMapping(path = "/delete_note.do", produces = {"application/json;charset=UTF8"})
+    public ServerResponse deleteNote(Note note)
+    {
+        return iNoteBookService.deleteNote(note);
+    }
+
+    /**
+     * 删除笔记本，并且删除笔记本下的所有笔记
+     * 参数 ： userId notebookId
+     * @param noteBook
+     * @return
+     */
+    @ResponseBody
+    @RequestMapping(path = "/delete_notebook.do", produces = {"application/json;charset=UTF8"})
+    public ServerResponse deleteNotebook(NoteBook noteBook)
+    {
+        return iNoteBookService.deleteNotebook(noteBook);
+    }
+
+
 }

@@ -95,19 +95,6 @@ public class INoteBookServiceImpl implements INoteBookService
     }
 
     /**
-     * 通过笔记本名称删除笔记本同时删除里面的笔记
-     *
-     * @param notebookName
-     * @return
-     */
-    public ServerResponse<String> deleteNotebook(String notebookName)
-    {
-        //判断这个Notebook是否属于这个用户
-        //
-        return null;
-    }
-
-    /**
      * 根据笔记id查询那个笔记
      * @param noteId
      * @return
@@ -180,7 +167,6 @@ public class INoteBookServiceImpl implements INoteBookService
         if(noteBook == null){
             return ServerResponse.getServerResponse(NoteBookResponse.PARAMETER_NULL);
         }
-        System.out.println(noteBook);
         if(noteBook.getNotebookId() == null){
             return ServerResponse.getServerResponse(NoteBookResponse.NOTEBOOK_ID_NULL);
         }
@@ -195,6 +181,115 @@ public class INoteBookServiceImpl implements INoteBookService
             return ServerResponse.getServerResponse(NoteBookResponse.UPDATE_ID_NULL);
         }
         return ServerResponse.getServerResponse(NoteBookResponse.SUCCESS);
+    }
+
+    @Override
+    public ServerResponse updateNote(Note note) {
+        if(note == null){
+            return ServerResponse.getServerResponse(NoteBookResponse.PARAMETER_NULL);
+        }
+        if(note.getNoteId() == null){
+            return ServerResponse.getServerResponse(NoteBookResponse.NOTE_ID_NULL);
+        }
+        if(note.getUserId() == null){
+            return ServerResponse.getServerResponse(NoteBookResponse.USER_ID_NULL);
+        }
+        if(note.getNotebookId() == null){
+            return ServerResponse.getServerResponse(NoteBookResponse.NOTEBOOK_ID_NULL);
+        }
+        if(note.getNoteTitle() == null){
+            return ServerResponse.getServerResponse(NoteBookResponse.NOTE_TITLE_NULL);
+        }
+        if(note.getNoteDetail() == null){
+            return ServerResponse.getServerResponse(NoteBookResponse.NOTE_DETAIL_NULL);
+        }
+        Integer result = noteDao.updateNote(note);
+        if (result <= 0){
+            return ServerResponse.getServerResponse(NoteBookResponse.UPDATE_ID_NULL);
+        }
+        return ServerResponse.getServerResponse(NoteBookResponse.SUCCESS);
+    }
+
+    /**
+     * 将一个笔记从一个笔记本移动到另外一个笔记本
+     * 参数：  userId,notebookId,noteId
+     * @param note
+     * @return
+     */
+    @Override
+    public ServerResponse moveNoteTo(Note note) {
+        if(note == null){
+            return ServerResponse.getServerResponse(NoteBookResponse.PARAMETER_NULL);
+        }
+        if(note.getNoteId() == null){
+            return ServerResponse.getServerResponse(NoteBookResponse.NOTE_ID_NULL);
+        }
+        if(note.getNotebookId() == null){
+            return ServerResponse.getServerResponse(NoteBookResponse.NOTEBOOK_ID_NULL);
+        }
+        if(note.getUserId() == null){
+            return ServerResponse.getServerResponse(NoteBookResponse.USER_ID_NULL);
+        }
+        //判定这个笔记本是不是这个用户的
+        Integer check =  noteBookDao.checkNoteBookByUserId(note.getUserId(), note.getNotebookId());
+        if(check <= 0){
+            return ServerResponse.getServerResponse(UserResponse.ILLEGAL_ARGUMENT);
+        }
+        Integer result = noteDao.moveNoteTo(note);
+        if (result <= 0){
+            return ServerResponse.getServerResponse(NoteBookResponse.UPDATE_ID_NULL);
+        }
+        return ServerResponse.getServerResponse(NoteBookResponse.SUCCESS);
+    }
+
+    /**
+     * 删除一个笔记 需要userId  noteId
+     * @param note
+     * @return
+     */
+    @Override
+    public ServerResponse deleteNote(Note note) {
+        if(note == null){
+            return ServerResponse.getServerResponse(NoteBookResponse.PARAMETER_NULL);
+        }
+        if(note.getUserId() == null){
+            return ServerResponse.getServerResponse(NoteBookResponse.USER_ID_NULL);
+        }
+        if(note.getNoteId() == null){
+            return ServerResponse.getServerResponse(NoteBookResponse.NOTE_ID_NULL);
+        }
+        Integer check = noteDao.checkNoteByUserId(note);
+        if(check <= 0){
+            return ServerResponse.getServerResponse(UserResponse.ILLEGAL_ARGUMENT);
+        }
+        Integer result = noteDao.deleteNoteByNoteId(note.getNoteId());
+        if (result <= 0){
+            return ServerResponse.getServerResponse(NoteBookResponse.UPDATE_ID_NULL);
+        }
+        return ServerResponse.getServerResponse(NoteBookResponse.SUCCESS);
+    }
+
+    @Override
+    public ServerResponse<Integer> deleteNotebook(NoteBook noteBook) {
+        if(noteBook == null){
+            return ServerResponse.getServerResponse(NoteBookResponse.PARAMETER_NULL);
+        }
+        if(noteBook.getUserId() == null){
+            return ServerResponse.getServerResponse(NoteBookResponse.USER_ID_NULL);
+        }
+        if(noteBook.getNotebookId() == null){
+            return ServerResponse.getServerResponse(NoteBookResponse.NOTEBOOK_ID_NULL);
+        }
+        Integer check = noteBookDao.checkNoteBookByUserId(noteBook.getUserId(), noteBook.getNotebookId());
+        if(check <= 0){
+            return ServerResponse.getServerResponse(UserResponse.ILLEGAL_ARGUMENT);
+        }
+        Integer deleteNoteNum = noteDao.deleteAllNoteByNotebookId(noteBook.getNotebookId());
+        Integer result = noteBookDao.deleteNotebookByNotebookId(noteBook.getNotebookId());
+        if (result <= 0){
+            return ServerResponse.getServerResponse(NoteBookResponse.UPDATE_ID_NULL);
+        }
+        return ServerResponse.getServerResponse(NoteBookResponse.SUCCESS, deleteNoteNum);
     }
 
 }

@@ -10,8 +10,8 @@
         VALUES (#{notebookId},#{userId},#{notebookName},now(),now())
     </insert>
 
-    <delete id="deleteNotebookByName">
-        DELETE FROM Jo_Notebook WHERE notebook_name=#{notebookName}
+    <delete id="deleteNotebookByNotebookId">
+        DELETE FROM Jo_Notebook WHERE notebook_id=#{notebookId}
     </delete>
 
     <select id="selectNotebookByNotebookId" parameterType="String" resultType="entity.NoteBook">

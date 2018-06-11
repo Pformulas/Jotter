@@ -25,13 +25,6 @@ public interface INoteBookService
     public ServerResponse<String> inserNote(Note note,User user,String notebookId);
 
     /**
-     * 通过笔记本名称删除笔记本同时删除里面的笔记
-     * @param notebookName
-     * @return
-     */
-    public ServerResponse<String> deleteNotebook(String notebookName);
-
-    /**
      * 通过noteId查找一个笔记
      * @param noteId
      * @return
@@ -66,4 +59,32 @@ public interface INoteBookService
      * @return
      */
     public ServerResponse updateNoteBook(NoteBook noteBook);
+
+    /**
+     * 更新笔记
+     * @param note
+     * @return
+     */
+    public ServerResponse updateNote(Note note);
+
+    /**
+     * 将一个笔记从一个分组移动到另外一个
+     * @param note
+     * @return
+     */
+    public ServerResponse moveNoteTo(Note note);
+
+    /**
+     * 删除一个笔记
+     * @param note
+     * @return
+     */
+    public ServerResponse deleteNote(Note note);
+
+    /**
+     * 删除笔记本和笔记本下的笔记
+     * @param noteBook
+     * @return
+     */
+    public ServerResponse deleteNotebook(NoteBook noteBook);
 }

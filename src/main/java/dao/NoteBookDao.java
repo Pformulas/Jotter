@@ -28,10 +28,10 @@ public interface NoteBookDao
 
     /**
      * 用bookname删除notebook
-     * @param notebookName
+     * @param notebookId
      * @return
      */
-    int deleteNotebookByName(String notebookName);
+    int deleteNotebookByNotebookId(String notebookId);
 
     /**
      * 用notebookId查询笔记本

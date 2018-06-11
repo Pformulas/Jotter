@@ -62,12 +62,14 @@
         </trim>
     </insert>
 
+    <!--  -->
     <select id="selectNoteByNoteId" parameterType="string" resultType="entity.Note">
         SELECT
         notebook_id,user_id,note_title,note_detail,note_create_time,note_update_time
         FROM Jo_Note WHERE note_id=#{noteId,jdbcType=VARCHAR}
     </select>
 
+    <!--  -->
     <update id="updateNoteByNoteId">
         UPDATE Jo_Note
         SET
@@ -80,11 +82,52 @@
         where note_id=#{noteId}
     </update>
 
+    <!--  -->
     <select id="checkNoteName" resultType="java.lang.Integer">
         SELECT COUNT(1) FROM Jo_Note WHERE note_title=#{noteTitle}
     </select>
 
-    <delete id="deleteByNoteTitle">
-        DELETE FROM Jo_Note WHERE note_title=#{noteTitle}
+    <!-- 更新笔记 -->
+    <update id="updateNote" parameterType="entity.Note">
+        UPDATE Jo_Note
+        <set>
+            <if test="userId != null">
+                user_id = #{userId},
+            </if>
+            <if test="notebookId != null">
+                notebook_id = #{notebookId},
+            </if>
+            <if test="noteTitle != null">
+                note_title = #{noteTitle},
+            </if>
+            <if test="noteDetail != null">
+                note_detail = #{noteDetail},
+            </if>
+            <if test="1 == 1">
+                note_update_time = NOW(),
+            </if>
+        </set>
+        WHERE note_id = #{noteId}
+    </update>
+
+    <!-- 移动笔记从这个分组到另外一个分组 -->
+    <update id="moveNoteTo" parameterType="entity.Note">
+        UPDATE Jo_Note
+        <set>
+            <if test="notebookId != null">
+                notebook_id = #{notebookId},
+            </if>
+        </set>
+        WHERE note_id = #{noteId}
+    </update>
+
+    <!--通过userid确认是否有这个笔记本-->
+    <select id="checkNoteByUserId" resultType="java.lang.Integer">
+        SELECT COUNT(1) FROM Jo_Note WHERE user_id=#{userId} and note_id=#{noteId}
+    </select>
+
+    <!-- 删除这个笔记本下的所有笔记 -->
+    <delete id="deleteAllNoteByNotebookId">
+        DELETE  FROM Jo_Note WHERE notebook_id = #{notebookId}
     </delete>
 </mapper>
