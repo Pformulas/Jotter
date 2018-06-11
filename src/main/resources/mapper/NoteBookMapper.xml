@@ -48,6 +48,6 @@
 
     <!--通过userid确认是否有这个笔记本-->
     <select id="checkNoteBookByUserId" resultType="java.lang.Integer">
-        SELECT COUNT(1) FROM Jo_Notebook WHERE user_id=#{userId}
+        SELECT COUNT(1) FROM Jo_Notebook WHERE user_id=#{userId} and notebook_id=#{notebookId}
     </select>
 </mapper>

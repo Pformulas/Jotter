@@ -42,4 +42,14 @@ public class NoteBookDaoTest
         System.out.println("====================================");
         noteBookDao.insertNotebook(noteBook);
     }
+
+    @Test
+    public void checkNoteBookByUserId(){
+        String userId = "61db9d1b-bd32-4218-8d14-33497fa3e0fa";
+        String notebookId= "2222";
+        int result = noteBookDao.checkNoteBookByUserId(userId,"");
+        System.out.println("====================================");
+        System.out.println(result);
+        System.out.println("====================================");
+    }
 }

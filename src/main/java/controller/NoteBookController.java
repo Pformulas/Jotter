@@ -1,8 +1,10 @@
 package controller;
 
+import common.Const;
 import common.ServerResponse;
 import entity.Note;
 import entity.NoteBook;
+import entity.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -16,7 +18,7 @@ import javax.servlet.http.HttpSession;
  * Created by rzh on 2018/06/08
  */
 @Controller
-@RequestMapping("/notebook/")
+@RequestMapping("/notebook")
 public class NoteBookController
 {
     @Autowired
@@ -28,11 +30,12 @@ public class NoteBookController
      * @param noteBook
      * @return
      */
-    @RequestMapping(value = "insert_notebook.do", method = RequestMethod.GET)
+    @RequestMapping(value = "/insert_notebook.do", method = RequestMethod.POST)
     @ResponseBody
     public ServerResponse<String> insertNoteBook(NoteBook noteBook, HttpSession session)
     {
-        return iNoteBookService.insertNoteBook(noteBook, session);
+        User user = (User) session.getAttribute(Const.USER_KEY);
+        return iNoteBookService.insertNoteBook(noteBook, user);
     }
 
     /**
@@ -41,10 +44,12 @@ public class NoteBookController
      * @param note
      * @return
      */
-    @RequestMapping(value = "insert_note.do", method = RequestMethod.GET)
-    public ServerResponse<String> inserNote(Note note, HttpSession session)
+    @RequestMapping(value = "/insert_note.do", method = RequestMethod.POST)
+    @ResponseBody
+    public ServerResponse<String> inserNote(Note note, HttpSession session,String notebookId)
     {
-        return iNoteBookService.inserNote(note, session);
+        User user = (User) session.getAttribute(Const.USER_KEY);
+        return iNoteBookService.inserNote(note, user,notebookId);
     }
 
     /**
@@ -65,7 +70,7 @@ public class NoteBookController
      * @return
      */
     @ResponseBody
-    @RequestMapping(path = "show_note.do", produces = {"application/json;charset=UTF8"})
+    @RequestMapping(path = "/show_note.do", produces = {"application/json;charset=UTF8"})
     public Object showNote(String noteId)
     {
         return iNoteBookService.showNote(noteId);
@@ -78,7 +83,7 @@ public class NoteBookController
      * @return
      */
     @ResponseBody
-    @RequestMapping(path = "show_notebook.do", produces = {"application/json;charset=UTF8"})
+    @RequestMapping(path = "/show_notebook.do", produces = {"application/json;charset=UTF8"})
     public Object showNotebook(String notebookId)
     {
         return iNoteBookService.showNotebook(notebookId);
@@ -91,7 +96,7 @@ public class NoteBookController
      * @return
      */
     @ResponseBody
-    @RequestMapping(path = "show_notes_of_notebook.do", produces = {"application/json;charset=UTF8"})
+    @RequestMapping(path = "/show_notes_of_notebook.do", produces = {"application/json;charset=UTF8"})
     public Object showNotesOfNotebook(String notebookId)
     {
         return iNoteBookService.selectNotesByNotebookId(notebookId);
@@ -104,14 +109,14 @@ public class NoteBookController
      * @return
      */
     @ResponseBody
-    @RequestMapping(path = "show_notebook_of_userId.do", produces = {"application/json;charset=UTF8"})
+    @RequestMapping(path = "/show_notebook_of_userId.do", produces = {"application/json;charset=UTF8"})
     public ServerResponse showNoteBookOfUserId(String userId)
     {
         return iNoteBookService.selectNoteBooksByUserId(userId);
     }
 
     @ResponseBody
-    @RequestMapping(path = "update_notebook", produces = {"application/json;charset=UTF8"})
+    @RequestMapping(path = "/update_notebook", produces = {"application/json;charset=UTF8"})
     public ServerResponse updateNotebook(NoteBook noteBook)
     {
         return iNoteBookService.updateNoteBook(noteBook);
