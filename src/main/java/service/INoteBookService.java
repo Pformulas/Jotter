@@ -5,6 +5,7 @@ import entity.Note;
 import entity.NoteBook;
 import org.springframework.stereotype.Service;
 
+import javax.servlet.http.HttpSession;
 import java.util.List;
 
 /**
@@ -18,9 +19,9 @@ public interface INoteBookService
      * @param noteBook
      * @return
      */
-    public ServerResponse<String> insertNoteBook(NoteBook noteBook);
+    public ServerResponse<String> insertNoteBook(NoteBook noteBook, HttpSession session);
 
-    public ServerResponse<String> inserNote(Note note);
+    public ServerResponse<String> inserNote(Note note,HttpSession session);
 
     /**
      * 通过笔记本名称删除笔记本同时删除里面的笔记

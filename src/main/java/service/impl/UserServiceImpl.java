@@ -36,7 +36,6 @@ public class UserServiceImpl implements UserService {
      * @param user 注册的新用户
      * @return 返回注册情况
      */
-    @Override
     public ServerResponse register(User user) {
         ServerResponse userValidateStatus = isUserValidated(user);
 

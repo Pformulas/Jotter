@@ -7,8 +7,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
-import static org.junit.Assert.*;
-
 /**
  * Created by rzh on 2018/06/10
  */
@@ -31,7 +29,7 @@ public class NoteDaoTest
         note.setUserId("2");
         note.setNoteTitle("方圆几里");
         note.setNoteDetail("感觉会压抑的样子，我不算很自私，也越来越懂事");
-        noteDao.insert(note);
+        noteDao.insertNote(note);
     }
 
     @Test

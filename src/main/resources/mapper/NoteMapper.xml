@@ -2,17 +2,17 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="dao.NoteDao">
 
-    <delete id="deleteByPrimaryKey" parameterType="string">
+    <delete id="deleteNoteByNoteId" parameterType="string">
         DELETE FROM Jo_Note WHERE note_id=#{noteId}
     </delete>
 
-    <insert id="insert" parameterType="entity.Note">
+    <insert id="insertNote" parameterType="entity.Note">
         INSERT INTO Jo_Note (note_id, notebook_id, user_id, note_title, note_detail, note_create_time, note_update_time)
         VALUES (#{noteId},#{notebookId},#{userId},#{noteTitle},#{noteDetail},
         now(),now())
     </insert>
 
-    <insert id="insertSelective" parameterType="entity.Note">
+    <insert id="insertNoteSelective" parameterType="entity.Note">
         INSERT INTO Jo_Note
         <trim prefix="(" suffix=")" suffixOverrides=",">
             <if test="noteId!=null">
@@ -68,7 +68,7 @@
         FROM Jo_Note WHERE note_id=#{noteId,jdbcType=VARCHAR}
     </select>
 
-    <update id="updateByPrimaryKey">
+    <update id="updateNoteByNoteId">
         UPDATE Jo_Note
         SET
         notebook_id=#{notebookId},

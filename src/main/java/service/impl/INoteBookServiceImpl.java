@@ -2,16 +2,19 @@ package service.impl;
 
 import common.ServerResponse;
 import common.response.NoteBookResponse;
+import common.response.UserResponse;
 import dao.NoteBookDao;
 import dao.NoteDao;
 import entity.Note;
 import entity.NoteBook;
+import entity.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import service.INoteBookService;
 
-import java.util.Date;
+import javax.servlet.http.HttpSession;
 import java.util.List;
+import java.util.UUID;
 
 /**
  * Created by rzh on 2018/06/08
@@ -30,14 +33,23 @@ public class INoteBookServiceImpl implements INoteBookService
      * @param noteBook
      * @return
      */
-    public ServerResponse<String> insertNoteBook(NoteBook noteBook)
+    public ServerResponse<String> insertNoteBook(NoteBook noteBook, HttpSession session)
     {
+        //判断用户是否登录
+        User user = (User)session.getAttribute("user");
+        if(user == null){
+            //用户未登录
+            return ServerResponse.getServerResponse(UserResponse.NEED_LOGIN);
+        }
         //检查notebookname是否重复
         int resultCount = noteBookDao.checkNotebookName(noteBook.getNotebookName());
         if(resultCount > 0){
             return ServerResponse.getServerResponse(NoteBookResponse.NOTEBOOK_IS_EXISTED);
         }
-        //插入
+        //得到用户的UserID
+        noteBook.setUserId(user.getUserId());
+        noteBook.setNotebookId(UUID.randomUUID().toString());
+        //判断是否新建成功
         resultCount = noteBookDao.insertNotebook(noteBook);
         if(resultCount > 0){
             return ServerResponse.getServerResponse(NoteBookResponse.NOTEBOOK_CREATE_SUCCESS);
@@ -50,14 +62,32 @@ public class INoteBookServiceImpl implements INoteBookService
      * @param note
      * @return
      */
-    public ServerResponse<String> inserNote(Note note)
+    public ServerResponse<String> inserNote(Note note,HttpSession session)
     {
+        //判断用户是否登录
+        User user = (User) session.getAttribute("user");
+        if (user == null)
+        {
+            //用户未登录
+            return ServerResponse.getServerResponse(UserResponse.NEED_LOGIN);
+        }
+        //检查这个user是否有这个文件夹
+        int resultCount = noteBookDao.checkNoteBookByUserId(user.getUserId());
+        if(resultCount < 0){
+            //说明恶意登录添加其他人的笔记
+            return ServerResponse.getServerResponse(UserResponse.ILLEGAL_ARGUMENT);
+        }
+        NoteBook noteBook = (NoteBook) session.getAttribute("notebook");
         //检查笔记名
-        int resultCount = noteDao.checkNoteName(note.getNoteTitle());
+        resultCount = noteDao.checkNoteName(note.getNoteTitle());
         if(resultCount > 0){
             return ServerResponse.getServerResponse(NoteBookResponse.NOTE_IS_EXISTED);
         }
-        resultCount = noteDao.insert(note);
+        note.setUserId(user.getUserId());
+        note.setNotebookId(noteBook.getNotebookId());
+        note.setNoteId(UUID.randomUUID().toString());
+        resultCount = noteDao.insertNote(note);
+        //判断是否新建成功
         if(resultCount > 0){
           return ServerResponse.getServerResponse(NoteBookResponse.NOTE_CREATE_SUCCESS);
         }
@@ -82,7 +112,6 @@ public class INoteBookServiceImpl implements INoteBookService
      * @param noteId
      * @return
      */
-    @Override
     public ServerResponse<Note> showNote(String noteId) {
         if(noteId == null){
             return ServerResponse.getServerResponse(NoteBookResponse.PARAMETER_NULL);
@@ -99,7 +128,6 @@ public class INoteBookServiceImpl implements INoteBookService
      * @param notebookId
      * @return
      */
-    @Override
     public ServerResponse<NoteBook> showNotebook(String notebookId) {
         if(notebookId == null){
             return  ServerResponse.getServerResponse(NoteBookResponse.PARAMETER_NULL);
@@ -116,7 +144,6 @@ public class INoteBookServiceImpl implements INoteBookService
      * @param notebookId
      * @return
      */
-    @Override
     public ServerResponse<List<Note>> selectNotesByNotebookId(String notebookId) {
         if(notebookId == null){
             return  ServerResponse.getServerResponse(NoteBookResponse.PARAMETER_NULL);
@@ -133,7 +160,6 @@ public class INoteBookServiceImpl implements INoteBookService
      * @param userId
      * @return
      */
-    @Override
     public ServerResponse<List<NoteBook>> selectNoteBooksByUserId(String userId) {
         if(userId == null){
             return ServerResponse.getServerResponse(NoteBookResponse.PARAMETER_NULL);
@@ -150,7 +176,6 @@ public class INoteBookServiceImpl implements INoteBookService
      * @param noteBook
      * @return
      */
-    @Override
     public ServerResponse updateNoteBook(NoteBook noteBook) {
         if(noteBook == null){
             return ServerResponse.getServerResponse(NoteBookResponse.PARAMETER_NULL);

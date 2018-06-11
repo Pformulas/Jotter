@@ -45,4 +45,9 @@
         </set>
         WHERE notebook_id = #{notebookId}
     </update>
+
+    <!--通过userid确认是否有这个笔记本-->
+    <select id="checkNoteBookByUserId" resultType="java.lang.Integer">
+        SELECT COUNT(1) FROM Jo_Notebook WHERE user_id=#{userId}
+    </select>
 </mapper>

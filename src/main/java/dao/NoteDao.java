@@ -9,25 +9,25 @@ import entity.NoteBook;
 public interface NoteDao
 {
     /**
-     * 用主键删除
+     * noteid删除记录
      * @param noteId
      * @return
      */
-    int deleteByPrimaryKey(String noteId);
+    int deleteNoteByNoteId(String noteId);
 
     /**
      * 插入note
      * @param record
      * @return
      */
-    int insert(Note record);
+    int insertNote(Note record);
 
     /**
      * 动态插入note
      * @param record
      * @return
      */
-    int insertSelective(Note record);
+    int insertNoteSelective(Note record);
 
     /**
      * 用noteId查询笔记
@@ -37,11 +37,11 @@ public interface NoteDao
     Note selectNoteByNoteId(String noteId);
 
     /**
-     * 用主键更新
+     * 用noteid更新
      * @param record
      * @return
      */
-    int updateByPrimaryKey(Note record);
+    int updateNoteByNoteId(Note record);
 
     /**
      * 检查notename

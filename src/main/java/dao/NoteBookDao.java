@@ -59,4 +59,6 @@ public interface NoteBookDao
      * @return
      */
     int updateNoteBook(NoteBook noteBook);
+
+    int checkNoteBookByUserId(String userId);
 }
