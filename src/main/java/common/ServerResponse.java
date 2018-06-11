@@ -18,11 +18,22 @@ public class ServerResponse<T> implements Serializable {
 
     private T data;
 
-    // 推荐直接用这个构造器！
-    private ServerResponse(ResponseCode responseCode, T data) {
-        this.status = responseCode.getCode();
-        this.msg = responseCode.getDesc();
+    private ServerResponse(int status, String msg, T data) {
+        this.status = status;
+        this.msg = msg;
         this.data = data;
+    }
+
+    public int getStatus() {
+        return status;
+    }
+
+    public String getMsg() {
+        return msg;
+    }
+
+    public T getData() {
+        return data;
     }
 
     /**
@@ -31,15 +42,23 @@ public class ServerResponse<T> implements Serializable {
      */
     @JsonIgnore // 使之不在json序列化当中
     public boolean isSuccess() {
-
-        return this.status == ResponseCode.SUCCESS.getCode();
+        return this.status == ResponseStatus.SUCCESS_CODE;
     }
 
-    public static <T> ServerResponse<T> getServerResponse(ResponseCode responseCode) {
-        return getServerResponse(responseCode, null);
+    public static <T> ServerResponse<T> getServerResponse(ResponseStatus responseStatus) {
+        return getServerResponse(responseStatus, null);
     }
 
-    public static <T> ServerResponse<T> getServerResponse(ResponseCode responseCode, T data) {
-        return new ServerResponse<T>(responseCode, data);
+    public static <T> ServerResponse<T> getServerResponse(ResponseStatus responseStatus, T data) {
+        return new ServerResponse<T>(responseStatus.getCode(), responseStatus.getDesc(), data);
+    }
+
+    @Override
+    public String toString() {
+        return "ServerResponse{" +
+                "status=" + status +
+                ", msg='" + msg + '\'' +
+                ", data=" + data +
+                '}';
     }
 }

@@ -48,4 +48,37 @@ public class NoteBookController
     public ServerResponse<String> deleteNotebook(String notebookName){
         return null;
     }
+
+    /**
+     * 根据笔记id查找一个笔记
+     * @param noteId 笔记id
+     * @return
+     */
+    @ResponseBody
+    @RequestMapping(path = "show_note.do", produces = {"application/json;charset=UTF8"})
+    public Object showNote(String noteId){
+        return iNoteBookService.showNote(noteId);
+    }
+
+    /**
+     * 根据笔记本id查找一个笔记本
+     * @param notebookId 笔记本id
+     * @return
+     */
+    @ResponseBody
+    @RequestMapping(path = "show_notebook.do", produces = {"application/json;charset=UTF8"})
+    public Object showNotebook(String notebookId){
+        return iNoteBookService.showNotebook(notebookId);
+    }
+
+    /**
+     * 根据笔记本id获取所有他的笔记
+     * @param notebookId
+     * @return
+     */
+    @ResponseBody
+    @RequestMapping(path = "show_notes_of_notebook.do", produces = {"application/json;charset=UTF8"})
+    public Object showNotesOfNotebook(String notebookId){
+        return iNoteBookService.selectNotesByNotebookId(notebookId);
+    }
 }

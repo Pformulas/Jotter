@@ -33,6 +33,7 @@
     <!-- 静态资源管理器 -->
     <mvc:resources location="/js/" mapping="/js/**"/>
     <mvc:resources location="/css/" mapping="/css/**"/>
+    <mvc:resources location="/font/" mapping="/font/**"/>
     <mvc:resources location="/images/" mapping="/images/**"/>
 
 </beans>

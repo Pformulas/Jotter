@@ -1,6 +1,7 @@
 package dao;
 
 import entity.User;
+import org.apache.ibatis.annotations.Param;
 
 /**
  * 用户模块相关 dao 层
@@ -25,4 +26,21 @@ public interface UserDao {
      * @return 返回个数，由于这里不允许用户名重复，所以最多返回 1 条
      */
     int countUsername(String username);
+
+    /**
+     * 通过用户名和密码获取相关信息
+     *
+     * @param username 用户名
+     * @param password 密码
+     * @return 返回 User 对象
+     */
+    User getUserByUsernameAndPassword(@Param("username") String username, @Param("password") String password);
+
+    /**
+     * 更新用户信息
+     *
+     * @param user 要被更新的用户
+     * @return 返回影响的行数
+     */
+    int updateUser(User user);
 }

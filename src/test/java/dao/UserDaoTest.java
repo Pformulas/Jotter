@@ -43,4 +43,32 @@ public class UserDaoTest {
 
         System.out.println(affect);
     }
+
+    /**
+     * 测试：通过用户名和密码获取相关信息
+     */
+    @Test
+    public void testGetUserByUsernameAndPassword() {
+        String username = "fish";
+        String password = "1997";
+
+        User user = userDao.getUserByUsernameAndPassword(username, password);
+
+        System.out.println(user);
+    }
+
+    /**
+     * 测试：更新用户信息
+     */
+    @Test
+    public void testUpdateUser() {
+        User user = new User();
+        user.setUsername("madao");
+        user.setIntro("我是哈哈哈");
+        user.setQq("99999999");
+
+        int affect = userDao.updateUser(user);
+
+        System.out.println(affect);
+    }
 }
