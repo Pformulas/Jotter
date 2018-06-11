@@ -44,10 +44,10 @@ public class FilesContorller {
             HttpServletRequest request, HttpSession session) throws IOException {
 
         String path = null;
-        User user = new User();
+        User user = (User) session.getAttribute(Const.USER_KEY);
 
         //得到文件保存路径
-        path = request.getSession().getServletContext().getRealPath(Const.baseDir);
+        path = request.getSession().getServletContext().getRealPath(Const.BASE_DIR);
         ServerResponse<String> serverResponse = filesService.saveFile(file, path, user);
 
         return  serverResponse;
