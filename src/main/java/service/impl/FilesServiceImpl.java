@@ -1,6 +1,7 @@
 package service.impl;
 
 import Utils.FileNiceUtil;
+import common.Const;
 import common.ServerResponse;
 import common.response.FilesResponse;
 import common.response.UserResponse;
@@ -9,15 +10,21 @@ import entity.Files;
 import entity.User;
 import org.apache.commons.io.FileUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.commons.CommonsMultipartFile;
 import service.FilesService;
 
-import java.io.File;
-import java.io.IOException;
-import java.io.InputStream;
+import javax.servlet.http.HttpServletRequest;
+import java.io.*;
+import java.util.Arrays;
 import java.util.List;
 import java.util.UUID;
+import java.util.zip.ZipEntry;
+import java.util.zip.ZipOutputStream;
 
 /**
  * 文件操作业务实现
@@ -130,4 +137,70 @@ public class FilesServiceImpl implements FilesService {
     public ServerResponse updateFilename(Files files) {
         return null;
     }
+
+    /**
+     * 下载单个文件
+     * @return 需要下载的文件
+     */
+    @Override
+    public ResponseEntity<byte[]> downloadFile(HttpServletRequest request, String url) throws IOException {
+        String fileName = url;
+        File file = new File("D:/" + fileName);
+        HttpHeaders headers = new HttpHeaders();
+        String realFileName = new String(fileName.getBytes("utf-8"),"iso-8859-1");
+        headers.setContentDispositionFormData("attachment", realFileName);
+        headers.setContentType(MediaType.APPLICATION_OCTET_STREAM);
+        return new ResponseEntity<byte[]>(FileUtils.readFileToByteArray(file),headers, HttpStatus.CREATED);
+    }
+
+    /**
+     * 下载多个文件
+     * @param request
+     * @param urls 多个文件的url数组
+     * @return 一个zip压缩包，里面包含指定的多个文件
+     * @throws IOException
+     */
+    @Override
+    public ResponseEntity<byte[]> downloadMultipleFile(HttpServletRequest request, String[] urls, User user) throws IOException {
+        List<String> urlList = Arrays.asList(urls);
+
+        //File路径
+        String path = request.getSession().getServletContext().getRealPath(Const.BASE_DIR);
+
+        //下载的压缩包的名字
+        String zipName = "JotterFile.zip";
+
+        //用户目录路径
+        String userFolder = FileNiceUtil.getDirFile(user.getUsername(), path);
+
+        ZipOutputStream zipOutputStream = new ZipOutputStream(
+                new FileOutputStream(FileNiceUtil.getDirFile("Temp", path) + zipName)
+        );
+        InputStream inputStream = null;
+
+        //压缩包装包
+        for (String fileName: urlList) {
+            String realFileName = userFolder + fileName;
+            System.out.println(realFileName);
+            inputStream = new FileInputStream(new File(realFileName));
+            zipOutputStream.putNextEntry(new ZipEntry(fileName));
+            int index = 0;
+            while ((index = inputStream.read()) != -1){
+                zipOutputStream.write(index);
+            }
+            inputStream.close();
+        }
+        zipOutputStream.close();
+
+        //封装完毕，开始传输
+        File file = new File(FileNiceUtil.getDirFile("Temp", path) + zipName);
+        HttpHeaders headers = new HttpHeaders();
+        String realZipName = new String(zipName.getBytes("utf-8"),"iso-8859-1");
+        headers.setContentDispositionFormData("attachment", realZipName);
+        headers.setContentType(MediaType.APPLICATION_OCTET_STREAM);
+        ResponseEntity<byte[]> responseEntity =  new ResponseEntity<byte[]>(FileUtils.readFileToByteArray(file), headers, HttpStatus.CREATED);
+        file.delete();
+        return responseEntity;
+    }
+
 }

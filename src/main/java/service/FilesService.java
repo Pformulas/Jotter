@@ -4,9 +4,11 @@ import common.ServerResponse;
 import entity.Files;
 import entity.NoteBook;
 import entity.User;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.commons.CommonsMultipartFile;
 
+import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
 import java.util.List;
 
@@ -50,4 +52,19 @@ public interface FilesService {
      * @return
      */
     public ServerResponse updateFilename(Files files);
+
+    /**
+     * 下载单个文件的方法
+     * @return
+     */
+    public ResponseEntity<byte[]> downloadFile(HttpServletRequest request, String url) throws IOException;
+
+    /**
+     * 下载多个文件
+     * @param request
+     * @param urls 多个文件的url数组
+     * @return 一个zip压缩包
+     * @throws IOException
+     */
+    public ResponseEntity<byte[]> downloadMultipleFile(HttpServletRequest request, String[] urls, User user) throws IOException;
 }

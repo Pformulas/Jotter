@@ -258,7 +258,7 @@ public class INoteBookServiceImpl implements INoteBookService
         if(note.getNoteId() == null){
             return ServerResponse.getServerResponse(NoteBookResponse.NOTE_ID_NULL);
         }
-        
+
         Integer check = noteDao.checkNoteByUserId(note);
         if(check <= 0){
             return ServerResponse.getServerResponse(UserResponse.ILLEGAL_ARGUMENT);

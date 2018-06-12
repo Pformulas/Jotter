@@ -15,7 +15,8 @@ public enum FilesResponse implements ResponseStatus {
     UPFILE_SUCCESS(ResponseStatus.SUCCESS_CODE,"文件上传成功"),
     UPFILE_FAILURE(-1,"文件上传失败"),
     UPFILE_IS_NULL(-2,"未上传文件"),
-    FILE_IS_EXIST(-3,"文件名重复");
+    FILE_IS_EXIST(-3,"文件名重复"),
+    URL_IS_WRONG(-4, "下载地址错误");
 
     private final int code;
 

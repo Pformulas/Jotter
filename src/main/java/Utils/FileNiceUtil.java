@@ -33,7 +33,7 @@ public class FileNiceUtil {
      */
     public static String getDirFile(String userName, String path){
         //拼接好的目录
-        String dir =  path + "/" + userName + "/";
+        String dir =  path + File.separator + userName + File.separator;
 
         File dirFile = new File(dir);
         //如果File文件夹不存在，创建文件夹
