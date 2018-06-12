@@ -154,7 +154,7 @@ $(function () {
 
             // 发送注册请求
             $.ajax({
-                url: "/user/register.do",
+                url: "user/register.do",
                 type: "POST",
                 data: form.serialize(),
                 success: function (resp) {
@@ -192,7 +192,7 @@ $(function () {
     $("#inputUsername").on("change", function () {
         // 发送请求去验证用户名
         $.ajax({
-            url: "/user/check_username.do",
+            url: "user/check_username.do",
             type: "POST",
             data: $("#registerForm").serialize(),
             success: function (resp) {
@@ -239,7 +239,7 @@ $(function () {
     $("#loginBtn").click(function () {
         // 发送请求登陆
         $.ajax({
-            url: "/user/login.do",
+            url: "user/login.do",
             type: "POST",
             data: $("#loginForm").serialize(),
             success: function (resp) {
@@ -271,7 +271,7 @@ $(function () {
     // 得到个人资料
     function getInfo() {
         $.ajax({
-            url: "/user/get_info.do",
+            url: "user/get_info.do",
             type: "GET",
             success: function (resp) {
                 putInfoOnSettingPage(resp.data);
@@ -286,7 +286,7 @@ $(function () {
     $("#saveBtn").click(function () {
         if (isLogin) {
             $.ajax({
-                url: "/user/update_info.do",
+                url: "user/update_info.do",
                 type: "POST",
                 data: $("#settingForm").serialize(),
                 success: function (resp) {
