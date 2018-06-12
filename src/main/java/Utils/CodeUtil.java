@@ -21,6 +21,6 @@ public final class CodeUtil {
      * @return 返回 MD5 编码
      */
     public static String getMD5(String str) {
-        return new String(DigestUtils.md5Digest(str.getBytes()));
+        return DigestUtils.md5DigestAsHex(str.getBytes());
     }
 }
