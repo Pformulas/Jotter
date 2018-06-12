@@ -14,14 +14,14 @@ public class Files {
     private String url;
 
     //1是视频  2是图片  3是文本 0是其他
-    private int type;
+    private String type;
 
     //文件名
     private String fileName;
 
     public Files(){}
 
-    public Files(String userId, String url, int type, String fileName) {
+    public Files(String userId, String url, String type, String fileName) {
         this.userId = userId;
         this.url = url;
         this.type = type;
@@ -44,11 +44,11 @@ public class Files {
         this.url = url;
     }
 
-    public int getType() {
+    public String getType() {
         return type;
     }
 
-    public void setType(int type) {
+    public void setType(String type) {
         this.type = type;
     }
 

@@ -21,19 +21,19 @@ public final class Const {
     public static final String TEMP_PASSWORD = "tempPassword";
 
     //视频类型码
-    public static  final int VIDEO_TYPE = 1;
+    public static  final String  VIDEO_TYPE = "视频";
 
     //音乐类型码
-    public static  final int MSUIC_TYPE = 2;
+    public static  final String MUSIC_TYPE = "音频";
 
     //图片类型码
-    public static  final int PICTURE_TYPE = 3;
+    public static  final String PICTURE_TYPE = "图片";
 
     //文本类型码
-    public static  final int TEXT_TYPE = 4;
+    public static  final String TEXT_TYPE = "文本";
 
     //其他类型码
-    public static  final int OTHER_TYPE = 0;
+    public static  final String OTHER_TYPE = "其他类型";
 
     //文件保存目录
     public static final String BASE_DIR= "/File";

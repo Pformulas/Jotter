@@ -1,8 +1,12 @@
 package Utils;
 
+
+import common.Const;
+import common.response.FilesResponse;
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.springframework.util.StringUtils;
 import org.springframework.web.multipart.commons.CommonsMultipartFile;
 
 import java.io.File;
@@ -88,6 +92,53 @@ public class FileNiceUtil {
     public static boolean fileIsExits(String fileName){
         File file = new File(fileName);
         return file.exists();
+    }
+
+    /**
+     * 判断文件类型,默认返回其他类型
+     * @param fileName 文件名
+     * @return 返回类型名
+     */
+    public static String getFileType(String fileName) {
+
+        //获得扩展名
+        String extension = StringUtils.getFilenameExtension(fileName);
+
+        //如果是空，表示没有扩展名，则归为其他类型
+        if( extension == null ){
+            return Const.OTHER_TYPE;
+        }
+
+        //如果后缀名在图片类型中，则归类为图片
+        for (int i = 0; i < Const.IMG.length; i++) {
+            if (Const.IMG[i].equals(extension)) {
+                return Const.PICTURE_TYPE;
+            }
+        }
+
+        //如果后缀名在音乐类型中，则归类为音乐
+        for (int i = 0; i < Const.MUSIC.length; i++) {
+            if (Const.MUSIC[i].equals(extension)) {
+                return Const.MUSIC_TYPE;
+            }
+        }
+
+        //如果后缀名在视频类型中，则归类为视频
+        for (int i = 0; i < Const.VIDEO.length; i++) {
+            if (Const.VIDEO[i].equals(extension)) {
+                return Const.VIDEO_TYPE;
+            }
+        }
+
+        //如果后缀名在图片类型中，则归类为图片
+        for (int i = 0; i < Const.DOCUMENT.length; i++) {
+            if (Const.DOCUMENT[i].equals(extension)) {
+                return Const.TEXT_TYPE;
+            }
+        }
+
+        //默认返回其他类型
+        return Const.OTHER_TYPE;
     }
 
 }

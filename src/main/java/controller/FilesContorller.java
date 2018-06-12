@@ -37,17 +37,19 @@ public class FilesContorller {
         this.filesService = filesService;
     }
 
-
-    @RequestMapping(value = "upFile.do", method = RequestMethod.POST)
+    @RequestMapping(value = "/upFile.do", method = RequestMethod.POST)
     @ResponseBody
     public ServerResponse<String> upFile(@RequestParam("file")CommonsMultipartFile file,
-            HttpServletRequest request, HttpSession session) throws IOException {
+            HttpServletRequest request, HttpSession session)  {
 
         String path = null;
+
+        //从session从取出用户信息
         User user = (User) session.getAttribute(Const.USER_KEY);
 
         //得到文件保存路径
         path = request.getSession().getServletContext().getRealPath(Const.BASE_DIR);
+
         ServerResponse<String> serverResponse = filesService.saveFile(file, path, user);
 
         return  serverResponse;

@@ -22,7 +22,6 @@ public class FilesDaoTest {
 
     @Test
     public void testSaveFile(){
-        Files files = new Files("1","xixi",1,"File");
-        filesDao.saveFile(files);
+
     }
 }

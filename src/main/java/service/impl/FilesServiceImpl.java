@@ -45,6 +45,9 @@ public class FilesServiceImpl implements FilesService {
     @Override
     public ServerResponse<String> saveFile(CommonsMultipartFile file, String path, User user) {
 
+
+        int affect = 0;
+
         if( file == null || file.getSize() == 0){
             return ServerResponse.getServerResponse(FilesResponse.UPFILE_IS_NULL);
 
@@ -59,7 +62,7 @@ public class FilesServiceImpl implements FilesService {
         String fileName = file.getOriginalFilename();
 
         //创建保存的目录，并得到目录名
-        String dir = FileNiceUtil.getDirFile("张三",path);
+        String dir = FileNiceUtil.getDirFile(user.getUsername(),path);
 
         //如果得到为空，则创建失败
         if(dir == null){
@@ -82,7 +85,17 @@ public class FilesServiceImpl implements FilesService {
             return ServerResponse.getServerResponse(FilesResponse.UPFILE_FAILURE);
         }
 
+        //得到File后面的路径
         uri = uri.substring(uri.indexOf("File"),uri.length());
+
+        //文件上传成功，将信息插入数据库
+        Files files = new Files(user.getUserId(), uri , FileNiceUtil.getFileType(fileName),fileName);
+        affect = filesDao.saveFile(files);
+
+        //如果返回小于等于0，则插入数据失败
+        if(affect <=0){
+            return ServerResponse.getServerResponse(FilesResponse.UPFILE_FAILURE);
+        }
 
         return ServerResponse.getServerResponse(FilesResponse.UPFILE_SUCCESS);
     }

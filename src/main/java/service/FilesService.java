@@ -26,7 +26,7 @@ public interface FilesService {
      * @param file 文件
      * @return 上传结果
      */
-    public ServerResponse<String> saveFile(CommonsMultipartFile file, String path, User user) throws IOException;
+    public ServerResponse<String> saveFile(CommonsMultipartFile file, String path, User user);
 
 
     /**
