@@ -38,8 +38,9 @@ public interface FilesDao {
 
     /**
      * 根据url修改fileName
-     * @param files
-     * @return
+     * @param files 文件对象
+     * @param uri 旧的uri 用来找到该更新哪条记录
+     * @return 影响的行数
      */
     public Integer updateFilename(@Param(("files")) Files files, @Param("uri") String uri);
 }

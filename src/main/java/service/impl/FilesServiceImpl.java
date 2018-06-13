@@ -134,6 +134,7 @@ public class FilesServiceImpl implements FilesService {
      * 参数 url
      * @param uri 文件保存路径
      * @param newUri 新的保存路径
+     * @param fileName 文件名
      * @return 修改结果
      */
     @Override
@@ -145,7 +146,9 @@ public class FilesServiceImpl implements FilesService {
         if(uri == null){
             return ServerResponse.getServerResponse(FilesResponse.RENAME_FILE_FAILURE);
         }
+        //旧文件
         File oldfile = new File(uri);
+        //文件
         File newFile = new File(newUri);
 
         //重命名失败
@@ -155,7 +158,7 @@ public class FilesServiceImpl implements FilesService {
 
         Files files = new Files(FileNiceUtil.getAfterFileUri(newUri),FileNiceUtil.getFileType(fileName), fileName);
 
-        //更新数据库中信息,考虑到更新了硬盘的名字但数据库没更新，所以回滚
+        //更新数据库中信息,考虑到更新了硬盘中文件的名字但数据库没更新，所以回滚
         try{
             affect = filesDao.updateFilename(files,FileNiceUtil.getAfterFileUri(uri));
             if(affect <= 0 ){
@@ -164,6 +167,7 @@ public class FilesServiceImpl implements FilesService {
                 return ServerResponse.getServerResponse(FilesResponse.RENAME_FILE_FAILURE);
             }
         }catch (Exception e){
+            //数据库发生异常，回滚
             FileNiceUtil.fileRename(oldfile,newFile);
         }
 
