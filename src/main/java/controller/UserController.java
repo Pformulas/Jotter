@@ -79,6 +79,10 @@ public class UserController {
         // 如果登陆成功，就把登陆信息存在 session 中
         if (loginStatus.isSuccess()) {
             session.setAttribute(Const.USER_KEY, loginStatus.getData());
+
+            // 把文件保存路径放进 session
+            String path = session.getServletContext().getRealPath(Const.BASE_DIR);
+            session.setAttribute(Const.FILE_PATH, path);
         }
 
         return loginStatus;

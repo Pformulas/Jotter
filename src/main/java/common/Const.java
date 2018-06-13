@@ -21,39 +21,42 @@ public final class Const {
     public static final String TEMP_PASSWORD = "tempPassword";
 
     //视频类型码
-    public static  final String  VIDEO_TYPE = "视频";
+    public static final String VIDEO_TYPE = "视频";
 
     //音乐类型码
-    public static  final String MUSIC_TYPE = "音频";
+    public static final String MUSIC_TYPE = "音频";
 
     //图片类型码
-    public static  final String PICTURE_TYPE = "图片";
+    public static final String PICTURE_TYPE = "图片";
 
     //文本类型码
-    public static  final String TEXT_TYPE = "文本";
+    public static final String TEXT_TYPE = "文本";
 
     //其他类型码
-    public static  final String OTHER_TYPE = "其他类型";
+    public static final String OTHER_TYPE = "其他类型";
+
+    // 文件保存路径
+    public static final String FILE_PATH = "File";
 
     //文件保存目录
-    public static final String BASE_DIR= "/File";
+    public static final String BASE_DIR = "/" + FILE_PATH;
 
     //图片类型后缀
-    public static final String IMG[] = { "bmp", "jpg", "jpeg", "png", "tiff", "gif", "pcx", "tga", "exif", "fpx", "svg", "psd",
-            "cdr", "pcd", "dxf", "ufo", "eps", "ai", "raw", "wmf" };
+    public static final String IMG[] = {"bmp", "jpg", "jpeg", "png", "tiff", "gif", "pcx", "tga", "exif", "fpx", "svg", "psd",
+            "cdr", "pcd", "dxf", "ufo", "eps", "ai", "raw", "wmf"};
 
     //文档类型后缀
     public static final String DOCUMENT[] =
-            { "txt", "doc", "docx", "xls", "htm", "html", "jsp", "rtf", "wpd", "pdf", "ppt" };
+            {"txt", "doc", "docx", "xls", "htm", "html", "jsp", "rtf", "wpd", "pdf", "ppt"};
 
     //视频类型后缀
     public static final String VIDEO[] =
-            { "mp4", "avi", "mov", "wmv", "asf", "navi", "3gp", "mkv", "f4v", "rmvb", "webm" };
+            {"mp4", "avi", "mov", "wmv", "asf", "navi", "3gp", "mkv", "f4v", "rmvb", "webm"};
 
     //音乐类型后缀
     public static final String MUSIC[] =
-            { "mp3", "wma", "wav", "mod", "ra", "cd", "md", "asf", "aac", "vqf", "ape", "mid", "ogg",
-            "m4a", "vqf" };
+            {"mp3", "wma", "wav", "mod", "ra", "cd", "md", "asf", "aac", "vqf", "ape", "mid", "ogg",
+                    "m4a", "vqf"};
 
 
 }
