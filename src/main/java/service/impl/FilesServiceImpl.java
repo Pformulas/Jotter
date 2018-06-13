@@ -118,12 +118,13 @@ public class FilesServiceImpl implements FilesService {
     }
 
     /**
-     * 删除指定url的文件
-     * @param url
+     * 根据url删除多个文件
+     * @param request
+     * @param urls
      * @return
      */
     @Override
-    public ServerResponse deleteFile(String url) {
+    public ServerResponse deleteFile(HttpServletRequest request, String[] urls) {
         return null;
     }
 

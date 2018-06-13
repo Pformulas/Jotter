@@ -43,7 +43,7 @@ public interface FilesService {
      * @param url
      * @return
      */
-    public ServerResponse deleteFile(String url);
+    public ServerResponse deleteFile(HttpServletRequest request, String[] urls);
 
     /**
      * 根据url修改fileName
@@ -67,5 +67,5 @@ public interface FilesService {
      * @throws IOException
      */
     public ResponseEntity<byte[]> downloadMultipleFile(HttpServletRequest request, String[] urls, User user) throws IOException;
-    
+
 }
