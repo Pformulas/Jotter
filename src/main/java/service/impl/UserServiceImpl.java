@@ -12,6 +12,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import service.UserService;
 
+import java.util.UUID;
+
 /**
  * 用户业务实现类
  *
@@ -47,6 +49,7 @@ public class UserServiceImpl implements UserService {
 
         // 用户合法，可以注册
         int affect = 0;
+        user.setUserId(UUID.randomUUID().toString());
         try {
             // 对密码进行 MD5 加密
             user.setPassword(CodeUtil.getMD5(user.getPassword()));

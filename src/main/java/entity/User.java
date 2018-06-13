@@ -27,7 +27,6 @@ public class User {
     private Date createTime = null;
 
     public User() {
-        this.userId = UUID.randomUUID().toString();
     }
 
     public User(String username, String password) {

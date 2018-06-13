@@ -178,19 +178,7 @@ public class FilesServiceImpl implements FilesService {
         );
         InputStream inputStream = null;
 
-        //压缩包装包
-        for (String fileName: urlList) {
-            String realFileName = userFolder + fileName;
-            System.out.println(realFileName);
-            inputStream = new FileInputStream(new File(realFileName));
-            zipOutputStream.putNextEntry(new ZipEntry(fileName));
-            int index = 0;
-            while ((index = inputStream.read()) != -1){
-                zipOutputStream.write(index);
-            }
-            inputStream.close();
-        }
-        zipOutputStream.close();
+        FileNiceUtil.zipFile(urlList, userFolder, zipOutputStream, inputStream);
 
         //封装完毕，开始传输
         File file = new File(FileNiceUtil.getDirFile("Temp", path) + zipName);

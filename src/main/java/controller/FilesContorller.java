@@ -1,11 +1,15 @@
 package controller;
 
+import Utils.FileNiceUtil;
 import common.Const;
 import common.ServerResponse;
 import common.response.FilesResponse;
 import common.response.NoteBookResponse;
 import entity.User;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -28,6 +32,8 @@ import java.io.IOException;
 
 @Controller
 public class FilesContorller {
+
+    private static final Log log = LogFactory.getLog(FilesContorller.class);
 
     private final FilesService filesService;
     @Autowired
@@ -73,7 +79,7 @@ public class FilesContorller {
      */
     @ResponseBody
     @RequestMapping(path = "/multipleDownload.do", produces = {"application/json;charset=UTF8"})
-    public Object multipleDownload(HttpServletRequest request, String[] fileNames, User user) throws IOException
+    public Object multipleDownload(HttpServletRequest request, String[] fileNames, User user)
     {
         if(fileNames == null){
             return ServerResponse.getServerResponse(FilesResponse.URL_IS_WRONG);
@@ -81,9 +87,18 @@ public class FilesContorller {
         if(user == null){
             return ServerResponse.getServerResponse(NoteBookResponse.PARAMETER_NULL);
         }
-        if(user.getUsername() == null || user.getUserId() == null){
+        if(user.getUserId() == null){
             return ServerResponse.getServerResponse(NoteBookResponse.USER_ID_NULL);
         }
-        return filesService.downloadMultipleFile(request, fileNames, user);
+        if(user.getUsername() == null){
+            return ServerResponse.getServerResponse(NoteBookResponse.USER_NAME_NULL);
+        }
+        ResponseEntity responseEntity = null;
+        try {
+            responseEntity = filesService.downloadMultipleFile(request, fileNames, user);
+        } catch (IOException e) {
+            log.error("文件下载失败");
+        }
+        return responseEntity;
     }
 }

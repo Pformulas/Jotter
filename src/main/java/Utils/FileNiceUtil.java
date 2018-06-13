@@ -9,10 +9,11 @@ import org.apache.commons.logging.LogFactory;
 import org.springframework.util.StringUtils;
 import org.springframework.web.multipart.commons.CommonsMultipartFile;
 
-import java.io.File;
-import java.io.IOException;
-import java.io.InputStream;
+import java.io.*;
+import java.util.List;
 import java.util.UUID;
+import java.util.zip.ZipEntry;
+import java.util.zip.ZipOutputStream;
 
 /**
  * 文件模块工具类
@@ -141,4 +142,40 @@ public class FileNiceUtil {
         return Const.OTHER_TYPE;
     }
 
+    public static void zipFile(List<String> urlList, String userFolder, ZipOutputStream zipOutputStream, InputStream inputStream){
+        //压缩包装包
+        try {
+            for (String fileName: urlList) {
+                String realFileName = userFolder + fileName;
+
+                inputStream = new FileInputStream(new File(realFileName));
+                zipOutputStream.putNextEntry(new ZipEntry(fileName));
+                int index = 0;
+                while ((index = inputStream.read()) != -1){
+                    zipOutputStream.write(index);
+                }
+                inputStream.close();
+            }
+            zipOutputStream.close();
+        } catch (FileNotFoundException e) {
+            log.error(e.getCause());
+        } catch (IOException e) {
+            log.error(e.getCause());
+        } finally {
+            if(inputStream != null) {
+                try {
+                    inputStream.close();
+                } catch (IOException e) {
+                    log.error("输入流关闭失败",e);
+                }
+            }
+            if(zipOutputStream != null){
+                try {
+                    zipOutputStream.close();
+                } catch (IOException e) {
+                    log.error("压缩流关闭失败",e);
+                }
+            }
+        }
+    }
 }

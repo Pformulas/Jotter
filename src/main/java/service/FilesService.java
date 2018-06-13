@@ -67,4 +67,5 @@ public interface FilesService {
      * @throws IOException
      */
     public ResponseEntity<byte[]> downloadMultipleFile(HttpServletRequest request, String[] urls, User user) throws IOException;
+    
 }
