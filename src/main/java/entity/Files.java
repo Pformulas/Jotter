@@ -28,6 +28,12 @@ public class Files {
         this.fileName = fileName;
     }
 
+    public Files(String url, String type, String fileName) {
+        this.url = url;
+        this.type = type;
+        this.fileName = fileName;
+    }
+
     public String getUserId() {
         return userId;
     }

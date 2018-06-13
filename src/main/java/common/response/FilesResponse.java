@@ -13,10 +13,12 @@ public enum FilesResponse implements ResponseStatus {
 
     SUCCESS(ResponseStatus.SUCCESS_CODE, "执行成功"),
     UPFILE_SUCCESS(ResponseStatus.SUCCESS_CODE,"文件上传成功"),
+    RENAME_FILE_SUCCESS(ResponseStatus.SUCCESS_CODE,"文件重命名成功"),
     UPFILE_FAILURE(-1,"文件上传失败"),
-    UPFILE_IS_NULL(-2,"未上传文件"),
+    UPFILE_IS_NULL(-2,"未上传文件,或者上传的文件内容是空，请重新上传"),
     FILE_IS_EXIST(-3,"文件名重复"),
-    URL_IS_WRONG(-4, "下载地址错误");
+    URL_IS_WRONG(-4, "下载地址错误"),
+    RENAME_FILE_FAILURE(-5, "文件重命名失败");
 
     private final int code;
 

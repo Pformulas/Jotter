@@ -45,13 +45,14 @@ public interface FilesService {
      */
     public ServerResponse deleteFile(HttpServletRequest request, String[] urls);
 
+
     /**
-     * 根据url修改fileName
-     * 参数 url file
-     * @param files
-     * @return
+     * 根据uri修改文件名
+     * @param uri 存储文件跟路径
+     * @param fileName 新的文件名
+     * @return 修改结果
      */
-    public ServerResponse updateFilename(Files files);
+    public ServerResponse updateFilename(String uri, String newUri, String fileName);
 
     /**
      * 下载单个文件的方法

@@ -41,6 +41,8 @@ public final class Const {
     //文件保存目录
     public static final String BASE_DIR = "/" + FILE_PATH;
 
+    public static final String FILE = "File";
+
     //图片类型后缀
     public static final String IMG[] = {"bmp", "jpg", "jpeg", "png", "tiff", "gif", "pcx", "tga", "exif", "fpx", "svg", "psd",
             "cdr", "pcd", "dxf", "ufo", "eps", "ai", "raw", "wmf"};

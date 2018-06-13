@@ -19,11 +19,13 @@ import org.springframework.web.multipart.commons.CommonsMultipartFile;
 import service.FilesService;
 
 import javax.servlet.http.HttpServletRequest;
-import java.io.*;
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
 import java.util.Arrays;
 import java.util.List;
 import java.util.UUID;
-import java.util.zip.ZipEntry;
 import java.util.zip.ZipOutputStream;
 
 /**
@@ -55,7 +57,7 @@ public class FilesServiceImpl implements FilesService {
 
         int affect = 0;
 
-        if( file == null || file.getSize() == 0){
+        if( file == null || file.getSize() == 0 ){
             return ServerResponse.getServerResponse(FilesResponse.UPFILE_IS_NULL);
 
         }
@@ -79,9 +81,8 @@ public class FilesServiceImpl implements FilesService {
         //得到保存文件的uri
         String uri = dir + fileName;
 
-        //如果该文件存在，重命名
+        //如果该文件存在，提示重复
         if(FileNiceUtil.fileIsExits(uri)){
-            //得到新的uri,避免重复;
             return ServerResponse.getServerResponse(FilesResponse.FILE_IS_EXIST);
 //            uri = dir +  fileName.substring(0,fileName.lastIndexOf(".")) +
 //                    UUID.randomUUID().toString().substring(0,2) + fileName.substring(fileName.lastIndexOf("."),fileName.length());
@@ -93,7 +94,7 @@ public class FilesServiceImpl implements FilesService {
         }
 
         //得到File后面的路径
-        uri = uri.substring(uri.indexOf("File"),uri.length());
+        uri = FileNiceUtil.getAfterFileUri(uri);
 
         //文件上传成功，将信息插入数据库
         Files files = new Files(user.getUserId(), uri , FileNiceUtil.getFileType(fileName),fileName);
@@ -130,13 +131,43 @@ public class FilesServiceImpl implements FilesService {
 
     /**
      * 根据url修改fileName
-     * 参数 url file
-     * @param files
-     * @return
+     * 参数 url
+     * @param uri 文件保存路径
+     * @param newUri 新的保存路径
+     * @return 修改结果
      */
     @Override
-    public ServerResponse updateFilename(Files files) {
-        return null;
+    public ServerResponse updateFilename(String uri,String newUri, String fileName) {
+
+        int affect = 0;
+
+        //从web层传递过来的参数为空
+        if(uri == null){
+            return ServerResponse.getServerResponse(FilesResponse.RENAME_FILE_FAILURE);
+        }
+        File oldfile = new File(uri);
+        File newFile = new File(newUri);
+
+        //重命名失败
+        if(!FileNiceUtil.fileRename(oldfile,newFile)){
+            return ServerResponse.getServerResponse(FilesResponse.RENAME_FILE_FAILURE);
+        }
+
+        Files files = new Files(FileNiceUtil.getAfterFileUri(newUri),FileNiceUtil.getFileType(fileName), fileName);
+
+        //更新数据库中信息,考虑到更新了硬盘的名字但数据库没更新，所以回滚
+        try{
+            affect = filesDao.updateFilename(files,FileNiceUtil.getAfterFileUri(uri));
+            if(affect <= 0 ){
+                //如果数据库没更新，把名字改回去。。
+                FileNiceUtil.fileRename(oldfile,newFile);
+                return ServerResponse.getServerResponse(FilesResponse.RENAME_FILE_FAILURE);
+            }
+        }catch (Exception e){
+            FileNiceUtil.fileRename(oldfile,newFile);
+        }
+
+        return ServerResponse.getServerResponse(FilesResponse.RENAME_FILE_SUCCESS);
     }
 
     /**

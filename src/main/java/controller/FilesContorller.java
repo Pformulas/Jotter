@@ -20,6 +20,7 @@ import service.FilesService;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+import java.io.File;
 import java.io.IOException;
 
 /**
@@ -57,6 +58,27 @@ public class FilesContorller {
         ServerResponse<String> serverResponse = filesService.saveFile(file, path, user);
 
         return  serverResponse;
+    }
+
+    @ResponseBody
+    @RequestMapping(value =  "renameFile.do", method = RequestMethod.POST)
+    public ServerResponse reNameFile(String partUri, String fileName, HttpSession session){
+
+        //未收到前台传过来的部分uri
+        if( partUri == null){
+            return ServerResponse.getServerResponse(FilesResponse.RENAME_FILE_FAILURE);
+        }
+
+        //从session从得到保存文件根路径
+        String dirPath = (String)session.getAttribute(Const.FILE_PATH);
+
+        //根路径+数据库存储的部分uri = 被修改文件完整的uri
+        String uri = dirPath + partUri;
+
+        //重命名后的uri
+        String newUri = dirPath + partUri.substring(0,partUri.lastIndexOf(File.separator)+1) + fileName;
+
+        return filesService.updateFilename(uri, newUri,fileName);
     }
 
     @ResponseBody

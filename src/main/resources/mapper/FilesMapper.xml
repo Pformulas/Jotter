@@ -16,13 +16,15 @@
         DELETE FROM Jo_File WHERE url = #{url}
     </delete>
 
-    <update id="updateFilename" parameterType="entity.Files">
+    <!--更新文件信息 !-->
+    <update id="updateFilename" >
         UPDATE Jo_File
         <set>
-            <if test="fileName != null">
-                file_name = #{fileName}
-            </if>
+            <if test="files.url != null" > url = #{files.url}, </if>
+            <if test="files.type != null" > type = #{files.type} ,</if>
+            <if test="files.fileName != null" > file_name = #{files.fileName}, </if>
         </set>
-        WHERE url = #{url}
+        WHERE url = #{uri}
     </update>
+
 </mapper>

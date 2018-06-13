@@ -96,6 +96,32 @@ public class FileNiceUtil {
     }
 
     /**
+     * 得到uri中 File 后面的uri
+     * @param uri
+     * @return File 之后的uri
+     */
+    public static String getAfterFileUri(String uri){
+        return uri.substring(uri.indexOf(Const.FILE) + Const.FILE.length(), uri.length());
+    }
+
+    /**
+     * 重命名方法
+     * @param oldFile 旧文件
+     * @param newFile 新文件
+     * @return true：重命名成功 false:重命名失败
+     */
+    public static boolean fileRename(File oldFile, File newFile){
+        try{
+            //重命名结果
+            return oldFile.renameTo(newFile);
+        }catch (SecurityException e){
+            log.error("用户权限不够，无法重命名文件",e);
+        }catch (Exception ex){
+            log.error("未知错误",ex);
+        }
+        return false;
+    }
+    /**
      * 判断文件类型,默认返回其他类型
      * @param fileName 文件名
      * @return 返回类型名

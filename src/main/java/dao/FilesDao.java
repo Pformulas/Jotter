@@ -1,6 +1,7 @@
 package dao;
 
 import entity.Files;
+import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 
@@ -40,5 +41,5 @@ public interface FilesDao {
      * @param files
      * @return
      */
-    public Integer updateFilename(Files files);
+    public Integer updateFilename(@Param(("files")) Files files, @Param("uri") String uri);
 }
