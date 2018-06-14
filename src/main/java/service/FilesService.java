@@ -43,7 +43,7 @@ public interface FilesService {
      * @param url
      * @return
      */
-    public ServerResponse deleteFile(HttpServletRequest request, String[] urls);
+    public ServerResponse deleteFile(HttpServletRequest request, String[] urls, User user);
 
 
     /**
