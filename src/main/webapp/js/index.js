@@ -11,13 +11,15 @@ const repoSwiper = new Swiper('#repoSwiper', {
     direction: 'vertical',
 });
 
+let isLogin = false; // 判断是否登陆
+
 $(function () {
-    let isLogin = false;
 
     // 点击导航栏样式切换
     const navBtns = $(".navBtn li");
 
-    const SLIDE_SPEED = 800; // 切换菜单速度，单位：ms
+    // 切换菜单速度，单位：ms
+    const SLIDE_SPEED = 800;
 
     // 清除原来的选择样式，并给指定元素加上样式
     function removeAndAddClass(ele) {
@@ -212,6 +214,7 @@ $(function () {
         // 获取设置页面的控件，进行设置
         if (data.username != null) {
             $("#usernameSpan").text(data.username);
+            $("#usernameId").text(data.username);
         }
 
         if (data.name != null) {
@@ -243,7 +246,11 @@ $(function () {
             type: "POST",
             data: $("#loginForm").serialize(),
             success: function (resp) {
-                alert(resp.msg); // 不管三七二十一，先把消息显示出来
+                // 把错误消息显示出来
+                if (!(resp.status === 0)) {
+                    alert(resp.msg);
+                }
+
                 if (resp.status === 0) {
                     // 登陆成功
                     isLogin = true;
@@ -285,21 +292,40 @@ $(function () {
     // 修改个人资料
     $("#saveBtn").click(function () {
         if (isLogin) {
-            $.ajax({
-                url: "user/update_info.do",
-                type: "POST",
-                data: $("#settingForm").serialize(),
-                success: function (resp) {
-                    // 修改成功之后刷新前台数据
-                    getInfo();
+            // 先判断邮箱是否合法
+            if (isEmail($("#mailId").val())) {
+                $.ajax({
+                    url: "user/update_info.do",
+                    type: "POST",
+                    data: $("#settingForm").serialize(),
+                    success: function (resp) {
+                        if (!(resp.status === 0)) {
+                            alert(resp.msg);
+                        } else {
+                            // 修改成功之后刷新前台数据
+                            getInfo();
 
-                    // 切换界面
-                    switchShowOrUpdate();
-                },
-                error: function () {
-                    alert("网络错误！");
-                }
-            });
+                            // 切换界面
+                            switchShowOrUpdate();
+                        }
+                    },
+                    error: function () {
+                        alert("网络错误！");
+                    }
+                });
+            } else {
+                alert("邮箱不合法");
+            }
         }
+
+        return false;
     });
+
+    // 验证邮箱
+    function isEmail(str) {
+        const reg = /^\w+@\w+\.\w{2,}$/; // 邮箱正则表达式
+
+        // 如果是邮箱，返回 true
+        return reg.test(str);
+    }
 });
