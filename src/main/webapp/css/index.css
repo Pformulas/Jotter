@@ -130,6 +130,7 @@ input:focus {
     margin: 18px 16px 0;
     transition: 100ms;
     background-color: transparent;
+    outline: none; /* 消除 button 点击之后的蓝框 */
 }
 
 .btn:hover {

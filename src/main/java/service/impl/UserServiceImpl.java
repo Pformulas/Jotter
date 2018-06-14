@@ -168,13 +168,26 @@ public class UserServiceImpl implements UserService {
             return ServerResponse.getServerResponse(UserResponse.NEED_LOGIN);
         }
 
-        // 判断执行成功没有
-        int affect = userDao.updateUser(user);
-        if (affect <= 0) {
-            return ServerResponse.getServerResponse(UserResponse.UPDATE_INFO_FAILED);
+        // 如果有更新邮箱，判断邮箱是否正确
+        if (user.getMail() != null) {
+            // 要更新邮箱，却没有传一个邮箱过来，还更新啥。。。
+            if (!CodeUtil.isEmail(user.getMail())) {
+                return ServerResponse.getServerResponse(UserResponse.EMAIL_IS_ILLEGAL);
+            }
         }
 
-        // 更新成功
-        return ServerResponse.getServerResponse(UserResponse.SUCCESS);
+        // 判断执行成功没有
+        try {
+            int affect = userDao.updateUser(user);
+            if (affect > 0) {
+                // 更新成功
+                return ServerResponse.getServerResponse(UserResponse.SUCCESS);
+            }
+        } catch (Exception e) {
+            log.error("用户信息更新异常：" + user.getUsername(), e);
+        }
+
+        // 更新异常
+        return ServerResponse.getServerResponse(UserResponse.UPDATE_INFO_FAILED);
     }
 }

@@ -4,6 +4,7 @@ import Utils.FileNiceUtil;
 import common.Const;
 import common.ServerResponse;
 import common.response.FilesResponse;
+import common.response.NoteBookResponse;
 import common.response.UserResponse;
 import dao.FilesDao;
 import entity.Files;
@@ -23,6 +24,7 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.UUID;
@@ -125,8 +127,46 @@ public class FilesServiceImpl implements FilesService {
      * @return
      */
     @Override
-    public ServerResponse deleteFile(HttpServletRequest request, String[] urls) {
-        return null;
+    public ServerResponse deleteFile(HttpServletRequest request, String[] urls, User user) {
+        if(urls == null){
+            return ServerResponse.getServerResponse(FilesResponse.URL_IS_WRONG);
+        }
+        if(user == null){
+            return ServerResponse.getServerResponse(NoteBookResponse.PARAMETER_NULL);
+        }
+        if(user.getUserId() == null){
+            return ServerResponse.getServerResponse(NoteBookResponse.USER_ID_NULL);
+        }
+        if(user.getUsername() == null){
+            return ServerResponse.getServerResponse(NoteBookResponse.USER_NAME_NULL);
+        }
+
+        //File路径
+        String path = request.getSession().getServletContext().getRealPath(Const.BASE_DIR);
+
+        List<String> urlList = Arrays.asList(urls);
+
+        List<String> failFileNames = new ArrayList<>();
+        for (String url : urlList) {
+            String realFileName = path + url;
+            System.out.println(realFileName);
+            File targetFile = new File(realFileName);
+            if(targetFile.exists()){
+                targetFile.delete();
+                Integer result = filesDao.deleteFile(url);
+                if(result <= 0){
+                    failFileNames.add(url);
+                }
+            }else {
+                failFileNames.add(url);
+            }
+        }
+        if (failFileNames.size() <= 0){
+            return ServerResponse.getServerResponse(FilesResponse.FILE_DELETE_SUCCES);
+        }else {
+            return ServerResponse.getServerResponse(FilesResponse.FILE_DELETE_FAIL, failFileNames);
+        }
+
     }
 
     /**

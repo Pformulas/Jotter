@@ -149,4 +149,10 @@ public class FilesContorller {
         }
         return responseEntity;
     }
+
+    @ResponseBody
+    @RequestMapping(path = "/deleteFile.do", produces = {"application/json;charset=UTF8"})
+    public ServerResponse deleteFile(HttpServletRequest request, String[] urls, User user){
+        return filesService.deleteFile(request, urls, user);
+    }
 }
