@@ -8,6 +8,7 @@ import common.response.NoteBookResponse;
 import entity.User;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -61,7 +62,7 @@ public class FilesContorller {
     }
 
     @ResponseBody
-    @RequestMapping(value =  "renameFile.do", method = RequestMethod.POST)
+    @RequestMapping(value =  "/renameFile.do", method = RequestMethod.POST)
     public ServerResponse reNameFile(String partUri, String fileName, HttpSession session){
 
         //未收到前台传过来的部分uri
@@ -80,6 +81,31 @@ public class FilesContorller {
 
         return filesService.updateFilename(uri, newUri,fileName);
     }
+
+    @ResponseBody
+    @RequestMapping(value = "/getFileList.do", method = RequestMethod.GET)
+    public ServerResponse getFileList(HttpServletRequest request, HttpSession session, String fileName, Integer back){
+
+        //得到当前访问到的路径
+        //String currentPath = (String) session.getAttribute(Const.CURRENT_PATH);
+        String currentPath = "E:/测试";
+
+        //如果点击了回退按钮
+        if(back != null && back == Const.BACK){
+            currentPath = currentPath.substring(0,currentPath.lastIndexOf("/")+1);
+        }
+
+        if(fileName != null){
+            currentPath = currentPath + File.separator + fileName;
+        }
+
+        //保存当前访问到的路径
+        session.setAttribute(Const.CURRENT_PATH,currentPath);
+
+        return filesService.getFileList(currentPath);
+    }
+
+
 
     @ResponseBody
     @RequestMapping(path = "/singleDownload.do", produces = {"application/json;charset=UTF8"})

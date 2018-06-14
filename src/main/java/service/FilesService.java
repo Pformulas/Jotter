@@ -69,4 +69,10 @@ public interface FilesService {
      */
     public ResponseEntity<byte[]> downloadMultipleFile(HttpServletRequest request, String[] urls, User user) throws IOException;
 
+    /**
+     * 展示文件列表，这里不是分类的
+     * @param currentPath 当前访问到的路径
+     * @return 文件列表和获取结果
+     */
+    public ServerResponse getFileList(String currentPath);
 }

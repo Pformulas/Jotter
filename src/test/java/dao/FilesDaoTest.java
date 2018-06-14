@@ -25,11 +25,9 @@ public class FilesDaoTest {
     @Test
     public void testSaveFile(){
 
-//        File file = new File("E:/修改前.txt");
-//        System.out.println(file.getName());
-//        File rename = new File("E:/修改后.txt");
-//        System.out.println(file.renameTo(rename));
-
+        String currentPath= "E:/测试";
+        currentPath = currentPath.substring(0,currentPath.lastIndexOf("/")+1);
+        System.out.println(currentPath);
 
 
     }

@@ -3,9 +3,11 @@ package Utils;
 
 import common.Const;
 import common.response.FilesResponse;
+import entity.Files;
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.apache.ibatis.annotations.Param;
 import org.springframework.util.StringUtils;
 import org.springframework.web.multipart.commons.CommonsMultipartFile;
 
@@ -28,18 +30,19 @@ public class FileNiceUtil {
 
     /**
      * 初始化文件目录并返回目录名
+     *
      * @param userName 用户名
-     * @param path 文件根目录
+     * @param path     文件根目录
      * @return 返回目录名，如果是null，则目录创建失败
      */
-    public static String getDirFile(String userName, String path){
+    public static String getDirFile(String userName, String path) {
         //拼接好的目录
-        String dir =  path + File.separator + userName + File.separator;
+        String dir = path + File.separator + userName + File.separator;
 
         File dirFile = new File(dir);
         //如果File文件夹不存在，创建文件夹
 
-        if(!(dirFile.exists())){
+        if (!(dirFile.exists())) {
 
             //创建文件夹失败，上传文件失败
             if (!dirFile.mkdirs()) {
@@ -50,12 +53,11 @@ public class FileNiceUtil {
     }
 
     /**
-     *
-     * @param file 上传的文件
-     * @param newFile  指向uri的文件   例如（File/"张三”/xx文件）
+     * @param file    上传的文件
+     * @param newFile 指向uri的文件   例如（File/"张三”/xx文件）
      * @return true:上传文件成功  false:上传文件失败
      */
-    public static boolean upFileUtils(CommonsMultipartFile file, File newFile){
+    public static boolean upFileUtils(CommonsMultipartFile file, File newFile) {
 
         InputStream inputStream = null;
 
@@ -67,18 +69,18 @@ public class FileNiceUtil {
             //把上传的文件内容复制到创建的文件中
             FileUtils.copyInputStreamToFile(inputStream, newFile);
 
-        } catch (IOException e){
+        } catch (IOException e) {
             log.error("发生异常，上传失败！", e);
 
             //发生异常，上传失败！
             return false;
         } finally {
             //如果流不空，关闭它
-            if(inputStream != null) {
+            if (inputStream != null) {
                 try {
                     inputStream.close();
                 } catch (IOException e) {
-                    log.error("流关闭失败",e);
+                    log.error("流关闭失败", e);
                 }
             }
         }
@@ -87,42 +89,47 @@ public class FileNiceUtil {
 
     /**
      * 判断文件是否存在
+     *
      * @param fileName 文件名
      * @return true:存在  false:不存在
      */
-    public static boolean fileIsExits(String fileName){
+    public static boolean fileIsExits(String fileName) {
         File file = new File(fileName);
         return file.exists();
     }
 
     /**
      * 得到uri中 File 后面的uri
+     *
      * @param uri
      * @return File 之后的uri
      */
-    public static String getAfterFileUri(String uri){
+    public static String getAfterFileUri(String uri) {
         return uri.substring(uri.indexOf(Const.FILE) + Const.FILE.length(), uri.length());
     }
 
     /**
      * 重命名方法
+     *
      * @param oldFile 旧文件
      * @param newFile 新文件
      * @return true：重命名成功 false:重命名失败
      */
-    public static boolean fileRename(File oldFile, File newFile){
-        try{
+    public static boolean fileRename(File oldFile, File newFile) {
+        try {
             //重命名结果
             return oldFile.renameTo(newFile);
-        }catch (SecurityException e){
-            log.error("用户权限不够，无法重命名文件",e);
-        }catch (Exception ex){
-            log.error("未知错误",ex);
+        } catch (SecurityException e) {
+            log.error("用户权限不够，无法重命名文件", e);
+        } catch (Exception ex) {
+            log.error("未知错误", ex);
         }
         return false;
     }
+
     /**
      * 判断文件类型,默认返回其他类型
+     *
      * @param fileName 文件名
      * @return 返回类型名
      */
@@ -132,7 +139,7 @@ public class FileNiceUtil {
         String extension = StringUtils.getFilenameExtension(fileName);
 
         //如果是空，表示没有扩展名，则归为其他类型
-        if( extension == null ){
+        if (extension == null) {
             return Const.OTHER_TYPE;
         }
 
@@ -168,16 +175,16 @@ public class FileNiceUtil {
         return Const.OTHER_TYPE;
     }
 
-    public static void zipFile(List<String> urlList, String userFolder, ZipOutputStream zipOutputStream, InputStream inputStream){
+    public static void zipFile(List<String> urlList, String userFolder, ZipOutputStream zipOutputStream, InputStream inputStream) {
         //压缩包装包
         try {
-            for (String fileName: urlList) {
+            for (String fileName : urlList) {
                 String realFileName = userFolder + fileName;
 
                 inputStream = new FileInputStream(new File(realFileName));
                 zipOutputStream.putNextEntry(new ZipEntry(fileName));
                 int index = 0;
-                while ((index = inputStream.read()) != -1){
+                while ((index = inputStream.read()) != -1) {
                     zipOutputStream.write(index);
                 }
                 inputStream.close();
@@ -188,20 +195,55 @@ public class FileNiceUtil {
         } catch (IOException e) {
             log.error(e.getCause());
         } finally {
-            if(inputStream != null) {
+            if (inputStream != null) {
                 try {
                     inputStream.close();
                 } catch (IOException e) {
-                    log.error("输入流关闭失败",e);
+                    log.error("输入流关闭失败", e);
                 }
             }
-            if(zipOutputStream != null){
+            if (zipOutputStream != null) {
                 try {
                     zipOutputStream.close();
                 } catch (IOException e) {
-                    log.error("压缩流关闭失败",e);
+                    log.error("压缩流关闭失败", e);
                 }
             }
         }
     }
+
+
+    public static Files[] getFilesInCurrentPath(String currentPath) {
+
+
+        File file = new File(currentPath);
+        String partUri = FileNiceUtil.getAfterFileUri(currentPath);
+
+        //得到当前路径下的所有文件
+        File[] files = file.listFiles();
+
+        //路径不正确
+        if(files == null){
+            return null;
+        }
+
+        //当前路径下没有文件
+        if(files.length <= 0){
+            return new Files[0];
+        }
+
+        Files[] fs = new Files[files.length];
+
+        for(int i = 0; i < files.length; i++){
+            fs[i] = new Files();
+            if(files[i].isDirectory()){
+                fs[i].setType(Const.Folder_Type);
+            }
+            fs[i].setType(FileNiceUtil.getFileType(files[i].getName()));
+            fs[i].setFileName(files[i].getName());
+            fs[i].setUrl(partUri + File.separator + files[i].getName());
+        }
+        return fs;
+    }
+
 }

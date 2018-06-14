@@ -17,6 +17,9 @@ public final class Const {
     // 当用户对象作为 key 值时使用
     public static final String USER_KEY = "userKey";
 
+    //当前访问到的路径
+    public static final String CURRENT_PATH = "currentPath";
+
     // 验证用户名是否存在时用的假密码，或者说临时密码
     public static final String TEMP_PASSWORD = "tempPassword";
 
@@ -32,16 +35,20 @@ public final class Const {
     //文本类型码
     public static final String TEXT_TYPE = "文本";
 
+    public static final String Folder_Type = "文件夹";
+
     //其他类型码
     public static final String OTHER_TYPE = "其他类型";
 
-    // 文件保存路径
+   // 文件保存路径
     public static final String FILE_PATH = "File";
 
     //文件保存目录
     public static final String BASE_DIR = "/" + FILE_PATH;
 
     public static final String FILE = "File";
+
+    public static final int BACK = 1;
 
     //图片类型后缀
     public static final String IMG[] = {"bmp", "jpg", "jpeg", "png", "tiff", "gif", "pcx", "tga", "exif", "fpx", "svg", "psd",

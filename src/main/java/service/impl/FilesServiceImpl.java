@@ -227,4 +227,20 @@ public class FilesServiceImpl implements FilesService {
         return responseEntity;
     }
 
+    /**
+     * 得到文件夹下的文件列表
+     * @param currentPath 当前访问到的路径
+     * @return 文件列表
+     */
+    @Override
+    public ServerResponse getFileList(String currentPath) {
+
+        Files[] fs = FileNiceUtil.getFilesInCurrentPath(currentPath);
+
+        if(fs == null ){
+            return ServerResponse.getServerResponse(FilesResponse.GET_FILE_LIST_FAILURE);
+        }
+        return ServerResponse.getServerResponse(FilesResponse.GET_FILE_LIST_SUCCESS,fs);
+    }
+
 }
