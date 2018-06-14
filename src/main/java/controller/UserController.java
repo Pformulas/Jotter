@@ -10,6 +10,7 @@ import service.UserService;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+import java.io.File;
 
 /**
  * 用户业务控制器
@@ -83,6 +84,9 @@ public class UserController {
             // 把文件保存路径放进 session
             String path = session.getServletContext().getRealPath(Const.BASE_DIR);
             session.setAttribute(Const.FILE_PATH, path);
+
+            // 把当前路径放入 session
+            session.setAttribute(Const.CURRENT_PATH, path + File.separator + user.getUsername());
         }
 
         return loginStatus;

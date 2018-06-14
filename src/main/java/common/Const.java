@@ -1,5 +1,7 @@
 package common;
 
+import java.io.File;
+
 /**
  * 常用常量类
  *
@@ -44,7 +46,7 @@ public final class Const {
     public static final String FILE_PATH = "File";
 
     //文件保存目录
-    public static final String BASE_DIR = "/" + FILE_PATH;
+    public static final String BASE_DIR = File.separator + FILE_PATH;
 
     public static final String FILE = "File";
 
