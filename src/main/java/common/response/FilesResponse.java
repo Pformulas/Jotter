@@ -22,7 +22,10 @@ public enum FilesResponse implements ResponseStatus {
     FILE_DELETE_FAIL(-6, "文件删除失败"),
     FILE_DELETE_SUCCES(-7, "文件删除成功"),
     GET_FILE_LIST_FAILURE(-8,"获取文件列表失败，请重试"),
-    GET_FILE_LIST_SUCCESS(ResponseStatus.SUCCESS_CODE,"获取文件列表成功");
+    GET_FILE_LIST_SUCCESS(ResponseStatus.SUCCESS_CODE,"获取文件列表成功"),
+    NEW_FILE_FOLDER_SUCCESS(ResponseStatus.SUCCESS_CODE,"创建文件夹成功"),
+    NEW_FILE_FOLDER_EXIST(-9,"创建文件夹失败，名称重复"),
+    NEW_FILE_FOLDER_FAILURE(-10,"创建文件夹失败，请重试");
 
 
     private final int code;

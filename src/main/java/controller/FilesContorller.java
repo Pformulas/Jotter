@@ -48,15 +48,15 @@ public class FilesContorller {
     public ServerResponse<String> upFile(@RequestParam("file")CommonsMultipartFile file,
             HttpServletRequest request, HttpSession session)  {
 
-        String path = null;
+        String currentPath = null;
 
         //从session从取出用户信息
         User user = (User) session.getAttribute(Const.USER_KEY);
 
-        //得到文件保存路径
-        path = request.getSession().getServletContext().getRealPath(Const.BASE_DIR);
+        //得到当前访问的路径
+         currentPath = (String)session.getAttribute(Const.CURRENT_PATH);
 
-        ServerResponse<String> serverResponse = filesService.saveFile(file, path, user);
+        ServerResponse<String> serverResponse = filesService.saveFile(file, currentPath, user);
 
         return  serverResponse;
     }
@@ -86,13 +86,16 @@ public class FilesContorller {
     @RequestMapping(value = "/getFileList.do", method = RequestMethod.GET)
     public ServerResponse getFileList(HttpServletRequest request, HttpSession session, String fileName, Integer back){
 
-        //得到当前访问到的路径
-        //String currentPath = (String) session.getAttribute(Const.CURRENT_PATH);
-        String currentPath = "E:/测试";
 
-        //如果点击了回退按钮
-        if(back != null && back == Const.BACK){
-            currentPath = currentPath.substring(0,currentPath.lastIndexOf("/")+1);
+        //得到当前访问到的路径
+        String currentPath = (String) session.getAttribute(Const.CURRENT_PATH);
+
+        User user = (User)session.getAttribute(Const.USER_KEY);
+
+        //如果点击了回退按钮,退回到主目录就不可回退
+        if(back != null && back == Const.BACK
+                && FileNiceUtil.getAfterFileUri(currentPath).length() > (File.separator + user.getUsername()) .length()){
+            currentPath = currentPath.substring(0,currentPath.lastIndexOf(File.separator)+1);
         }
 
         if(fileName != null){
@@ -103,6 +106,20 @@ public class FilesContorller {
         session.setAttribute(Const.CURRENT_PATH,currentPath);
 
         return filesService.getFileList(currentPath);
+    }
+
+    @ResponseBody
+    @RequestMapping(value = "/newFolder.do", method = RequestMethod.GET)
+    public ServerResponse newFolder(String folderName, HttpSession session){
+
+        //得到当前访问路径
+        String currentPath = (String)session.getAttribute(Const.CURRENT_PATH);
+
+        if(folderName != null){
+            currentPath = currentPath + File.separator + folderName;
+        }
+
+        return filesService.newFolder(currentPath);
     }
 
 

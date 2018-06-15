@@ -10,6 +10,8 @@ import dao.FilesDao;
 import entity.Files;
 import entity.User;
 import org.apache.commons.io.FileUtils;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -43,6 +45,8 @@ public class FilesServiceImpl implements FilesService {
 
     private final FilesDao filesDao;
 
+    private static final Log log = LogFactory.getLog(FilesServiceImpl.class);
+
     @Autowired
     public FilesServiceImpl(FilesDao filesDao) {
         this.filesDao = filesDao;
@@ -73,16 +77,17 @@ public class FilesServiceImpl implements FilesService {
         String fileName = file.getOriginalFilename();
 
         //创建保存的目录，并得到目录名
-        String dir = FileNiceUtil.getDirFile(user.getUsername(),path);
+        //String dir = FileNiceUtil.getDirFile(user.getUsername(),path);
 
         //如果得到为空，则创建失败
-        if(dir == null){
-            return ServerResponse.getServerResponse(FilesResponse.UPFILE_FAILURE);
-        }
+//        if(dir == null){
+//            return ServerResponse.getServerResponse(FilesResponse.UPFILE_FAILURE);
+//        }
 
         //得到保存文件的uri
-        String uri = dir + fileName;
+        String uri = path + File.separator + fileName;
 
+        String deleteUri = uri;
         //如果该文件存在，提示重复
         if(FileNiceUtil.fileIsExits(uri)){
             return ServerResponse.getServerResponse(FilesResponse.FILE_IS_EXIST);
@@ -99,13 +104,19 @@ public class FilesServiceImpl implements FilesService {
         uri = FileNiceUtil.getAfterFileUri(uri);
 
         //文件上传成功，将信息插入数据库
-        Files files = new Files(user.getUserId(), uri , FileNiceUtil.getFileType(fileName),fileName);
-        affect = filesDao.saveFile(files);
-
-        //如果返回小于等于0，则插入数据失败
-        if(affect <=0){
+        try {
+            Files files = new Files(user.getUserId(), uri , FileNiceUtil.getFileType(fileName),fileName);
+            affect = filesDao.saveFile(files);
+            if(affect <=0){
+                return ServerResponse.getServerResponse(FilesResponse.UPFILE_FAILURE);
+            }
+        }catch (Exception e){
+            File f = new File(deleteUri);
+            f.delete();
+            log.error("未知错误发生",e);
             return ServerResponse.getServerResponse(FilesResponse.UPFILE_FAILURE);
         }
+
 
         return ServerResponse.getServerResponse(FilesResponse.UPFILE_SUCCESS);
     }
@@ -281,6 +292,29 @@ public class FilesServiceImpl implements FilesService {
             return ServerResponse.getServerResponse(FilesResponse.GET_FILE_LIST_FAILURE);
         }
         return ServerResponse.getServerResponse(FilesResponse.GET_FILE_LIST_SUCCESS,fs);
+    }
+
+    /**
+     * 创建文件夹
+     * @param currentPath 当前访问路径
+     * @return 创建结果
+     */
+    @Override
+    public ServerResponse newFolder(String currentPath) {
+
+        //判断同级下文件是否重名
+        if(FileNiceUtil.fileIsExits(currentPath)){
+            return ServerResponse.getServerResponse(FilesResponse.NEW_FILE_FOLDER_EXIST);
+
+        }
+
+        //创建文件夹
+        File file = new File(currentPath);
+        if(!file.mkdir()){
+            return ServerResponse.getServerResponse(FilesResponse.NEW_FILE_FOLDER_FAILURE);
+        }
+
+        return ServerResponse.getServerResponse(FilesResponse.NEW_FILE_FOLDER_SUCCESS);
     }
 
 }

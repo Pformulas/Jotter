@@ -236,10 +236,11 @@ public class FileNiceUtil {
 
         for(int i = 0; i < files.length; i++){
             fs[i] = new Files();
+            fs[i].setType(FileNiceUtil.getFileType(files[i].getName()));
             if(files[i].isDirectory()){
+                System.out.println(1);
                 fs[i].setType(Const.Folder_Type);
             }
-            fs[i].setType(FileNiceUtil.getFileType(files[i].getName()));
             fs[i].setFileName(files[i].getName());
             fs[i].setUrl(partUri + File.separator + files[i].getName());
         }

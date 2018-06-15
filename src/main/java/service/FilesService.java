@@ -75,4 +75,11 @@ public interface FilesService {
      * @return 文件列表和获取结果
      */
     public ServerResponse getFileList(String currentPath);
+
+    /**
+     * 新建文件夹
+     * @param currentPath 当前访问路径
+     * @return 创建结果
+     */
+    public ServerResponse newFolder(String currentPath);
 }

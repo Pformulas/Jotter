@@ -1,5 +1,6 @@
 package dao;
 
+import Utils.FileNiceUtil;
 import entity.Files;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -25,8 +26,10 @@ public class FilesDaoTest {
     @Test
     public void testSaveFile(){
 
-        String currentPath= "E:/测试";
-        currentPath = currentPath.substring(0,currentPath.lastIndexOf("/")+1);
+        String currentPath= "D:\\apache-tomcat-8.5.29\\webapps\\Jotter\\File\\imp";
+
+        currentPath = currentPath.substring(0,currentPath.lastIndexOf(File.separator)+1);
+        System.out.println(FileNiceUtil.getAfterFileUri(currentPath));
         System.out.println(currentPath);
 
 
