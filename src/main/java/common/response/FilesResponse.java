@@ -25,7 +25,8 @@ public enum FilesResponse implements ResponseStatus {
     GET_FILE_LIST_SUCCESS(ResponseStatus.SUCCESS_CODE,"获取文件列表成功"),
     NEW_FILE_FOLDER_SUCCESS(ResponseStatus.SUCCESS_CODE,"创建文件夹成功"),
     NEW_FILE_FOLDER_EXIST(-9,"创建文件夹失败，名称重复"),
-    NEW_FILE_FOLDER_FAILURE(-10,"创建文件夹失败，请重试");
+    NEW_FILE_FOLDER_FAILURE(-10,"创建文件夹失败，请重试"),
+    FILE_TYPE_IS_WEONG(-11, "文件类型错误");
 
 
     private final int code;

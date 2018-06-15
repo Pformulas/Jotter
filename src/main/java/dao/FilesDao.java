@@ -1,6 +1,7 @@
 package dao;
 
 import entity.Files;
+import entity.User;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
@@ -24,10 +25,10 @@ public interface FilesDao {
     /**
      * 获取这个userId和type的文件列表
      * 参数： userId  type
-     * @param files
+     * @param userId type
      * @return 文件列表
      */
-    public List<Files> listFile(Files files);
+    public List<Files> listFile(@Param(("userId"))String userId, @Param(("type"))String type);
 
     /**
      * 根据url删除指定的文件

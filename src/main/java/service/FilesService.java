@@ -36,7 +36,7 @@ public interface FilesService {
      * @param files
      * @return
      */
-    public ServerResponse<List<Files>> listFile(Files files);
+    public ServerResponse<List<Files>> listFile(User user, String type);
 
     /**
      * 删除指定url的文件

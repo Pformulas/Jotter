@@ -122,13 +122,27 @@ public class FilesServiceImpl implements FilesService {
     }
 
     /**
-     * 查询这个用户的某个类型的文件
-     * @param files
+     * 根据类型查询文件的列表
+     * @param user  需要userId
+     * @param type  文件类型
      * @return
      */
     @Override
-    public ServerResponse<List<Files>> listFile(Files files) {
-        return null;
+    public ServerResponse<List<Files>> listFile(User user, String type) {
+        if(user == null){
+            return  ServerResponse.getServerResponse(NoteBookResponse.PARAMETER_NULL);
+        }
+        if(user.getUserId() == null){
+            return ServerResponse.getServerResponse(NoteBookResponse.USER_ID_NULL);
+        }
+        if(type == null){
+            return ServerResponse.getServerResponse(FilesResponse.FILE_TYPE_IS_WEONG);
+        }
+        List<Files> files = filesDao.listFile(user.getUserId(), type);
+        if(files.size() <= 0){
+            return ServerResponse.getServerResponse(FilesResponse.GET_FILE_LIST_FAILURE);
+        }
+        return ServerResponse.getServerResponse(FilesResponse.SUCCESS, files);
     }
 
     /**

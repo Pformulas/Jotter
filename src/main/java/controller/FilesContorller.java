@@ -167,9 +167,30 @@ public class FilesContorller {
         return responseEntity;
     }
 
+    /**
+     * 删除文件
+     * 参数：一个url数组， user需要username, userId
+     * @param request
+     * @param urls
+     * @param user
+     * @return
+     */
     @ResponseBody
     @RequestMapping(path = "/deleteFile.do", produces = {"application/json;charset=UTF8"})
     public ServerResponse deleteFile(HttpServletRequest request, String[] urls, User user){
         return filesService.deleteFile(request, urls, user);
+    }
+
+    /**
+     * 根据文件的类型来列表
+     * 参数 user的userId   type是字符串，表示类别
+     * @param user
+     * @param type
+     * @return
+     */
+    @ResponseBody
+    @RequestMapping(path = "/listFilesByType.do", produces = {"application/json;charset=UTF8"})
+    public ServerResponse listFilesByType(User user, String type){
+        return filesService.listFile(user, type);
     }
 }

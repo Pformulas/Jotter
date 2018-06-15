@@ -8,7 +8,7 @@
             VALUES (#{userId}, #{url}, #{type}, #{fileName})
     </insert>
 
-    <select id="listFile" parameterType="entity.Files" resultType="entity.Files">
+    <select id="listFile" resultType="entity.Files">
         SELECT url, file_name FROM Jo_File WHERE user_id = #{userId} AND type = #{type}
     </select>
 
