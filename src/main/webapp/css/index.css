@@ -194,8 +194,27 @@ input:focus {
 .mainBox .repoPage .content .left > ul {
     position: absolute;
     right: 0;
-    top: 36px;
+    top: 72px;
     margin-right: 5px;
+}
+
+/* 添加笔记本按钮 */
+.mainBox .repoPage .content .left .addANotebookDiv {
+    width: 50%;
+    position: absolute;
+    top: 36px;
+    right: 0;
+    text-align: center;
+    margin: 12px 0;
+}
+
+.mainBox .repoPage .content .left .addANotebookDiv a {
+    color: #5B4947;
+    text-decoration: none;
+}
+
+.mainBox .repoPage .content .left .addANotebookDiv a:hover {
+    color: #0092C7;
 }
 
 .mainBox .repoPage .content .left > p {
@@ -230,7 +249,6 @@ ul.noteBookList li {
     margin: 10px 0;
     box-sizing: border-box;
     transition: border 200ms;
-    /*overflow: hidden;*/
 }
 
 ul.noteBookList li:hover, ul.noteBookList li.noteBookListChosen {
@@ -238,6 +256,7 @@ ul.noteBookList li:hover, ul.noteBookList li.noteBookListChosen {
     border-right: 6px solid #0092C7;
     cursor: pointer;
     position: relative;
+    color: #0092C7;
 }
 
 ul.noteBookList li.noteBookListChosen:before {
