@@ -11,8 +11,13 @@ const repoSwiper = new Swiper('#repoSwiper', {
     direction: 'vertical',
 });
 
-// 笔记界面的切换器
+// 笔记内部界面的切换器
 const noteBookListSwiper = new Swiper('#notebookListSwiper', {
+    allowTouchMove: false, // 只能通过点击导航栏来切换，不允许直接切换
+});
+
+// 笔记内部右边界面的切换器
+const noteListSwiper = new Swiper('#noteListSwiper', {
     allowTouchMove: true, // 只能通过点击导航栏来切换，不允许直接切换
 });
 

@@ -201,7 +201,7 @@ input:focus {
     position: absolute;
     right: 0;
     top: 72px;
-    margin-right: 5px;
+    margin-right: 10px;
 }
 
 /* 添加笔记本按钮 */
@@ -225,14 +225,17 @@ input:focus {
 
 .mainBox .repoPage .content .left .leftBox > p {
     width: 50%;
-    height: 36px;
-    line-height: 36px;
-    font-size: 16px;
     position: absolute;
     right: 0;
     top: 0;
-    /*padding-left: 1em;*/
-    margin-right: 5px;
+    margin-right: 10px;
+}
+
+.noteBookP {
+    width: 80%;
+    height: 36px;
+    line-height: 36px;
+    font-size: 16px;
     box-sizing: border-box;
     border-bottom: 1px dashed #5B4947;
 }
@@ -263,6 +266,7 @@ ul.noteBookList li:hover, ul.noteBookList li.noteBookListChosen {
     cursor: pointer;
     position: relative;
     color: #0092C7;
+    border-radius: 6px;
 }
 
 /* li 前面的小玩意 */
@@ -279,8 +283,69 @@ ul.noteBookList li.noteBookListChosen:before {
     transform: translate(-50%, -50%);
 }
 
+/* 右边笔记区域的 li 样式 */
+.right ul.noteBookList li:hover {
+    border: 1px solid #0092C7;
+    border-left: 6px solid #0092C7;
+}
+
+.right ul.noteBookList li:hover:before {
+    content: '';
+    width: 12px;
+    height: 12px;
+    display: block;
+    background-color: #0092C7;
+    border-radius: 50%;
+    position: absolute;
+    top: 50%;
+    right: 0;
+    transform: translate(50%, -50%);
+}
+
 .mainBox .repoPage .content .right {
     flex: 4;
+    overflow-y: auto;
+}
+
+.mainBox .repoPage .content .right .rightBox {
+    width: 100%;
+    margin-left: 10px;
+    box-sizing: border-box;
+}
+
+.mainBox .repoPage .content .right .rightBox .notebookPan p {
+    width: 80%;
+    text-align: center;
+    margin-bottom: 10px;
+}
+
+.mainBox .repoPage .content .right .rightBox .notebookPan p .btn {
+    width: 110px;
+    height: 30px;
+    line-height: 30px;
+    border-radius: unset;
+    font-size: 16px;
+}
+
+.mainBox .repoPage .content .right .rightBox .notebookPan p .btn:hover {
+    border-radius: 15px;
+}
+
+.mainBox .repoPage .content .right .rightBox ul.noteBookList {
+    width: 80%;
+}
+
+.mainBox .repoPage .content .right .rightBox .noteList {
+    margin-top: 30px;
+}
+
+.mainBox .repoPage .content .right ul.noteBookList li p {
+    line-height: 32px;
+}
+
+.mainBox .repoPage .content .right ul.noteBookList li p:nth-of-type(2) {
+    line-height: 24px;
+    font-size: 12px;
 }
 
 /* 设置区域 */
