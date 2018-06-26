@@ -11,8 +11,6 @@ const repoSwiper = new Swiper('#repoSwiper', {
     direction: 'vertical',
 });
 
-let isLogin = false; // 判断是否登陆
-
 $(function () {
 
     // 点击导航栏样式切换
@@ -20,6 +18,19 @@ $(function () {
 
     // 切换菜单速度，单位：ms
     const SLIDE_SPEED = 800;
+
+    // 从 localStorage 中获取登陆信息时用到的 key 值
+    const LOGIN_KEY = "isLogin";
+
+    // 当登陆之后，将登陆信息存在 localStorage 中
+    function loginSuccess() {
+        sessionStorage.setItem(LOGIN_KEY, "true");
+    }
+
+    // 判断是否登陆的方法
+    function isLogin() {
+        return sessionStorage.getItem(LOGIN_KEY) === "true";
+    }
 
     // 清除原来的选择样式，并给指定元素加上样式
     function removeAndAddClass(ele) {
@@ -78,6 +89,12 @@ $(function () {
 
     // 切换显示资料和修改资料的模块
     function switchShowOrUpdate() {
+        if (!isLogin()) {
+            // 还没有登陆，跳转到登陆界面
+            slideToLoginPage();
+            return;
+        }
+
         const detailDiv = $($(".detail")[0]);
         const formDiv = $($(".form")[0]);
 
@@ -103,7 +120,7 @@ $(function () {
                 repoSwiper.slideTo(1, SLIDE_SPEED);
             }
 
-            if (isLogin === true) {
+            if (isLogin() === true) {
                 repoSwiper.slideTo(2, SLIDE_SPEED);
             }
         });
@@ -253,7 +270,7 @@ $(function () {
 
                 if (resp.status === 0) {
                     // 登陆成功
-                    isLogin = true;
+                    loginSuccess();
 
                     // 设置个人信息到页面上
                     putInfoOnSettingPage(resp.data);
@@ -289,9 +306,18 @@ $(function () {
         });
     }
 
+    // 如果是登陆了，就获取信息
+    if (isLogin()) {
+        getInfo();
+
+        // 修改首页按钮为跳转到笔记界面
+        $(".welcomePage .operation").hide();
+        $(".welcomePage .afterLogin").show();
+    }
+
     // 修改个人资料
     $("#saveBtn").click(function () {
-        if (isLogin) {
+        if (isLogin()) {
             // 先判断邮箱是否合法
             if (isEmail($("#mailId").val())) {
                 $.ajax({

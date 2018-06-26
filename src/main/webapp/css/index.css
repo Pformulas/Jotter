@@ -130,6 +130,7 @@ input:focus {
     border-radius: 25px;
     margin: 18px 16px 0;
     transition: 100ms;
+    cursor: pointer;
     background-color: transparent;
     outline: none; /* 消除 button 点击之后的蓝框 */
 }
