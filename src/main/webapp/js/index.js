@@ -12,7 +12,7 @@ const repoSwiper = new Swiper('#repoSwiper', {
 });
 
 // 笔记界面的切换器
-const noteBookListSwiper = new Swiper('#noteBookListSwiper', {
+const noteBookListSwiper = new Swiper('#notebookListSwiper', {
     allowTouchMove: true, // 只能通过点击导航栏来切换，不允许直接切换
 });
 
