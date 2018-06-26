@@ -265,6 +265,7 @@ ul.noteBookList li:hover, ul.noteBookList li.noteBookListChosen {
     color: #0092C7;
 }
 
+/* li 前面的小玩意 */
 ul.noteBookList li.noteBookListChosen:before {
     content: '';
     width: 12px;
