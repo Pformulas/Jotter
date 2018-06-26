@@ -11,6 +11,11 @@ const repoSwiper = new Swiper('#repoSwiper', {
     direction: 'vertical',
 });
 
+// 笔记界面的切换器
+const noteBookListSwiper = new Swiper('#noteBookListSwiper', {
+    allowTouchMove: true, // 只能通过点击导航栏来切换，不允许直接切换
+});
+
 $(function () {
 
     // 点击导航栏样式切换
@@ -62,7 +67,7 @@ $(function () {
         removeAndAddClass(navBtns[1]);
     }
 
-    // 切换到注册界面
+    // 切换到仓库界面
     function slideToRepoPage() {
         mainSwiper.slideTo(1, SLIDE_SPEED);
         repoSwiper.slideTo(2, SLIDE_SPEED);

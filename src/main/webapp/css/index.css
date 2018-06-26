@@ -79,12 +79,12 @@ input:focus {
 /* 中间重要展示区域 */
 .mainBox {
     width: 100%;
-    padding-top: 75px;
+    padding-top: 50px;
 }
 
 .mainBox .page {
     width: 100%;
-    height: 800px;
+    height: 860px;
 }
 
 .welcomePage, .repoPage, .settingPage {
@@ -96,7 +96,7 @@ input:focus {
 .mainBox .welcomePage .content {
     width: 70%;
     height: 70%;
-    margin: 0 auto;
+    margin: 10px auto 0;
     text-align: center;
 }
 
@@ -167,6 +167,96 @@ input:focus {
     width: 300px;
 }
 
+/* 笔记主要内容区域 */
+.mainBox .repoPage .content {
+    display: flex;
+}
+
+.mainBox .repoPage .content .left {
+    height: 100%;
+    flex: 2;
+    position: relative;
+    overflow-y: auto;
+}
+
+/* 分割线 */
+.mainBox .repoPage .content .left:before {
+    content: '';
+    width: 0;
+    height: 90%;
+    display: block;
+    position: absolute;
+    right: 0;
+    top: 6px;
+    border-right: 1px dashed #5B4947;
+}
+
+.mainBox .repoPage .content .left > ul {
+    position: absolute;
+    right: 0;
+    top: 36px;
+    margin-right: 5px;
+}
+
+.mainBox .repoPage .content .left > p {
+    width: 50%;
+    height: 36px;
+    line-height: 36px;
+    font-size: 16px;
+    position: absolute;
+    right: 0;
+    top: 0;
+    /*padding-left: 1em;*/
+    margin-right: 5px;
+    box-sizing: border-box;
+    border-bottom: 1px dashed #5B4947;
+}
+
+/* 交集选择器，只有 class 为 noteBookList 的 ul 才有效 */
+/* 笔记本列表样式 */
+ul.noteBookList {
+    width: 50%;
+    height: max-content;
+}
+
+ul.noteBookList li {
+    width: 100%;
+    height: max-content;
+    line-height: 40px;
+    list-style: none;
+    border: 1px dashed #5B4947;
+    color: #5B4947;
+    padding-left: 1em;
+    margin: 10px 0;
+    box-sizing: border-box;
+    transition: border 200ms;
+    /*overflow: hidden;*/
+}
+
+ul.noteBookList li:hover, ul.noteBookList li.noteBookListChosen {
+    border: 1px solid #0092C7;
+    border-right: 6px solid #0092C7;
+    cursor: pointer;
+    position: relative;
+}
+
+ul.noteBookList li.noteBookListChosen:before {
+    content: '';
+    width: 12px;
+    height: 12px;
+    display: block;
+    background-color: #0092C7;
+    border-radius: 50%;
+    position: absolute;
+    top: 50%;
+    left: 0;
+    transform: translate(-50%, -50%);
+}
+
+.mainBox .repoPage .content .right {
+    flex: 4;
+}
+
 /* 设置区域 */
 .mainBox .settingPage {
     text-align: center;
@@ -179,10 +269,10 @@ input:focus {
 
 .mainBox .settingPage img {
     width: 300px;
-    margin-bottom: 10px;
+    margin: 10px auto;
 }
 
-.mainBox .settingPage .detail p {
+.mainBox .settingPage p {
     font-size: 18px;
     margin: 20px 0;
     letter-spacing: 2px;
@@ -230,11 +320,11 @@ input:focus {
 
     /* 中间重要展示区域 */
     .mainBox {
-        padding-top: 60px;
+        padding-top: 45px;
     }
 
     .mainBox .page {
-        height: 540px;
+        height: 580px;
     }
 
     .welcomePage, .repoPage, .settingPage {
@@ -280,7 +370,7 @@ input:focus {
         width: 240px;
     }
 
-    .mainBox .settingPage .detail p {
+    .mainBox .settingPage p {
         font-size: 14px;
         margin: 16px 0;
         letter-spacing: 1px;
