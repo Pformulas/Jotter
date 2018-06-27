@@ -20,7 +20,7 @@ public enum UserResponse implements ResponseStatus {
     REGISTER_FAILED(-5, "注册失败"),
     LOGIN_ERROR(-6, "用户名或密码错误"),
     LOGIN_SUCCESS(ResponseStatus.SUCCESS_CODE, "登陆成功"),
-    NEED_LOGIN(-7, "请先登录再操作"),
+    NEED_LOGIN(-7, "您还未登录！"),
     UPDATE_INFO_FAILED(-8, "更新信息失败"),
     EMAIL_IS_ILLEGAL(-9, "邮箱不合法，信息更新失败");
 
