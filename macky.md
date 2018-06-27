@@ -1,4 +1,3 @@
-####author:macky
 #NoteBookController
 
 ##根据笔记本获取他的笔记
@@ -7,23 +6,144 @@
 - 页码，笔记本id   参数 
 -  SUCCESS(0, "执行成功"),
 
+		{
+		"status": 0,
+		"msg": "执行成功",
+		"data": {
+		"pageNum": 1,
+		"pageSize": 8,
+		"size": 2,
+		"startRow": 1,
+		"endRow": 2,
+		"total": 2,
+		"pages": 1,
+		"list": [
+		{
+		"noteId": "48b6c5eb-cd99-4a62-a172-1eb96337e7f7",
+		"notebookId": "19d4d1aa-671e-44a5-901e-53d58997105a",
+		"userId": "af8e9c46-a000-4f2e-aea1-f7bba5718b4a",
+		"noteTitle": "112312312",
+		"noteDetail": "af8e9c46-a000-4f2e-aea1-f7bba5718b4a",
+		"noteCreateTime": 1528698248000,
+		"noteUpdateTime": 1528698248000
+		},
+		{
+		"noteId": "d6244e4e-939a-49bf-bb33-f337d83a2197",
+		"notebookId": "19d4d1aa-671e-44a5-901e-53d58997105a",
+		"userId": "af8e9c46-a000-4f2e-aea1-f7bba5718b4a",
+		"noteTitle": "11231",
+		"noteDetail": "af8e9c46-a000-4f2e-aea1-f7bba5718b4a",
+		"noteCreateTime": 1528698814000,
+		"noteUpdateTime": 1528698814000
+		}
+		],
+		"prePage": 0,
+		"nextPage": 0,
+		"isFirstPage": true,
+		"isLastPage": true,
+		"hasPreviousPage": false,
+		"hasNextPage": false,
+		"navigatePages": 5,
+		"navigatepageNums": [
+		1
+		],
+		"navigateFirstPage": 1,
+		"navigateLastPage": 1,
+		"firstPage": 1,
+		"lastPage": 1
+		},
+		"success": true
+		}
+
 ##获取这个用户的所有笔记本
 - /show_notebook_of_userId.do
 - (Integer page, String userId)
 - 页码，用户id
 - SUCCESS(0, "执行成功"),
 
+		{
+		"status": 0,
+		"msg": "执行成功",
+		"data": {
+		"pageNum": 1,
+		"pageSize": 8,
+		"size": 2,
+		"startRow": 1,
+		"endRow": 2,
+		"total": 2,
+		"pages": 1,
+		"list": [
+		{
+		"notebookId": "19d4d1aa-671e-44a5-901e-53d58997105a",
+		"userId": "af8e9c46-a000-4f2e-aea1-f7bba5718b4a",
+		"notebookName": "ä»å¤©æ¯ä¸ªå¥½æ¥å­",
+		"notebookCreateTime": 1528697097000,
+		"notebookUpdateTime": 1528697097000
+		},
+		{
+		"notebookId": "dcc06f3f-0f1c-491d-b6e7-406b277737d2",
+		"userId": "af8e9c46-a000-4f2e-aea1-f7bba5718b4a",
+		"notebookName": "ä»å¤©æ¯ä¸ªå¥½æ¥å­1",
+		"notebookCreateTime": 1528697317000,
+		"notebookUpdateTime": 1528697317000
+		}
+		],
+		"prePage": 0,
+		"nextPage": 0,
+		"isFirstPage": true,
+		"isLastPage": true,
+		"hasPreviousPage": false,
+		"hasNextPage": false,
+		"navigatePages": 5,
+		"navigatepageNums": [
+		1
+		],
+		"navigateFirstPage": 1,
+		"navigateLastPage": 1,
+		"firstPage": 1,
+		"lastPage": 1
+		},
+		"success": true
+		}
 ##根据笔记id查找一个笔记
 - /show_note.do
 - (String noteId)
 - 笔记id
 - SUCCESS(0, "执行成功"),
 
+		{
+		"status": 0,
+		"msg": "执行成功",
+		"data": {
+		"noteId": null,
+		"notebookId": "19d4d1aa-671e-44a5-901e-53d58997105a",
+		"userId": "af8e9c46-a000-4f2e-aea1-f7bba5718b4a",
+		"noteTitle": "112312312",
+		"noteDetail": "af8e9c46-a000-4f2e-aea1-f7bba5718b4a",
+		"noteCreateTime": 1528698248000,
+		"noteUpdateTime": 1528698248000
+		},
+		"success": true
+		}
+
 ##根据笔记本id查找一个笔记本
 - /show_notebook.do
 - (String notebookId)
 - 笔记本id
 - - SUCCESS(0, "执行成功"),
+
+		{
+		"status": 0,
+		"msg": "执行成功",
+		"data": {
+		"notebookId": "19d4d1aa-671e-44a5-901e-53d58997105a",
+		"userId": "af8e9c46-a000-4f2e-aea1-f7bba5718b4a",
+		"notebookName": "ä»å¤©æ¯ä¸ªå¥½æ¥å­",
+		"notebookCreateTime": 1528697097000,
+		"notebookUpdateTime": 1528697097000
+		},
+		"success": true
+		}
 
 ##更新笔记本
 - /update_notebook.do
@@ -77,3 +197,16 @@
 - type是字符串，表示类别
 - SUCCESS(0, "执行成功"),
 
+		{
+		"status": 0,
+		"msg": "执行成功",
+		"data": [
+		{
+		"userId": null,
+		"url": "\\imp\\文件操作.txt",
+		"type": null,
+		"fileName": "文件操作.txt"
+		}
+		],
+		"success": true
+		}
