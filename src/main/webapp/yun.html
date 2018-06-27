@@ -1,0 +1,2647 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="css/semantic.css">
+    <link rel="stylesheet" href="css/yun.css">
+    <title>Jotter云盘</title>
+</head>
+
+<body>
+    <div class="layout-wrapper">
+        <div class="layout-body">
+            <div class="layout-body-inner">
+                <!-- 侧边栏 -->
+                <div class="layout-aside">
+                    <div class="layout-aside-hd">
+                        <div class="mod-logo">
+                            <img class="ui image centered" src="https://qzonestyle.gtimg.cn/qz-proj/wy-pc-v3/static/img/svg/logo-v2.svg" alt="">
+                        </div>
+                        <div class="mod-search">
+                            <div class="ui left icon input">
+                                <input type="text" placeholder="搜索全部">
+                                <i class="search icon"></i>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="layout-aside-bd">
+                        <div class="mod_menu" id="_menu_list">
+                            <div class="menu_item">
+                                <ul class="menu_list">
+                                    <li>
+                                        <a href="javascript:void(0)" data-type="1">
+                                            <i class="large clock icon"></i>最近</a>
+                                    </li>
+                                </ul>
+                            </div>
+                            <div class="menu_item">
+                                <ul class="menu_list">
+                                    <li>
+                                        <a href="javascript:void(0)" data-type="2">
+                                            <i class="large book icon"></i>全部</a>
+                                    </li>
+                                    <li>
+                                        <a href="javascript:void(0)" data-type="3">
+                                            <i class="large folder icon"></i>文档</a>
+                                    </li>
+                                    <li>
+                                        <a href="javascript:void(0)" data-type="4">
+                                            <i class="large image icon"></i>图片</a>
+                                    </li>
+                                    <li>
+                                        <a href="javascript:void(0)" data-type="5">
+                                            <i class="large video icon"></i>视频</a>
+                                    </li>
+                                    <li>
+                                        <a href="javascript:void(0)" data-type="6">
+                                            <i class="large music icon"></i>音乐</a>
+                                    </li>
+                                </ul>
+                            </div>
+                            <div class="menu_item">
+                                <ul class="menu_list">
+                                    <li>
+                                        <a href="javascript:void(0)" data-type="7">
+                                            <i class="large book icon"></i>照片</a>
+                                    </li>
+                                    <li>
+                                        <a href="javascript:void(0)" data-type="8">
+                                            <i class="large folder icon"></i>笔记</a>
+                                    </li>
+                                    <li>
+                                        <a href="javascript:void(0)" data-type="9">
+                                            <i class="large image icon"></i>共享组</a>
+                                    </li>
+                                    <li>
+                                        <a href="javascript:void(0)" data-type="10">
+                                            <i class="large video icon"></i>保险箱</a>
+                                    </li>
+                                    <li>
+                                        <a href="javascript:void(0)" data-type="11">
+                                            <i class="large music icon"></i>分享链接</a>
+                                    </li>
+                                    <li>
+                                        <a href="javascript:void(0)" data-type="12">
+                                            <i class="large music icon"></i>回收站</a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="layout-aside-ft"></div>
+                </div>
+                <!-- 主体 -->
+                <div class="layout-main-wrap">
+                    <div class="layout-toolbar">
+                        <div class="ui basic segment">
+                            <button class="ui blue button" id="btn" onclick="fileUpload()">
+                                <i class="upload icon"></i>上传</button>
+                            <input type="file" id="File" style="display: none;" multiple="multiple" />
+                            <a class="ui secondary basic button" id="plus">
+                                <i class="plus icon"></i>新建</a>
+                            <div class="ui mini modal" id="plus_modal">
+                                <div class="header">请输入文件夹的名字</div>
+                                <div class="ui fluid input">
+                                    <input type="text" name="fileName">
+                                </div>
+                                <div class="actions">
+                                    <div class="ui green button" id="plus_ensure">确认</div>
+                                    <div class="ui red button" id="plus_console">取消</div>
+                                </div>
+                            </div>
+
+                            <!-- 按钮组
+                                下载，分享，删除，更多
+                            -->
+                            <div class="ui icon basic buttons" style="display: none;">
+                                <button class="ui icon button" title="下载">
+                                    <i class="upload icon"></i>
+                                </button>
+                                <button class="ui icon button" title="分享">
+                                    <i class="share square outline icon"></i>
+                                </button>
+                                <button class="ui icon button" title="删除" id="delete">
+                                    <i class="trash alternate outline icon"></i>
+                                </button>
+                                <div class="ui mini modal" id="delete_modal">
+                                    <div class="header">删除文件</div>
+                                    <div class="content">
+                                        <h3 class="ui header"><i class="icon blue big exclamation"></i>确定要删除这个文件夹?</h3>
+                                    </div>
+                                    <div class="actions">
+                                        <div class="ui green button" id="delete_ensure">确认</div>
+                                        <div class="ui red button" id="delete_console">取消</div>
+                                    </div>
+                                </div>
+                                <button class="ui icon button" title="更多" id="btn_more">
+                                    <i class="ellipsis horizontal icon"></i>
+                                </button>
+                            </div>
+                        </div>
+                        <div class="ui header divider" style="margin-top: -10px;"></div>
+                    </div>
+                    <div class="layout-main">
+                        <div class="layout-main-hd">
+                            <div class="ui left floated basic segment">
+                                <p style="font-size: 15px;line-height: 28px;padding-left: 50px;font-weight: bolder;">全部</p>
+                            </div>
+                            <div class="ui right floated basic segment" style="padding-right: 40px;">
+                                <i class="list large icon"></i>
+                                <i class="qrcode large icon"></i>
+                            </div>
+                        </div>
+                    </div>
+                    <div id="_main_body" class="layout-main-bd">
+                        <div class="mod-list-group" data-type="1">
+                            <div class="list-group-hd">
+                                <div class="ui basic segment" style="display: flex;width: 100%;padding-left: 60px;">
+                                    <div class="list-group-tit name">
+                                        名称
+                                    </div>
+                                    <div class="list-group-tit time">
+                                        上次修改时间
+                                    </div>
+                                    <div class="list-group-tit size">
+                                        大小
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="list-group-bd">
+                                <div class="list-group-wrapper">
+                                    <ul class="list-group">
+                                        <li class="list-group-item">
+                                            <div class="item-inner">
+                                                <div class="item-tit">
+                                                    <i class="big folder blue icon"></i>
+                                                    <a href="#">
+                                                        QQ浏览器</a>
+                                                </div>
+                                                <div class="item-info">
+                                                    <div class="item-info-list">
+                                                        <span>02月26日 14:44</span>
+                                                    </div>
+                                                    <div class="item-info-list">
+                                                        <span>3.6 MB</span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </li>
+                                        <li class="list-group-item">
+                                            <div class="item-inner">
+                                                <div class="item-tit">
+                                                    <i class="big folder blue icon"></i>
+                                                    <a href="#">
+                                                        网络硬盘收藏夹</a>
+                                                </div>
+                                                <div class="item-info">
+                                                    <div class="item-info-list">
+                                                        <span>02月26日 14:44</span>
+                                                    </div>
+                                                    <div class="item-info-list">
+                                                        <span>3.6 MB</span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </li>
+                                        <li class="list-group-item">
+                                            <div class="item-inner">
+                                                <div class="item-tit">
+                                                    <i class="big folder blue icon"></i>
+                                                    <a href="#">
+                                                        QQ</a>
+                                                </div>
+                                                <div class="item-info">
+                                                    <div class="item-info-list">
+                                                        <span>02月26日 14:44</span>
+                                                    </div>
+                                                    <div class="item-info-list">
+                                                        <span>3.6 MB</span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </li>
+                                        <li class="list-group-item">
+                                            <div class="item-inner">
+                                                <div class="item-tit">
+                                                    <i class="big file blue icon"></i>
+                                                    <a href="#">
+                                                        MadaoMusicSpider.exe</a>
+                                                </div>
+                                                <div class="item-info">
+                                                    <div class="item-info-list">
+                                                        <span>02月26日 14:44</span>
+                                                    </div>
+                                                    <div class="item-info-list">
+                                                        <span>3.6 MB</span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </li>
+                                        <li class="list-group-item">
+                                            <div class="item-inner">
+                                                <div class="item-tit">
+                                                    <i class="big folder blue icon"></i>
+                                                    <a href="#">
+                                                        QQ浏览器</a>
+                                                </div>
+                                                <div class="item-info">
+                                                    <div class="item-info-list">
+                                                        <span>02月26日 14:44</span>
+                                                    </div>
+                                                    <div class="item-info-list">
+                                                        <span>3.6 MB</span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </li>
+                                        <li class="list-group-item">
+                                            <div class="item-inner">
+                                                <div class="item-tit">
+                                                    <i class="big folder blue icon"></i>
+                                                    <a href="#">
+                                                        QQ浏览器</a>
+                                                </div>
+                                                <div class="item-info">
+                                                    <div class="item-info-list">
+                                                        <span>02月26日 14:44</span>
+                                                    </div>
+                                                    <div class="item-info-list">
+                                                        <span>3.6 MB</span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </li>
+                                        <li class="list-group-item">
+                                            <div class="item-inner">
+                                                <div class="item-tit">
+                                                    <i class="big folder blue icon"></i>
+                                                    <a href="#">
+                                                        QQ浏览器</a>
+                                                </div>
+                                                <div class="item-info">
+                                                    <div class="item-info-list">
+                                                        <span>02月26日 14:44</span>
+                                                    </div>
+                                                    <div class="item-info-list">
+                                                        <span>3.6 MB</span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </li>
+                                        <li class="list-group-item">
+                                            <div class="item-inner">
+                                                <div class="item-tit">
+                                                    <i class="big folder blue icon"></i>
+                                                    <a href="#">
+                                                        QQ浏览器</a>
+                                                </div>
+                                                <div class="item-info">
+                                                    <div class="item-info-list">
+                                                        <span>02月26日 14:44</span>
+                                                    </div>
+                                                    <div class="item-info-list">
+                                                        <span>3.6 MB</span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </li>
+                                        <li class="list-group-item">
+                                            <div class="item-inner">
+                                                <div class="item-tit">
+                                                    <i class="big folder blue icon"></i>
+                                                    <a href="#">
+                                                        QQ浏览器</a>
+                                                </div>
+                                                <div class="item-info">
+                                                    <div class="item-info-list">
+                                                        <span>02月26日 14:44</span>
+                                                    </div>
+                                                    <div class="item-info-list">
+                                                        <span>3.6 MB</span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </li>
+                                        <li class="list-group-item">
+                                            <div class="item-inner">
+                                                <div class="item-tit">
+                                                    <i class="big folder blue icon"></i>
+                                                    <a href="#">
+                                                        QQ浏览器</a>
+                                                </div>
+                                                <div class="item-info">
+                                                    <div class="item-info-list">
+                                                        <span>02月26日 14:44</span>
+                                                    </div>
+                                                    <div class="item-info-list">
+                                                        <span>3.6 MB</span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </li>
+                                        <li class="list-group-item">
+                                            <div class="item-inner">
+                                                <div class="item-tit">
+                                                    <i class="big folder blue icon"></i>
+                                                    <a href="#">
+                                                        QQ浏览器</a>
+                                                </div>
+                                                <div class="item-info">
+                                                    <div class="item-info-list">
+                                                        <span>02月26日 14:44</span>
+                                                    </div>
+                                                    <div class="item-info-list">
+                                                        <span>3.6 MB</span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="mod-list-group" data-type="2">
+                            <div class="list-group-hd">
+                                <div class="ui basic segment" style="display: flex;width: 100%;margin-left: 70px;">
+                                    <div class="list-group-tit name">
+                                        名称
+                                    </div>
+                                    <div class="list-group-tit time">
+                                        上次修改时间
+                                    </div>
+                                    <div class="list-group-tit size">
+                                        大小
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="list-group-bd">
+                                <div class="list-group-wrapper">
+                                    <ul class="list-group">
+                                        <li class="list-group-item">
+                                            <div class="item-icon">
+                                                <input type="checkbox" name="1"/>
+                                            </div>
+                                            <div class="item-inner">
+                                                <div class="item-tit">
+                                                    <i class="big folder blue icon"></i>
+                                                    <a href="javascript:void(0)" title="QQ浏览器" data-type="111111">
+                                                        QQ浏览器</a>
+                                                </div>
+                                                <div class="item-info">
+                                                    <div class="item-info-list">
+                                                        <span>02月26日 14:44</span>
+                                                    </div>
+                                                    <div class="item-info-list">
+                                                        <span>3.6 MB</span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </li>
+                                        <li class="list-group-item">
+                                            <div class="item-icon">
+                                                <input type="checkbox" name="2"/>
+                                            </div>
+                                            <div class="item-inner">
+                                                <div class="item-tit">
+                                                    <i class="big folder blue icon"></i>
+                                                    <a href="#">
+                                                        网络硬盘收藏夹</a>
+                                                </div>
+                                                <div class="item-info">
+                                                    <div class="item-info-list">
+                                                        <span>02月26日 14:44</span>
+                                                    </div>
+                                                    <div class="item-info-list">
+                                                        <span>3.6 MB</span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </li>
+                                        <li class="list-group-item">
+                                            <div class="item-icon">
+                                                <input type="checkbox" name="3"/>
+                                            </div>
+                                            <div class="item-inner">
+                                                <div class="item-tit">
+                                                    <i class="big folder blue icon"></i>
+                                                    <a href="#">
+                                                        QQ</a>
+                                                </div>
+                                                <div class="item-info">
+                                                    <div class="item-info-list">
+                                                        <span>02月26日 14:44</span>
+                                                    </div>
+                                                    <div class="item-info-list">
+                                                        <span>3.6 MB</span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </li>
+                                        <li class="list-group-item">
+                                            <div class="item-icon">
+                                                <input type="checkbox" />
+                                            </div>
+                                            <div class="item-inner">
+                                                <div class="item-tit">
+                                                    <i class="big file icon"></i>
+                                                    <a href="#">
+                                                        MadaoMusicSpider.exe</a>
+                                                </div>
+                                                <div class="item-info">
+                                                    <div class="item-info-list">
+                                                        <span>02月26日 14:44</span>
+                                                    </div>
+                                                    <div class="item-info-list">
+                                                        <span>3.6 MB</span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </li>
+                                        <li class="list-group-item">
+                                            <div class="item-icon">
+                                                <input type="checkbox" />
+                                            </div>
+                                            <div class="item-inner">
+                                                <div class="item-tit">
+                                                    <i class="big music green icon"></i>
+                                                    <a href="#">
+                                                        夕阳西下</a>
+                                                </div>
+                                                <div class="item-info">
+                                                    <div class="item-info-list">
+                                                        <span>02月26日 14:44</span>
+                                                    </div>
+                                                    <div class="item-info-list">
+                                                        <span>3.6 MB</span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </li>
+                                        <li class="list-group-item">
+                                            <div class="item-icon">
+                                                <input type="checkbox" />
+                                            </div>
+                                            <div class="item-inner">
+                                                <div class="item-tit">
+                                                    <i class="big file code outline icon"></i>
+                                                    <a href="#">
+                                                        exp06</a>
+                                                </div>
+                                                <div class="item-info">
+                                                    <div class="item-info-list">
+                                                        <span>02月26日 14:44</span>
+                                                    </div>
+                                                    <div class="item-info-list">
+                                                        <span>3.6 MB</span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </li>
+                                        <li class="list-group-item">
+                                            <div class="item-icon">
+                                                <input type="checkbox" />
+                                            </div>
+                                            <div class="item-inner">
+                                                <div class="item-tit">
+                                                    <i class="big file code outline icon"></i>
+                                                    <a href="#">
+                                                        exp05</a>
+                                                </div>
+                                                <div class="item-info">
+                                                    <div class="item-info-list">
+                                                        <span>02月26日 14:44</span>
+                                                    </div>
+                                                    <div class="item-info-list">
+                                                        <span>3.6 MB</span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </li>
+                                        <li class="list-group-item">
+                                            <div class="item-icon">
+                                                <input type="checkbox" />
+                                            </div>
+                                            <div class="item-inner">
+                                                <div class="item-tit">
+                                                    <i class="big blue file word icon"></i>
+                                                    <a href="#">
+                                                        QQ浏览器</a>
+                                                </div>
+                                                <div class="item-info">
+                                                    <div class="item-info-list">
+                                                        <span>02月26日 14:44</span>
+                                                    </div>
+                                                    <div class="item-info-list">
+                                                        <span>3.6 MB</span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </li>
+                                        <li class="list-group-item">
+                                            <div class="item-icon">
+                                                <input type="checkbox" />
+                                            </div>
+                                            <div class="item-inner">
+                                                <div class="item-tit">
+                                                    <i class="big blue file word icon"></i>
+                                                    <a href="#">
+                                                        QQ浏览器</a>
+                                                </div>
+                                                <div class="item-info">
+                                                    <div class="item-info-list">
+                                                        <span>02月26日 14:44</span>
+                                                    </div>
+                                                    <div class="item-info-list">
+                                                        <span>3.6 MB</span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </li>
+                                        <li class="list-group-item">
+                                            <div class="item-icon">
+                                                <input type="checkbox" />
+                                            </div>
+                                            <div class="item-inner">
+                                                <div class="item-tit">
+                                                    <i class="big file pdf red icon"></i>
+                                                    <a href="#">
+                                                        QQ浏览器</a>
+                                                </div>
+                                                <div class="item-info">
+                                                    <div class="item-info-list">
+                                                        <span>02月26日 14:44</span>
+                                                    </div>
+                                                    <div class="item-info-list">
+                                                        <span>3.6 MB</span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="mod-list-group" data-type="3">
+                            <div class="list-group-hd">
+                                <div class="ui basic segment" style="display: flex;width: 100%;padding-left: 60px;">
+                                    <div class="list-group-tit name">
+                                        名称
+                                    </div>
+                                    <div class="list-group-tit time">
+                                        上次修改时间
+                                    </div>
+                                    <div class="list-group-tit size">
+                                        大小
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="list-group-bd">
+                                <div class="list-group-wrapper">
+                                    <ul class="list-group">
+                                        <li class="list-group-item">
+                                            <div class="item-inner">
+                                                <div class="item-tit">
+                                                    <i class="big folder blue icon"></i>
+                                                    <a href="#">
+                                                        WD浏览器</a>
+                                                </div>
+                                                <div class="item-info">
+                                                    <div class="item-info-list">
+                                                        <span>02月26日 14:44</span>
+                                                    </div>
+                                                    <div class="item-info-list">
+                                                        <span>3.6 MB</span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </li>
+                                        <li class="list-group-item">
+                                            <div class="item-inner">
+                                                <div class="item-tit">
+                                                    <i class="big folder blue icon"></i>
+                                                    <a href="#">
+                                                        QQ浏览器</a>
+                                                </div>
+                                                <div class="item-info">
+                                                    <div class="item-info-list">
+                                                        <span>02月26日 14:44</span>
+                                                    </div>
+                                                    <div class="item-info-list">
+                                                        <span>3.6 MB</span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </li>
+                                        <li class="list-group-item">
+                                            <div class="item-inner">
+                                                <div class="item-tit">
+                                                    <i class="big folder blue icon"></i>
+                                                    <a href="#">
+                                                        QQ浏览器</a>
+                                                </div>
+                                                <div class="item-info">
+                                                    <div class="item-info-list">
+                                                        <span>02月26日 14:44</span>
+                                                    </div>
+                                                    <div class="item-info-list">
+                                                        <span>3.6 MB</span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </li>
+                                        <li class="list-group-item">
+                                            <div class="item-inner">
+                                                <div class="item-tit">
+                                                    <i class="big folder blue icon"></i>
+                                                    <a href="#">
+                                                        QQ浏览器</a>
+                                                </div>
+                                                <div class="item-info">
+                                                    <div class="item-info-list">
+                                                        <span>02月26日 14:44</span>
+                                                    </div>
+                                                    <div class="item-info-list">
+                                                        <span>3.6 MB</span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </li>
+                                        <li class="list-group-item">
+                                            <div class="item-inner">
+                                                <div class="item-tit">
+                                                    <i class="big folder blue icon"></i>
+                                                    <a href="#">
+                                                        QQ浏览器</a>
+                                                </div>
+                                                <div class="item-info">
+                                                    <div class="item-info-list">
+                                                        <span>02月26日 14:44</span>
+                                                    </div>
+                                                    <div class="item-info-list">
+                                                        <span>3.6 MB</span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </li>
+                                        <li class="list-group-item">
+                                            <div class="item-inner">
+                                                <div class="item-tit">
+                                                    <i class="big folder blue icon"></i>
+                                                    <a href="#">
+                                                        QQ浏览器</a>
+                                                </div>
+                                                <div class="item-info">
+                                                    <div class="item-info-list">
+                                                        <span>02月26日 14:44</span>
+                                                    </div>
+                                                    <div class="item-info-list">
+                                                        <span>3.6 MB</span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </li>
+                                        <li class="list-group-item">
+                                            <div class="item-inner">
+                                                <div class="item-tit">
+                                                    <i class="big folder blue icon"></i>
+                                                    <a href="#">
+                                                        QQ浏览器</a>
+                                                </div>
+                                                <div class="item-info">
+                                                    <div class="item-info-list">
+                                                        <span>02月26日 14:44</span>
+                                                    </div>
+                                                    <div class="item-info-list">
+                                                        <span>3.6 MB</span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </li>
+                                        <li class="list-group-item">
+                                            <div class="item-inner">
+                                                <div class="item-tit">
+                                                    <i class="big folder blue icon"></i>
+                                                    <a href="#">
+                                                        QQ浏览器</a>
+                                                </div>
+                                                <div class="item-info">
+                                                    <div class="item-info-list">
+                                                        <span>02月26日 14:44</span>
+                                                    </div>
+                                                    <div class="item-info-list">
+                                                        <span>3.6 MB</span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </li>
+                                        <li class="list-group-item">
+                                            <div class="item-inner">
+                                                <div class="item-tit">
+                                                    <i class="big folder blue icon"></i>
+                                                    <a href="#">
+                                                        QQ浏览器</a>
+                                                </div>
+                                                <div class="item-info">
+                                                    <div class="item-info-list">
+                                                        <span>02月26日 14:44</span>
+                                                    </div>
+                                                    <div class="item-info-list">
+                                                        <span>3.6 MB</span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </li>
+                                        <li class="list-group-item">
+                                            <div class="item-inner">
+                                                <div class="item-tit">
+                                                    <i class="big folder blue icon"></i>
+                                                    <a href="#">
+                                                        QQ浏览器</a>
+                                                </div>
+                                                <div class="item-info">
+                                                    <div class="item-info-list">
+                                                        <span>02月26日 14:44</span>
+                                                    </div>
+                                                    <div class="item-info-list">
+                                                        <span>3.6 MB</span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </li>
+                                        <li class="list-group-item">
+                                            <div class="item-inner">
+                                                <div class="item-tit">
+                                                    <i class="big folder blue icon"></i>
+                                                    <a href="#">
+                                                        QQ浏览器</a>
+                                                </div>
+                                                <div class="item-info">
+                                                    <div class="item-info-list">
+                                                        <span>02月26日 14:44</span>
+                                                    </div>
+                                                    <div class="item-info-list">
+                                                        <span>3.6 MB</span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="mod-list-group" data-type="4">
+                            <div class="list-group-hd">
+                                <div class="ui basic segment" style="display: flex;width: 100%;padding-left: 60px;">
+                                    <div class="list-group-tit name">
+                                        名称
+                                    </div>
+                                    <div class="list-group-tit time">
+                                        上次修改时间
+                                    </div>
+                                    <div class="list-group-tit size">
+                                        大小
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="list-group-bd">
+                                <div class="list-group-wrapper">
+                                    <ul class="list-group">
+                                        <li class="list-group-item">
+                                            <div class="item-inner">
+                                                <div class="item-tit">
+                                                    <i class="big image blue icon"></i>
+                                                    <a href="#">
+                                                        IMG</a>
+                                                </div>
+                                                <div class="item-info">
+                                                    <div class="item-info-list">
+                                                        <span>02月26日 14:44</span>
+                                                    </div>
+                                                    <div class="item-info-list">
+                                                        <span>3.6 MB</span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </li>
+                                        <li class="list-group-item">
+                                            <div class="item-inner">
+                                                <div class="item-tit">
+                                                    <i class="big folder blue icon"></i>
+                                                    <a href="#">
+                                                        QQ浏览器</a>
+                                                </div>
+                                                <div class="item-info">
+                                                    <div class="item-info-list">
+                                                        <span>02月26日 14:44</span>
+                                                    </div>
+                                                    <div class="item-info-list">
+                                                        <span>3.6 MB</span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </li>
+                                        <li class="list-group-item">
+                                            <div class="item-inner">
+                                                <div class="item-tit">
+                                                    <i class="big folder blue icon"></i>
+                                                    <a href="#">
+                                                        QQ浏览器</a>
+                                                </div>
+                                                <div class="item-info">
+                                                    <div class="item-info-list">
+                                                        <span>02月26日 14:44</span>
+                                                    </div>
+                                                    <div class="item-info-list">
+                                                        <span>3.6 MB</span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </li>
+                                        <li class="list-group-item">
+                                            <div class="item-inner">
+                                                <div class="item-tit">
+                                                    <i class="big folder blue icon"></i>
+                                                    <a href="#">
+                                                        QQ浏览器</a>
+                                                </div>
+                                                <div class="item-info">
+                                                    <div class="item-info-list">
+                                                        <span>02月26日 14:44</span>
+                                                    </div>
+                                                    <div class="item-info-list">
+                                                        <span>3.6 MB</span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </li>
+                                        <li class="list-group-item">
+                                            <div class="item-inner">
+                                                <div class="item-tit">
+                                                    <i class="big folder blue icon"></i>
+                                                    <a href="#">
+                                                        QQ浏览器</a>
+                                                </div>
+                                                <div class="item-info">
+                                                    <div class="item-info-list">
+                                                        <span>02月26日 14:44</span>
+                                                    </div>
+                                                    <div class="item-info-list">
+                                                        <span>3.6 MB</span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </li>
+                                        <li class="list-group-item">
+                                            <div class="item-inner">
+                                                <div class="item-tit">
+                                                    <i class="big folder blue icon"></i>
+                                                    <a href="#">
+                                                        QQ浏览器</a>
+                                                </div>
+                                                <div class="item-info">
+                                                    <div class="item-info-list">
+                                                        <span>02月26日 14:44</span>
+                                                    </div>
+                                                    <div class="item-info-list">
+                                                        <span>3.6 MB</span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </li>
+                                        <li class="list-group-item">
+                                            <div class="item-inner">
+                                                <div class="item-tit">
+                                                    <i class="big folder blue icon"></i>
+                                                    <a href="#">
+                                                        QQ浏览器</a>
+                                                </div>
+                                                <div class="item-info">
+                                                    <div class="item-info-list">
+                                                        <span>02月26日 14:44</span>
+                                                    </div>
+                                                    <div class="item-info-list">
+                                                        <span>3.6 MB</span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </li>
+                                        <li class="list-group-item">
+                                            <div class="item-inner">
+                                                <div class="item-tit">
+                                                    <i class="big folder blue icon"></i>
+                                                    <a href="#">
+                                                        QQ浏览器</a>
+                                                </div>
+                                                <div class="item-info">
+                                                    <div class="item-info-list">
+                                                        <span>02月26日 14:44</span>
+                                                    </div>
+                                                    <div class="item-info-list">
+                                                        <span>3.6 MB</span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </li>
+                                        <li class="list-group-item">
+                                            <div class="item-inner">
+                                                <div class="item-tit">
+                                                    <i class="big folder blue icon"></i>
+                                                    <a href="#">
+                                                        QQ浏览器</a>
+                                                </div>
+                                                <div class="item-info">
+                                                    <div class="item-info-list">
+                                                        <span>02月26日 14:44</span>
+                                                    </div>
+                                                    <div class="item-info-list">
+                                                        <span>3.6 MB</span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </li>
+                                        <li class="list-group-item">
+                                            <div class="item-inner">
+                                                <div class="item-tit">
+                                                    <i class="big folder blue icon"></i>
+                                                    <a href="#">
+                                                        QQ浏览器</a>
+                                                </div>
+                                                <div class="item-info">
+                                                    <div class="item-info-list">
+                                                        <span>02月26日 14:44</span>
+                                                    </div>
+                                                    <div class="item-info-list">
+                                                        <span>3.6 MB</span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </li>
+                                        <li class="list-group-item">
+                                            <div class="item-inner">
+                                                <div class="item-tit">
+                                                    <i class="big folder blue icon"></i>
+                                                    <a href="#">
+                                                        QQ浏览器</a>
+                                                </div>
+                                                <div class="item-info">
+                                                    <div class="item-info-list">
+                                                        <span>02月26日 14:44</span>
+                                                    </div>
+                                                    <div class="item-info-list">
+                                                        <span>3.6 MB</span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="mod-list-group" data-type="5">
+                            <div class="list-group-hd">
+                                <div class="ui basic segment" style="display: flex;width: 100%;padding-left: 60px;">
+                                    <div class="list-group-tit name">
+                                        名称
+                                    </div>
+                                    <div class="list-group-tit time">
+                                        上次修改时间
+                                    </div>
+                                    <div class="list-group-tit size">
+                                        大小
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="list-group-bd">
+                                <div class="list-group-wrapper">
+                                    <ul class="list-group">
+                                        <li class="list-group-item">
+                                            <div class="item-inner">
+                                                <div class="item-tit">
+                                                    <i class="big video blue icon"></i>
+                                                    <a href="#">
+                                                        视频</a>
+                                                </div>
+                                                <div class="item-info">
+                                                    <div class="item-info-list">
+                                                        <span>02月26日 14:44</span>
+                                                    </div>
+                                                    <div class="item-info-list">
+                                                        <span>3.6 MB</span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </li>
+                                        <li class="list-group-item">
+                                            <div class="item-inner">
+                                                <div class="item-tit">
+                                                    <i class="big folder blue icon"></i>
+                                                    <a href="#">
+                                                        QQ浏览器</a>
+                                                </div>
+                                                <div class="item-info">
+                                                    <div class="item-info-list">
+                                                        <span>02月26日 14:44</span>
+                                                    </div>
+                                                    <div class="item-info-list">
+                                                        <span>3.6 MB</span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </li>
+                                        <li class="list-group-item">
+                                            <div class="item-inner">
+                                                <div class="item-tit">
+                                                    <i class="big folder blue icon"></i>
+                                                    <a href="#">
+                                                        QQ浏览器</a>
+                                                </div>
+                                                <div class="item-info">
+                                                    <div class="item-info-list">
+                                                        <span>02月26日 14:44</span>
+                                                    </div>
+                                                    <div class="item-info-list">
+                                                        <span>3.6 MB</span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </li>
+                                        <li class="list-group-item">
+                                            <div class="item-inner">
+                                                <div class="item-tit">
+                                                    <i class="big folder blue icon"></i>
+                                                    <a href="#">
+                                                        QQ浏览器</a>
+                                                </div>
+                                                <div class="item-info">
+                                                    <div class="item-info-list">
+                                                        <span>02月26日 14:44</span>
+                                                    </div>
+                                                    <div class="item-info-list">
+                                                        <span>3.6 MB</span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </li>
+                                        <li class="list-group-item">
+                                            <div class="item-inner">
+                                                <div class="item-tit">
+                                                    <i class="big folder blue icon"></i>
+                                                    <a href="#">
+                                                        QQ浏览器</a>
+                                                </div>
+                                                <div class="item-info">
+                                                    <div class="item-info-list">
+                                                        <span>02月26日 14:44</span>
+                                                    </div>
+                                                    <div class="item-info-list">
+                                                        <span>3.6 MB</span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </li>
+                                        <li class="list-group-item">
+                                            <div class="item-inner">
+                                                <div class="item-tit">
+                                                    <i class="big folder blue icon"></i>
+                                                    <a href="#">
+                                                        QQ浏览器</a>
+                                                </div>
+                                                <div class="item-info">
+                                                    <div class="item-info-list">
+                                                        <span>02月26日 14:44</span>
+                                                    </div>
+                                                    <div class="item-info-list">
+                                                        <span>3.6 MB</span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </li>
+                                        <li class="list-group-item">
+                                            <div class="item-inner">
+                                                <div class="item-tit">
+                                                    <i class="big folder blue icon"></i>
+                                                    <a href="#">
+                                                        QQ浏览器</a>
+                                                </div>
+                                                <div class="item-info">
+                                                    <div class="item-info-list">
+                                                        <span>02月26日 14:44</span>
+                                                    </div>
+                                                    <div class="item-info-list">
+                                                        <span>3.6 MB</span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </li>
+                                        <li class="list-group-item">
+                                            <div class="item-inner">
+                                                <div class="item-tit">
+                                                    <i class="big folder blue icon"></i>
+                                                    <a href="#">
+                                                        QQ浏览器</a>
+                                                </div>
+                                                <div class="item-info">
+                                                    <div class="item-info-list">
+                                                        <span>02月26日 14:44</span>
+                                                    </div>
+                                                    <div class="item-info-list">
+                                                        <span>3.6 MB</span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="mod-list-group" data-type="6">
+                            <div class="list-group-hd">
+                                <div class="ui basic segment" style="display: flex;width: 100%;padding-left: 60px;">
+                                    <div class="list-group-tit name">
+                                        名称
+                                    </div>
+                                    <div class="list-group-tit time">
+                                        上次修改时间
+                                    </div>
+                                    <div class="list-group-tit size">
+                                        大小
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="list-group-bd">
+                                <div class="list-group-wrapper">
+                                    <ul class="list-group">
+                                        <li class="list-group-item">
+                                            <div class="item-inner">
+                                                <div class="item-tit">
+                                                    <i class="big music blue icon"></i>
+                                                    <a href="#">
+                                                        MUSIC</a>
+                                                </div>
+                                                <div class="item-info">
+                                                    <div class="item-info-list">
+                                                        <span>02月26日 14:44</span>
+                                                    </div>
+                                                    <div class="item-info-list">
+                                                        <span>3.6 MB</span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </li>
+                                        <li class="list-group-item">
+                                            <div class="item-inner">
+                                                <div class="item-tit">
+                                                    <i class="big folder blue icon"></i>
+                                                    <a href="#">
+                                                        QQ浏览器</a>
+                                                </div>
+                                                <div class="item-info">
+                                                    <div class="item-info-list">
+                                                        <span>02月26日 14:44</span>
+                                                    </div>
+                                                    <div class="item-info-list">
+                                                        <span>3.6 MB</span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </li>
+                                        <li class="list-group-item">
+                                            <div class="item-inner">
+                                                <div class="item-tit">
+                                                    <i class="big folder blue icon"></i>
+                                                    <a href="#">
+                                                        QQ浏览器</a>
+                                                </div>
+                                                <div class="item-info">
+                                                    <div class="item-info-list">
+                                                        <span>02月26日 14:44</span>
+                                                    </div>
+                                                    <div class="item-info-list">
+                                                        <span>3.6 MB</span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </li>
+                                        <li class="list-group-item">
+                                            <div class="item-inner">
+                                                <div class="item-tit">
+                                                    <i class="big folder blue icon"></i>
+                                                    <a href="#">
+                                                        QQ浏览器</a>
+                                                </div>
+                                                <div class="item-info">
+                                                    <div class="item-info-list">
+                                                        <span>02月26日 14:44</span>
+                                                    </div>
+                                                    <div class="item-info-list">
+                                                        <span>3.6 MB</span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </li>
+                                        <li class="list-group-item">
+                                            <div class="item-inner">
+                                                <div class="item-tit">
+                                                    <i class="big folder blue icon"></i>
+                                                    <a href="#">
+                                                        QQ浏览器</a>
+                                                </div>
+                                                <div class="item-info">
+                                                    <div class="item-info-list">
+                                                        <span>02月26日 14:44</span>
+                                                    </div>
+                                                    <div class="item-info-list">
+                                                        <span>3.6 MB</span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </li>
+                                        <li class="list-group-item">
+                                            <div class="item-inner">
+                                                <div class="item-tit">
+                                                    <i class="big folder blue icon"></i>
+                                                    <a href="#">
+                                                        QQ浏览器</a>
+                                                </div>
+                                                <div class="item-info">
+                                                    <div class="item-info-list">
+                                                        <span>02月26日 14:44</span>
+                                                    </div>
+                                                    <div class="item-info-list">
+                                                        <span>3.6 MB</span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </li>
+                                        <li class="list-group-item">
+                                            <div class="item-inner">
+                                                <div class="item-tit">
+                                                    <i class="big folder blue icon"></i>
+                                                    <a href="#">
+                                                        QQ浏览器</a>
+                                                </div>
+                                                <div class="item-info">
+                                                    <div class="item-info-list">
+                                                        <span>02月26日 14:44</span>
+                                                    </div>
+                                                    <div class="item-info-list">
+                                                        <span>3.6 MB</span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </li>
+                                        <li class="list-group-item">
+                                            <div class="item-inner">
+                                                <div class="item-tit">
+                                                    <i class="big folder blue icon"></i>
+                                                    <a href="#">
+                                                        QQ浏览器</a>
+                                                </div>
+                                                <div class="item-info">
+                                                    <div class="item-info-list">
+                                                        <span>02月26日 14:44</span>
+                                                    </div>
+                                                    <div class="item-info-list">
+                                                        <span>3.6 MB</span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </li>
+                                        <li class="list-group-item">
+                                            <div class="item-inner">
+                                                <div class="item-tit">
+                                                    <i class="big folder blue icon"></i>
+                                                    <a href="#">
+                                                        QQ浏览器</a>
+                                                </div>
+                                                <div class="item-info">
+                                                    <div class="item-info-list">
+                                                        <span>02月26日 14:44</span>
+                                                    </div>
+                                                    <div class="item-info-list">
+                                                        <span>3.6 MB</span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </li>
+                                        <li class="list-group-item">
+                                            <div class="item-inner">
+                                                <div class="item-tit">
+                                                    <i class="big folder blue icon"></i>
+                                                    <a href="#">
+                                                        QQ浏览器</a>
+                                                </div>
+                                                <div class="item-info">
+                                                    <div class="item-info-list">
+                                                        <span>02月26日 14:44</span>
+                                                    </div>
+                                                    <div class="item-info-list">
+                                                        <span>3.6 MB</span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </li>
+                                        <li class="list-group-item">
+                                            <div class="item-inner">
+                                                <div class="item-tit">
+                                                    <i class="big folder blue icon"></i>
+                                                    <a href="#">
+                                                        QQ浏览器</a>
+                                                </div>
+                                                <div class="item-info">
+                                                    <div class="item-info-list">
+                                                        <span>02月26日 14:44</span>
+                                                    </div>
+                                                    <div class="item-info-list">
+                                                        <span>3.6 MB</span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="mod-list-group" data-type="7">
+                            <div class="list-group-hd">
+                                <div class="ui basic segment" style="display: flex;width: 100%;padding-left: 60px;">
+                                    <div class="list-group-tit name">
+                                        名称
+                                    </div>
+                                    <div class="list-group-tit time">
+                                        上次修改时间
+                                    </div>
+                                    <div class="list-group-tit size">
+                                        大小
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="list-group-bd">
+                                <div class="list-group-wrapper">
+                                    <ul class="list-group">
+                                        <li class="list-group-item">
+                                            <div class="item-inner">
+                                                <div class="item-tit">
+                                                    <i class="big folder blue icon"></i>
+                                                    <a href="#">
+                                                        QQ浏览器</a>
+                                                </div>
+                                                <div class="item-info">
+                                                    <div class="item-info-list">
+                                                        <span>02月26日 14:44</span>
+                                                    </div>
+                                                    <div class="item-info-list">
+                                                        <span>3.6 MB</span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </li>
+                                        <li class="list-group-item">
+                                            <div class="item-inner">
+                                                <div class="item-tit">
+                                                    <i class="big folder blue icon"></i>
+                                                    <a href="#">
+                                                        QQ浏览器</a>
+                                                </div>
+                                                <div class="item-info">
+                                                    <div class="item-info-list">
+                                                        <span>02月26日 14:44</span>
+                                                    </div>
+                                                    <div class="item-info-list">
+                                                        <span>3.6 MB</span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </li>
+                                        <li class="list-group-item">
+                                            <div class="item-inner">
+                                                <div class="item-tit">
+                                                    <i class="big folder blue icon"></i>
+                                                    <a href="#">
+                                                        QQ浏览器</a>
+                                                </div>
+                                                <div class="item-info">
+                                                    <div class="item-info-list">
+                                                        <span>02月26日 14:44</span>
+                                                    </div>
+                                                    <div class="item-info-list">
+                                                        <span>3.6 MB</span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </li>
+                                        <li class="list-group-item">
+                                            <div class="item-inner">
+                                                <div class="item-tit">
+                                                    <i class="big folder blue icon"></i>
+                                                    <a href="#">
+                                                        QQ浏览器</a>
+                                                </div>
+                                                <div class="item-info">
+                                                    <div class="item-info-list">
+                                                        <span>02月26日 14:44</span>
+                                                    </div>
+                                                    <div class="item-info-list">
+                                                        <span>3.6 MB</span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </li>
+                                        <li class="list-group-item">
+                                            <div class="item-inner">
+                                                <div class="item-tit">
+                                                    <i class="big folder blue icon"></i>
+                                                    <a href="#">
+                                                        QQ浏览器</a>
+                                                </div>
+                                                <div class="item-info">
+                                                    <div class="item-info-list">
+                                                        <span>02月26日 14:44</span>
+                                                    </div>
+                                                    <div class="item-info-list">
+                                                        <span>3.6 MB</span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </li>
+                                        <li class="list-group-item">
+                                            <div class="item-inner">
+                                                <div class="item-tit">
+                                                    <i class="big folder blue icon"></i>
+                                                    <a href="#">
+                                                        QQ浏览器</a>
+                                                </div>
+                                                <div class="item-info">
+                                                    <div class="item-info-list">
+                                                        <span>02月26日 14:44</span>
+                                                    </div>
+                                                    <div class="item-info-list">
+                                                        <span>3.6 MB</span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </li>
+                                        <li class="list-group-item">
+                                            <div class="item-inner">
+                                                <div class="item-tit">
+                                                    <i class="big folder blue icon"></i>
+                                                    <a href="#">
+                                                        QQ浏览器</a>
+                                                </div>
+                                                <div class="item-info">
+                                                    <div class="item-info-list">
+                                                        <span>02月26日 14:44</span>
+                                                    </div>
+                                                    <div class="item-info-list">
+                                                        <span>3.6 MB</span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </li>
+                                        <li class="list-group-item">
+                                            <div class="item-inner">
+                                                <div class="item-tit">
+                                                    <i class="big folder blue icon"></i>
+                                                    <a href="#">
+                                                        QQ浏览器</a>
+                                                </div>
+                                                <div class="item-info">
+                                                    <div class="item-info-list">
+                                                        <span>02月26日 14:44</span>
+                                                    </div>
+                                                    <div class="item-info-list">
+                                                        <span>3.6 MB</span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </li>
+                                        <li class="list-group-item">
+                                            <div class="item-inner">
+                                                <div class="item-tit">
+                                                    <i class="big folder blue icon"></i>
+                                                    <a href="#">
+                                                        QQ浏览器</a>
+                                                </div>
+                                                <div class="item-info">
+                                                    <div class="item-info-list">
+                                                        <span>02月26日 14:44</span>
+                                                    </div>
+                                                    <div class="item-info-list">
+                                                        <span>3.6 MB</span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </li>
+                                        <li class="list-group-item">
+                                            <div class="item-inner">
+                                                <div class="item-tit">
+                                                    <i class="big folder blue icon"></i>
+                                                    <a href="#">
+                                                        QQ浏览器</a>
+                                                </div>
+                                                <div class="item-info">
+                                                    <div class="item-info-list">
+                                                        <span>02月26日 14:44</span>
+                                                    </div>
+                                                    <div class="item-info-list">
+                                                        <span>3.6 MB</span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </li>
+                                        <li class="list-group-item">
+                                            <div class="item-inner">
+                                                <div class="item-tit">
+                                                    <i class="big folder blue icon"></i>
+                                                    <a href="#">
+                                                        QQ浏览器</a>
+                                                </div>
+                                                <div class="item-info">
+                                                    <div class="item-info-list">
+                                                        <span>02月26日 14:44</span>
+                                                    </div>
+                                                    <div class="item-info-list">
+                                                        <span>3.6 MB</span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="mod-list-group" data-type="8">
+                            <div class="list-group-hd">
+                                <div class="ui basic segment" style="display: flex;width: 100%;padding-left: 60px;">
+                                    <div class="list-group-tit name">
+                                        名称
+                                    </div>
+                                    <div class="list-group-tit time">
+                                        上次修改时间
+                                    </div>
+                                    <div class="list-group-tit size">
+                                        大小
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="list-group-bd">
+                                <div class="list-group-wrapper">
+                                    <ul class="list-group">
+                                        <li class="list-group-item">
+                                            <div class="item-inner">
+                                                <div class="item-tit">
+                                                    <i class="big folder blue icon"></i>
+                                                    <a href="#">
+                                                        QQ浏览器</a>
+                                                </div>
+                                                <div class="item-info">
+                                                    <div class="item-info-list">
+                                                        <span>02月26日 14:44</span>
+                                                    </div>
+                                                    <div class="item-info-list">
+                                                        <span>3.6 MB</span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </li>
+                                        <li class="list-group-item">
+                                            <div class="item-inner">
+                                                <div class="item-tit">
+                                                    <i class="big folder blue icon"></i>
+                                                    <a href="#">
+                                                        QQ浏览器</a>
+                                                </div>
+                                                <div class="item-info">
+                                                    <div class="item-info-list">
+                                                        <span>02月26日 14:44</span>
+                                                    </div>
+                                                    <div class="item-info-list">
+                                                        <span>3.6 MB</span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </li>
+                                        <li class="list-group-item">
+                                            <div class="item-inner">
+                                                <div class="item-tit">
+                                                    <i class="big folder blue icon"></i>
+                                                    <a href="#">
+                                                        QQ浏览器</a>
+                                                </div>
+                                                <div class="item-info">
+                                                    <div class="item-info-list">
+                                                        <span>02月26日 14:44</span>
+                                                    </div>
+                                                    <div class="item-info-list">
+                                                        <span>3.6 MB</span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </li>
+                                        <li class="list-group-item">
+                                            <div class="item-inner">
+                                                <div class="item-tit">
+                                                    <i class="big folder blue icon"></i>
+                                                    <a href="#">
+                                                        QQ浏览器</a>
+                                                </div>
+                                                <div class="item-info">
+                                                    <div class="item-info-list">
+                                                        <span>02月26日 14:44</span>
+                                                    </div>
+                                                    <div class="item-info-list">
+                                                        <span>3.6 MB</span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </li>
+                                        <li class="list-group-item">
+                                            <div class="item-inner">
+                                                <div class="item-tit">
+                                                    <i class="big folder blue icon"></i>
+                                                    <a href="#">
+                                                        QQ浏览器</a>
+                                                </div>
+                                                <div class="item-info">
+                                                    <div class="item-info-list">
+                                                        <span>02月26日 14:44</span>
+                                                    </div>
+                                                    <div class="item-info-list">
+                                                        <span>3.6 MB</span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </li>
+                                        <li class="list-group-item">
+                                            <div class="item-inner">
+                                                <div class="item-tit">
+                                                    <i class="big folder blue icon"></i>
+                                                    <a href="#">
+                                                        QQ浏览器</a>
+                                                </div>
+                                                <div class="item-info">
+                                                    <div class="item-info-list">
+                                                        <span>02月26日 14:44</span>
+                                                    </div>
+                                                    <div class="item-info-list">
+                                                        <span>3.6 MB</span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </li>
+                                        <li class="list-group-item">
+                                            <div class="item-inner">
+                                                <div class="item-tit">
+                                                    <i class="big folder blue icon"></i>
+                                                    <a href="#">
+                                                        QQ浏览器</a>
+                                                </div>
+                                                <div class="item-info">
+                                                    <div class="item-info-list">
+                                                        <span>02月26日 14:44</span>
+                                                    </div>
+                                                    <div class="item-info-list">
+                                                        <span>3.6 MB</span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </li>
+                                        <li class="list-group-item">
+                                            <div class="item-inner">
+                                                <div class="item-tit">
+                                                    <i class="big folder blue icon"></i>
+                                                    <a href="#">
+                                                        QQ浏览器</a>
+                                                </div>
+                                                <div class="item-info">
+                                                    <div class="item-info-list">
+                                                        <span>02月26日 14:44</span>
+                                                    </div>
+                                                    <div class="item-info-list">
+                                                        <span>3.6 MB</span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </li>
+                                        <li class="list-group-item">
+                                            <div class="item-inner">
+                                                <div class="item-tit">
+                                                    <i class="big folder blue icon"></i>
+                                                    <a href="#">
+                                                        QQ浏览器</a>
+                                                </div>
+                                                <div class="item-info">
+                                                    <div class="item-info-list">
+                                                        <span>02月26日 14:44</span>
+                                                    </div>
+                                                    <div class="item-info-list">
+                                                        <span>3.6 MB</span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </li>
+                                        <li class="list-group-item">
+                                            <div class="item-inner">
+                                                <div class="item-tit">
+                                                    <i class="big folder blue icon"></i>
+                                                    <a href="#">
+                                                        QQ浏览器</a>
+                                                </div>
+                                                <div class="item-info">
+                                                    <div class="item-info-list">
+                                                        <span>02月26日 14:44</span>
+                                                    </div>
+                                                    <div class="item-info-list">
+                                                        <span>3.6 MB</span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </li>
+                                        <li class="list-group-item">
+                                            <div class="item-inner">
+                                                <div class="item-tit">
+                                                    <i class="big folder blue icon"></i>
+                                                    <a href="#">
+                                                        QQ浏览器</a>
+                                                </div>
+                                                <div class="item-info">
+                                                    <div class="item-info-list">
+                                                        <span>02月26日 14:44</span>
+                                                    </div>
+                                                    <div class="item-info-list">
+                                                        <span>3.6 MB</span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="mod-list-group" data-type="9">
+                            <div class="list-group-hd">
+                                <div class="ui basic segment" style="display: flex;width: 100%;padding-left: 60px;">
+                                    <div class="list-group-tit name">
+                                        名称
+                                    </div>
+                                    <div class="list-group-tit time">
+                                        上次修改时间
+                                    </div>
+                                    <div class="list-group-tit size">
+                                        大小
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="list-group-bd">
+                                <div class="list-group-wrapper">
+                                    <ul class="list-group">
+                                        <li class="list-group-item">
+                                            <div class="item-inner">
+                                                <div class="item-tit">
+                                                    <i class="big folder blue icon"></i>
+                                                    <a href="#">
+                                                        QQ浏览器</a>
+                                                </div>
+                                                <div class="item-info">
+                                                    <div class="item-info-list">
+                                                        <span>02月26日 14:44</span>
+                                                    </div>
+                                                    <div class="item-info-list">
+                                                        <span>3.6 MB</span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </li>
+                                        <li class="list-group-item">
+                                            <div class="item-inner">
+                                                <div class="item-tit">
+                                                    <i class="big folder blue icon"></i>
+                                                    <a href="#">
+                                                        QQ浏览器</a>
+                                                </div>
+                                                <div class="item-info">
+                                                    <div class="item-info-list">
+                                                        <span>02月26日 14:44</span>
+                                                    </div>
+                                                    <div class="item-info-list">
+                                                        <span>3.6 MB</span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </li>
+                                        <li class="list-group-item">
+                                            <div class="item-inner">
+                                                <div class="item-tit">
+                                                    <i class="big folder blue icon"></i>
+                                                    <a href="#">
+                                                        QQ浏览器</a>
+                                                </div>
+                                                <div class="item-info">
+                                                    <div class="item-info-list">
+                                                        <span>02月26日 14:44</span>
+                                                    </div>
+                                                    <div class="item-info-list">
+                                                        <span>3.6 MB</span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </li>
+                                        <li class="list-group-item">
+                                            <div class="item-inner">
+                                                <div class="item-tit">
+                                                    <i class="big folder blue icon"></i>
+                                                    <a href="#">
+                                                        QQ浏览器</a>
+                                                </div>
+                                                <div class="item-info">
+                                                    <div class="item-info-list">
+                                                        <span>02月26日 14:44</span>
+                                                    </div>
+                                                    <div class="item-info-list">
+                                                        <span>3.6 MB</span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </li>
+                                        <li class="list-group-item">
+                                            <div class="item-inner">
+                                                <div class="item-tit">
+                                                    <i class="big folder blue icon"></i>
+                                                    <a href="#">
+                                                        QQ浏览器</a>
+                                                </div>
+                                                <div class="item-info">
+                                                    <div class="item-info-list">
+                                                        <span>02月26日 14:44</span>
+                                                    </div>
+                                                    <div class="item-info-list">
+                                                        <span>3.6 MB</span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </li>
+                                        <li class="list-group-item">
+                                            <div class="item-inner">
+                                                <div class="item-tit">
+                                                    <i class="big folder blue icon"></i>
+                                                    <a href="#">
+                                                        QQ浏览器</a>
+                                                </div>
+                                                <div class="item-info">
+                                                    <div class="item-info-list">
+                                                        <span>02月26日 14:44</span>
+                                                    </div>
+                                                    <div class="item-info-list">
+                                                        <span>3.6 MB</span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </li>
+                                        <li class="list-group-item">
+                                            <div class="item-inner">
+                                                <div class="item-tit">
+                                                    <i class="big folder blue icon"></i>
+                                                    <a href="#">
+                                                        QQ浏览器</a>
+                                                </div>
+                                                <div class="item-info">
+                                                    <div class="item-info-list">
+                                                        <span>02月26日 14:44</span>
+                                                    </div>
+                                                    <div class="item-info-list">
+                                                        <span>3.6 MB</span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </li>
+                                        <li class="list-group-item">
+                                            <div class="item-inner">
+                                                <div class="item-tit">
+                                                    <i class="big folder blue icon"></i>
+                                                    <a href="#">
+                                                        QQ浏览器</a>
+                                                </div>
+                                                <div class="item-info">
+                                                    <div class="item-info-list">
+                                                        <span>02月26日 14:44</span>
+                                                    </div>
+                                                    <div class="item-info-list">
+                                                        <span>3.6 MB</span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </li>
+                                        <li class="list-group-item">
+                                            <div class="item-inner">
+                                                <div class="item-tit">
+                                                    <i class="big folder blue icon"></i>
+                                                    <a href="#">
+                                                        QQ浏览器</a>
+                                                </div>
+                                                <div class="item-info">
+                                                    <div class="item-info-list">
+                                                        <span>02月26日 14:44</span>
+                                                    </div>
+                                                    <div class="item-info-list">
+                                                        <span>3.6 MB</span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </li>
+                                        <li class="list-group-item">
+                                            <div class="item-inner">
+                                                <div class="item-tit">
+                                                    <i class="big folder blue icon"></i>
+                                                    <a href="#">
+                                                        QQ浏览器</a>
+                                                </div>
+                                                <div class="item-info">
+                                                    <div class="item-info-list">
+                                                        <span>02月26日 14:44</span>
+                                                    </div>
+                                                    <div class="item-info-list">
+                                                        <span>3.6 MB</span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </li>
+                                        <li class="list-group-item">
+                                            <div class="item-inner">
+                                                <div class="item-tit">
+                                                    <i class="big folder blue icon"></i>
+                                                    <a href="#">
+                                                        QQ浏览器</a>
+                                                </div>
+                                                <div class="item-info">
+                                                    <div class="item-info-list">
+                                                        <span>02月26日 14:44</span>
+                                                    </div>
+                                                    <div class="item-info-list">
+                                                        <span>3.6 MB</span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="mod-list-group" data-type="10">
+                            <div class="list-group-hd">
+                                <div class="ui basic segment" style="display: flex;width: 100%;padding-left: 60px;">
+                                    <div class="list-group-tit name">
+                                        名称
+                                    </div>
+                                    <div class="list-group-tit time">
+                                        上次修改时间
+                                    </div>
+                                    <div class="list-group-tit size">
+                                        大小
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="list-group-bd">
+                                <div class="list-group-wrapper">
+                                    <ul class="list-group">
+                                        <li class="list-group-item">
+                                            <div class="item-inner">
+                                                <div class="item-tit">
+                                                    <i class="big folder blue icon"></i>
+                                                    <a href="#">
+                                                        QQ浏览器</a>
+                                                </div>
+                                                <div class="item-info">
+                                                    <div class="item-info-list">
+                                                        <span>02月26日 14:44</span>
+                                                    </div>
+                                                    <div class="item-info-list">
+                                                        <span>3.6 MB</span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </li>
+                                        <li class="list-group-item">
+                                            <div class="item-inner">
+                                                <div class="item-tit">
+                                                    <i class="big folder blue icon"></i>
+                                                    <a href="#">
+                                                        QQ浏览器</a>
+                                                </div>
+                                                <div class="item-info">
+                                                    <div class="item-info-list">
+                                                        <span>02月26日 14:44</span>
+                                                    </div>
+                                                    <div class="item-info-list">
+                                                        <span>3.6 MB</span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </li>
+                                        <li class="list-group-item">
+                                            <div class="item-inner">
+                                                <div class="item-tit">
+                                                    <i class="big folder blue icon"></i>
+                                                    <a href="#">
+                                                        QQ浏览器</a>
+                                                </div>
+                                                <div class="item-info">
+                                                    <div class="item-info-list">
+                                                        <span>02月26日 14:44</span>
+                                                    </div>
+                                                    <div class="item-info-list">
+                                                        <span>3.6 MB</span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </li>
+                                        <li class="list-group-item">
+                                            <div class="item-inner">
+                                                <div class="item-tit">
+                                                    <i class="big folder blue icon"></i>
+                                                    <a href="#">
+                                                        QQ浏览器</a>
+                                                </div>
+                                                <div class="item-info">
+                                                    <div class="item-info-list">
+                                                        <span>02月26日 14:44</span>
+                                                    </div>
+                                                    <div class="item-info-list">
+                                                        <span>3.6 MB</span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </li>
+                                        <li class="list-group-item">
+                                            <div class="item-inner">
+                                                <div class="item-tit">
+                                                    <i class="big folder blue icon"></i>
+                                                    <a href="#">
+                                                        QQ浏览器</a>
+                                                </div>
+                                                <div class="item-info">
+                                                    <div class="item-info-list">
+                                                        <span>02月26日 14:44</span>
+                                                    </div>
+                                                    <div class="item-info-list">
+                                                        <span>3.6 MB</span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </li>
+                                        <li class="list-group-item">
+                                            <div class="item-inner">
+                                                <div class="item-tit">
+                                                    <i class="big folder blue icon"></i>
+                                                    <a href="#">
+                                                        QQ浏览器</a>
+                                                </div>
+                                                <div class="item-info">
+                                                    <div class="item-info-list">
+                                                        <span>02月26日 14:44</span>
+                                                    </div>
+                                                    <div class="item-info-list">
+                                                        <span>3.6 MB</span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </li>
+                                        <li class="list-group-item">
+                                            <div class="item-inner">
+                                                <div class="item-tit">
+                                                    <i class="big folder blue icon"></i>
+                                                    <a href="#">
+                                                        QQ浏览器</a>
+                                                </div>
+                                                <div class="item-info">
+                                                    <div class="item-info-list">
+                                                        <span>02月26日 14:44</span>
+                                                    </div>
+                                                    <div class="item-info-list">
+                                                        <span>3.6 MB</span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </li>
+                                        <li class="list-group-item">
+                                            <div class="item-inner">
+                                                <div class="item-tit">
+                                                    <i class="big folder blue icon"></i>
+                                                    <a href="#">
+                                                        QQ浏览器</a>
+                                                </div>
+                                                <div class="item-info">
+                                                    <div class="item-info-list">
+                                                        <span>02月26日 14:44</span>
+                                                    </div>
+                                                    <div class="item-info-list">
+                                                        <span>3.6 MB</span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </li>
+                                        <li class="list-group-item">
+                                            <div class="item-inner">
+                                                <div class="item-tit">
+                                                    <i class="big folder blue icon"></i>
+                                                    <a href="#">
+                                                        QQ浏览器</a>
+                                                </div>
+                                                <div class="item-info">
+                                                    <div class="item-info-list">
+                                                        <span>02月26日 14:44</span>
+                                                    </div>
+                                                    <div class="item-info-list">
+                                                        <span>3.6 MB</span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </li>
+                                        <li class="list-group-item">
+                                            <div class="item-inner">
+                                                <div class="item-tit">
+                                                    <i class="big folder blue icon"></i>
+                                                    <a href="#">
+                                                        QQ浏览器</a>
+                                                </div>
+                                                <div class="item-info">
+                                                    <div class="item-info-list">
+                                                        <span>02月26日 14:44</span>
+                                                    </div>
+                                                    <div class="item-info-list">
+                                                        <span>3.6 MB</span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </li>
+                                        <li class="list-group-item">
+                                            <div class="item-inner">
+                                                <div class="item-tit">
+                                                    <i class="big folder blue icon"></i>
+                                                    <a href="#">
+                                                        QQ浏览器</a>
+                                                </div>
+                                                <div class="item-info">
+                                                    <div class="item-info-list">
+                                                        <span>02月26日 14:44</span>
+                                                    </div>
+                                                    <div class="item-info-list">
+                                                        <span>3.6 MB</span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="mod-list-group" data-type="11">
+                            <div class="list-group-hd">
+                                <div class="ui basic segment" style="display: flex;width: 100%;padding-left: 60px;">
+                                    <div class="list-group-tit name">
+                                        名称
+                                    </div>
+                                    <div class="list-group-tit time">
+                                        上次修改时间
+                                    </div>
+                                    <div class="list-group-tit size">
+                                        大小
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="list-group-bd">
+                                <div class="list-group-wrapper">
+                                    <ul class="list-group">
+                                        <li class="list-group-item">
+                                            <div class="item-inner">
+                                                <div class="item-tit">
+                                                    <i class="big folder blue icon"></i>
+                                                    <a href="#">
+                                                        QQ浏览器</a>
+                                                </div>
+                                                <div class="item-info">
+                                                    <div class="item-info-list">
+                                                        <span>02月26日 14:44</span>
+                                                    </div>
+                                                    <div class="item-info-list">
+                                                        <span>3.6 MB</span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </li>
+                                        <li class="list-group-item">
+                                            <div class="item-inner">
+                                                <div class="item-tit">
+                                                    <i class="big folder blue icon"></i>
+                                                    <a href="#">
+                                                        QQ浏览器</a>
+                                                </div>
+                                                <div class="item-info">
+                                                    <div class="item-info-list">
+                                                        <span>02月26日 14:44</span>
+                                                    </div>
+                                                    <div class="item-info-list">
+                                                        <span>3.6 MB</span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </li>
+                                        <li class="list-group-item">
+                                            <div class="item-inner">
+                                                <div class="item-tit">
+                                                    <i class="big folder blue icon"></i>
+                                                    <a href="#">
+                                                        QQ浏览器</a>
+                                                </div>
+                                                <div class="item-info">
+                                                    <div class="item-info-list">
+                                                        <span>02月26日 14:44</span>
+                                                    </div>
+                                                    <div class="item-info-list">
+                                                        <span>3.6 MB</span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </li>
+                                        <li class="list-group-item">
+                                            <div class="item-inner">
+                                                <div class="item-tit">
+                                                    <i class="big folder blue icon"></i>
+                                                    <a href="#">
+                                                        QQ浏览器</a>
+                                                </div>
+                                                <div class="item-info">
+                                                    <div class="item-info-list">
+                                                        <span>02月26日 14:44</span>
+                                                    </div>
+                                                    <div class="item-info-list">
+                                                        <span>3.6 MB</span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </li>
+                                        <li class="list-group-item">
+                                            <div class="item-inner">
+                                                <div class="item-tit">
+                                                    <i class="big folder blue icon"></i>
+                                                    <a href="#">
+                                                        QQ浏览器</a>
+                                                </div>
+                                                <div class="item-info">
+                                                    <div class="item-info-list">
+                                                        <span>02月26日 14:44</span>
+                                                    </div>
+                                                    <div class="item-info-list">
+                                                        <span>3.6 MB</span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </li>
+                                        <li class="list-group-item">
+                                            <div class="item-inner">
+                                                <div class="item-tit">
+                                                    <i class="big folder blue icon"></i>
+                                                    <a href="#">
+                                                        QQ浏览器</a>
+                                                </div>
+                                                <div class="item-info">
+                                                    <div class="item-info-list">
+                                                        <span>02月26日 14:44</span>
+                                                    </div>
+                                                    <div class="item-info-list">
+                                                        <span>3.6 MB</span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </li>
+                                        <li class="list-group-item">
+                                            <div class="item-inner">
+                                                <div class="item-tit">
+                                                    <i class="big folder blue icon"></i>
+                                                    <a href="#">
+                                                        QQ浏览器</a>
+                                                </div>
+                                                <div class="item-info">
+                                                    <div class="item-info-list">
+                                                        <span>02月26日 14:44</span>
+                                                    </div>
+                                                    <div class="item-info-list">
+                                                        <span>3.6 MB</span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </li>
+                                        <li class="list-group-item">
+                                            <div class="item-inner">
+                                                <div class="item-tit">
+                                                    <i class="big folder blue icon"></i>
+                                                    <a href="#">
+                                                        QQ浏览器</a>
+                                                </div>
+                                                <div class="item-info">
+                                                    <div class="item-info-list">
+                                                        <span>02月26日 14:44</span>
+                                                    </div>
+                                                    <div class="item-info-list">
+                                                        <span>3.6 MB</span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </li>
+                                        <li class="list-group-item">
+                                            <div class="item-inner">
+                                                <div class="item-tit">
+                                                    <i class="big folder blue icon"></i>
+                                                    <a href="#">
+                                                        QQ浏览器</a>
+                                                </div>
+                                                <div class="item-info">
+                                                    <div class="item-info-list">
+                                                        <span>02月26日 14:44</span>
+                                                    </div>
+                                                    <div class="item-info-list">
+                                                        <span>3.6 MB</span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </li>
+                                        <li class="list-group-item">
+                                            <div class="item-inner">
+                                                <div class="item-tit">
+                                                    <i class="big folder blue icon"></i>
+                                                    <a href="#">
+                                                        QQ浏览器</a>
+                                                </div>
+                                                <div class="item-info">
+                                                    <div class="item-info-list">
+                                                        <span>02月26日 14:44</span>
+                                                    </div>
+                                                    <div class="item-info-list">
+                                                        <span>3.6 MB</span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </li>
+                                        <li class="list-group-item">
+                                            <div class="item-inner">
+                                                <div class="item-tit">
+                                                    <i class="big folder blue icon"></i>
+                                                    <a href="#">
+                                                        QQ浏览器</a>
+                                                </div>
+                                                <div class="item-info">
+                                                    <div class="item-info-list">
+                                                        <span>02月26日 14:44</span>
+                                                    </div>
+                                                    <div class="item-info-list">
+                                                        <span>3.6 MB</span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="mod-list-group" data-type="12">
+                            <div class="list-group-hd">
+                                <div class="ui basic segment" style="display: flex;width: 100%;padding-left: 60px;">
+                                    <div class="list-group-tit name">
+                                        名称
+                                    </div>
+                                    <div class="list-group-tit time">
+                                        上次修改时间
+                                    </div>
+                                    <div class="list-group-tit size">
+                                        大小
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="list-group-bd">
+                                <div class="list-group-wrapper">
+                                    <ul class="list-group">
+                                        <li class="list-group-item">
+                                            <div class="item-inner">
+                                                <div class="item-tit">
+                                                    <i class="big folder blue icon"></i>
+                                                    <a href="#">
+                                                        QQ浏览器</a>
+                                                </div>
+                                                <div class="item-info">
+                                                    <div class="item-info-list">
+                                                        <span>02月26日 14:44</span>
+                                                    </div>
+                                                    <div class="item-info-list">
+                                                        <span>3.6 MB</span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </li>
+                                        <li class="list-group-item">
+                                            <div class="item-inner">
+                                                <div class="item-tit">
+                                                    <i class="big folder blue icon"></i>
+                                                    <a href="#">
+                                                        QQ浏览器</a>
+                                                </div>
+                                                <div class="item-info">
+                                                    <div class="item-info-list">
+                                                        <span>02月26日 14:44</span>
+                                                    </div>
+                                                    <div class="item-info-list">
+                                                        <span>3.6 MB</span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </li>
+                                        <li class="list-group-item">
+                                            <div class="item-inner">
+                                                <div class="item-tit">
+                                                    <i class="big folder blue icon"></i>
+                                                    <a href="#">
+                                                        QQ浏览器</a>
+                                                </div>
+                                                <div class="item-info">
+                                                    <div class="item-info-list">
+                                                        <span>02月26日 14:44</span>
+                                                    </div>
+                                                    <div class="item-info-list">
+                                                        <span>3.6 MB</span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </li>
+                                        <li class="list-group-item">
+                                            <div class="item-inner">
+                                                <div class="item-tit">
+                                                    <i class="big folder blue icon"></i>
+                                                    <a href="#">
+                                                        QQ浏览器</a>
+                                                </div>
+                                                <div class="item-info">
+                                                    <div class="item-info-list">
+                                                        <span>02月26日 14:44</span>
+                                                    </div>
+                                                    <div class="item-info-list">
+                                                        <span>3.6 MB</span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </li>
+                                        <li class="list-group-item">
+                                            <div class="item-inner">
+                                                <div class="item-tit">
+                                                    <i class="big folder blue icon"></i>
+                                                    <a href="#">
+                                                        QQ浏览器</a>
+                                                </div>
+                                                <div class="item-info">
+                                                    <div class="item-info-list">
+                                                        <span>02月26日 14:44</span>
+                                                    </div>
+                                                    <div class="item-info-list">
+                                                        <span>3.6 MB</span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </li>
+                                        <li class="list-group-item">
+                                            <div class="item-inner">
+                                                <div class="item-tit">
+                                                    <i class="big folder blue icon"></i>
+                                                    <a href="#">
+                                                        QQ浏览器</a>
+                                                </div>
+                                                <div class="item-info">
+                                                    <div class="item-info-list">
+                                                        <span>02月26日 14:44</span>
+                                                    </div>
+                                                    <div class="item-info-list">
+                                                        <span>3.6 MB</span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </li>
+                                        <li class="list-group-item">
+                                            <div class="item-inner">
+                                                <div class="item-tit">
+                                                    <i class="big folder blue icon"></i>
+                                                    <a href="#">
+                                                        QQ浏览器</a>
+                                                </div>
+                                                <div class="item-info">
+                                                    <div class="item-info-list">
+                                                        <span>02月26日 14:44</span>
+                                                    </div>
+                                                    <div class="item-info-list">
+                                                        <span>3.6 MB</span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </li>
+                                        <li class="list-group-item">
+                                            <div class="item-inner">
+                                                <div class="item-tit">
+                                                    <i class="big folder blue icon"></i>
+                                                    <a href="#">
+                                                        QQ浏览器</a>
+                                                </div>
+                                                <div class="item-info">
+                                                    <div class="item-info-list">
+                                                        <span>02月26日 14:44</span>
+                                                    </div>
+                                                    <div class="item-info-list">
+                                                        <span>3.6 MB</span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </li>
+                                        <li class="list-group-item">
+                                            <div class="item-inner">
+                                                <div class="item-tit">
+                                                    <i class="big folder blue icon"></i>
+                                                    <a href="#">
+                                                        QQ浏览器</a>
+                                                </div>
+                                                <div class="item-info">
+                                                    <div class="item-info-list">
+                                                        <span>02月26日 14:44</span>
+                                                    </div>
+                                                    <div class="item-info-list">
+                                                        <span>3.6 MB</span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </li>
+                                        <li class="list-group-item">
+                                            <div class="item-inner">
+                                                <div class="item-tit">
+                                                    <i class="big folder blue icon"></i>
+                                                    <a href="#">
+                                                        QQ浏览器</a>
+                                                </div>
+                                                <div class="item-info">
+                                                    <div class="item-info-list">
+                                                        <span>02月26日 14:44</span>
+                                                    </div>
+                                                    <div class="item-info-list">
+                                                        <span>3.6 MB</span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </li>
+                                        <li class="list-group-item">
+                                            <div class="item-inner">
+                                                <div class="item-tit">
+                                                    <i class="big folder blue icon"></i>
+                                                    <a href="#">
+                                                        QQ浏览器</a>
+                                                </div>
+                                                <div class="item-info">
+                                                    <div class="item-info-list">
+                                                        <span>02月26日 14:44</span>
+                                                    </div>
+                                                    <div class="item-info-list">
+                                                        <span>3.6 MB</span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="js/jquery-3.3.1.min.js"></script>
+    <script src="https://cdn.bootcss.com/semantic-ui/2.3.1/semantic.min.js"></script>
+    <script src="js/yun.js"></script>
+    <script>
+        function getFileName(fileName)
+        {
+            $.ajax({
+                url: '/getFileList.do',
+                type: 'GET',
+                data: {
+                    "fileName": fileName,
+                },
+                success: function (data)
+                {
+                    console.log(data);
+                },
+                error: function ()
+                {
+                    console.log("错误");
+                }
+            });
+        };
+        getFileName(null);
+    </script>
+</body>
+
+</html>

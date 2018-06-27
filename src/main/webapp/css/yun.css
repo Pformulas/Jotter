@@ -1,0 +1,348 @@
+html {
+    color: #000;
+    background: #FFF
+}
+
+body, div, dl, dt, dd, ul, ol, li, h1, h2, h3, h4, h5, h6, pre, code, form, fieldset, legend, input, textarea, p, blockquote, th, td {
+    margin: 0;
+    padding: 0
+}
+body{
+    /*  字体  */
+    font-family: -apple-system, BlinkMacSystemFont, 'Microsoft YaHei', sans-serif;
+
+    /*  字号 */
+    font-size: 14px;
+
+    /*  字体颜色  */
+    color: #333;
+
+    /* 行距 */
+    line-height: 1.75;
+}
+table {
+    border-collapse: collapse;
+    border-spacing: 0
+}
+
+fieldset, img {
+    border: 0
+}
+
+address, caption, cite, code, dfn, em, strong, th, var {
+    font-style: normal;
+    font-weight: normal
+}
+
+ol, ul {
+    list-style: none
+}
+
+caption, th {
+    text-align: left
+}
+
+h1, h2, h3, h4, h5, h6 {
+    font-size: 100%;
+    font-weight: normal
+}
+
+q:before, q:after {
+    content: ''
+}
+
+abbr, acronym {
+    border: 0;
+    font-variant: normal
+}
+
+sup {
+    vertical-align: text-top
+}
+
+sub {
+    vertical-align: text-bottom
+}
+
+input, textarea, select {
+    font-family: inherit;
+    font-size: inherit;
+    font-weight: inherit;
+    *font-size: 100%
+}
+
+legend {
+    color: #000
+}
+
+#yui3-css-stamp.cssreset {
+    display: none
+}
+
+.layout-wrapper {
+    width: 100%;
+    height: 100%;
+    position: relative;
+}
+
+.layout-body {
+    width: 100%!important;
+    height: 100%;
+}
+
+/* .layout-body-inner 
+*   侧边栏
+*/
+
+.layout-body-inner {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-wrap: nowrap;
+}
+
+/* .layout-aside */
+
+.layout-aside {
+    width: 13%;
+    min-width: 240px;
+    height: 100%;
+    background-color: #f4f4f4;
+}
+
+/* .layout-aside-hd */
+
+.layout-aside-hd {
+    width: 100%;
+    margin-bottom: 10px;
+}
+
+.mod-search {
+    padding-top: 20px;
+    text-align: center;
+}
+
+.mod-logo {
+    padding-top: 20px;
+}
+
+.layout-aside-bd {
+    width: 100%;
+    height: 700px;
+}
+
+.mod_menu {
+    width: 100%;
+}
+
+.menu_item {
+    min-width: 240px;
+    width: 100%;
+    padding: 12px 0;
+}
+
+.menu_list {
+    width: 100%;
+    list-style: none;
+    border-bottom: 2px solid white;
+}
+
+/*a标签被选中时,背景色*/
+
+.cur a {
+    color: #2980FF!important;
+    font-weight: 700;
+    background: 0 0;
+}
+
+.cur a:before {
+    position: absolute;
+    content: "";
+    width: 4px;
+    height: 28px;
+    left: 0;
+    top: 50%;
+    margin: -14px 0 0;
+    background: #2980FF;
+}
+
+.cur a:hover {
+    background-color: #f4f4f4 !important;
+}
+
+.menu_list li {
+    width: 100%;
+    margin-bottom: 10px;
+}
+
+.menu_list a {
+    display: block;
+    height: 40px;
+    width: 100%;
+    line-height: 40px;
+    color: #555;
+    background-color: #f4f4f4;
+    padding-left: 34px;
+    position: relative;
+}
+
+.menu_list a i {
+    padding-right: 40px;
+    box-sizing: border-box;
+}
+
+.menu_list a:hover {
+    background-color: #eaeaea;
+    transition: background-color, 2s;
+}
+
+/* 
+*主体
+ */
+
+.layout-main-wrap {
+    max-width: 1680px;
+    width: 87%;
+    height: 100%;
+}
+
+
+a.ui.secondary.basic.button:hover {
+    background-color: rgba(244, 244, 244, 0.7) !important;
+}
+div.ui.icon.basic.buttons button:hover{
+    background-color: rgba(244, 244, 244, 0.7) !important;
+}
+.layout-main {}
+
+.layout-main-hd {
+    /*height: 48px;*/
+}
+
+/*  */
+
+.layout-main-bd {}
+
+/*  */
+
+.mod-list-group {}
+
+.list-group-hd {
+    width: 100%;
+}
+
+.list-group-tit {
+    display: inline-block;
+    height: 100%;
+    /* padding-left: 20px; */
+}
+
+.name {
+    width: 48.5%;
+}
+
+.time {
+    width: 20%;
+}
+
+.size {
+    width: 23%;
+}
+
+.list-group-bd {}
+
+.list-group-wrapper {}
+
+.list-group {}
+
+.list-group-item {
+    height: 56px;
+    margin-left: 30px;
+    margin-right: 60px;
+    box-sizing: border-box;
+    display: flex;
+}
+
+.list-group-item.act:hover .item-inner,
+.list-group-item.act:hover .item-icon{
+    background-color: #308eff !important;
+}
+
+.list-group-item:hover .item-inner,
+.list-group-item:hover .item-icon{
+    background-color: #f4f4f4;
+}
+
+.list-group-item:hover .item-inner{
+    border: 0px;
+}
+.item-inner {
+    width: 95%;
+    height: 100%;
+    display: flex;
+    border-top: 1px solid rgba(220, 220, 220, 0.3);
+    /* border-bottom:1px solid rgba(220, 220, 220, 0.8); */
+}
+
+.item-icon {
+    width: 50px;
+    height: 56px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding-right: 10px;
+    box-sizing: border-box;
+}
+/*checkbox*/
+
+input[type="checkbox"] {
+    -webkit-appearance: none;
+    /*清除复选框默认样式*/
+    background: #fff url("../images/checkbox.png");
+    /*复选框的背景图，就是上图*/
+    height: 18px;
+    /*高度*/
+    vertical-align: middle;
+    width: 18px;
+}
+
+input[type="checkbox"]:checked {
+    background-position: -50px -2px;
+}
+
+
+.item-tit {
+    width: 54%;
+}
+
+.item-tit a {
+    color: #020202;
+    line-height: 56px;
+    font-size: 14px;
+}
+
+.item-tit a:hover{
+    border-bottom: 1px solid #202020;
+}
+
+.item-info {
+    display: flex;
+    width: 47%;
+}
+
+.item-info-list:nth-child(1) {
+    width: 47%;
+}
+
+.item-info-list:nth-child(2) {
+    width: 28%;
+}
+
+.item-info-list span {
+    font-size: 14px;
+    line-height: 56px;
+}
+
+.act{
+    background-color: #308eff;
+}
