@@ -1,5 +1,7 @@
 package entity;
 
+import java.util.Date;
+
 /**
  * author: Imp
  * email: 1318944013@qq.com
@@ -19,13 +21,23 @@ public class Files {
     //文件名
     private String fileName;
 
-    public Files(){}
+    //文件大小
+    private String size;
 
-    public Files(String userId, String url, String type, String fileName) {
+    //创建时间
+    private Date createTime;
+
+    //修改时间
+    private Date updateTime;
+
+   public Files(){}
+
+    public Files(String userId, String url, String type, String fileName, String size) {
         this.userId = userId;
         this.url = url;
         this.type = type;
         this.fileName = fileName;
+        this.size = size;
     }
 
     public Files(String url, String type, String fileName) {
@@ -66,13 +78,40 @@ public class Files {
         this.fileName = fileName;
     }
 
+    public String getSize() {
+        return size;
+    }
+
+    public void setSize(String size) {
+        this.size = size;
+    }
+
+    public Date getCreateTime() {
+        return createTime;
+    }
+
+    public void setCreateTime(Date createTime) {
+        this.createTime = createTime;
+    }
+
+    public Date getUpdateTime() {
+        return updateTime;
+    }
+
+    public void setUpdateTime(Date updateTime) {
+        this.updateTime = updateTime;
+    }
+
     @Override
     public String toString() {
-        return "File{" +
+        return "Files{" +
                 "userId='" + userId + '\'' +
                 ", url='" + url + '\'' +
-                ", type=" + type +
+                ", type='" + type + '\'' +
                 ", fileName='" + fileName + '\'' +
+                ", size='" + size + '\'' +
+                ", createTime=" + createTime +
+                ", updateTime=" + updateTime +
                 '}';
     }
 }

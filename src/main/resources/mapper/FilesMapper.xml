@@ -4,8 +4,8 @@
 <mapper namespace="dao.FilesDao">
 
     <insert id="saveFile" parameterType="entity.Files">
-        INSERT INTO Jo_File(user_id, url, type, file_name)
-            VALUES (#{userId}, #{url}, #{type}, #{fileName})
+        INSERT INTO Jo_File(user_id, url, type, file_name,file_size,create_time,update_time)
+            VALUES (#{userId}, #{url}, #{type}, #{fileName}, #{size}, NOW(), NOW())
     </insert>
 
     <select id="listFile" resultType="entity.Files">

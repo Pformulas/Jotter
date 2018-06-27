@@ -20,9 +20,11 @@ import org.springframework.web.multipart.commons.CommonsMultipartFile;
 import service.FilesService;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.File;
 import java.io.IOException;
+import java.io.UnsupportedEncodingException;
 
 /**
  * 文件上传web层
@@ -43,7 +45,7 @@ public class FilesContorller {
         this.filesService = filesService;
     }
 
-    @RequestMapping(value = "/upFile.do", method = RequestMethod.POST)
+    @RequestMapping(value = "/upFile.do")
     @ResponseBody
     public ServerResponse<String> upFile(@RequestParam("file")CommonsMultipartFile file,
             HttpServletRequest request, HttpSession session)  {
@@ -62,7 +64,7 @@ public class FilesContorller {
     }
 
     @ResponseBody
-    @RequestMapping(value =  "/renameFile.do", method = RequestMethod.POST)
+    @RequestMapping(value =  "/renameFile.do")
     public ServerResponse reNameFile(String partUri, String fileName, HttpSession session){
 
         //未收到前台传过来的部分uri
@@ -83,7 +85,7 @@ public class FilesContorller {
     }
 
     @ResponseBody
-    @RequestMapping(value = "/getFileList.do", method = RequestMethod.POST)
+    @RequestMapping(value = "/getFileList.do")
     public ServerResponse getFileList(HttpServletRequest request, HttpSession session, String fileName, Integer back){
 
 
@@ -102,6 +104,7 @@ public class FilesContorller {
             currentPath = currentPath + File.separator + fileName;
         }
 
+
         //保存当前访问到的路径
         session.setAttribute(Const.CURRENT_PATH,currentPath);
 
@@ -109,7 +112,7 @@ public class FilesContorller {
     }
 
     @ResponseBody
-    @RequestMapping(value = "/newFolder.do", method = RequestMethod.POST)
+    @RequestMapping(value = "/newFolder.do")
     public ServerResponse newFolder(String folderName, HttpSession session){
 
         //得到当前访问路径
