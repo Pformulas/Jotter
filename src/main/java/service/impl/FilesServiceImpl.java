@@ -105,7 +105,8 @@ public class FilesServiceImpl implements FilesService {
 
         //文件上传成功，将信息插入数据库
         try {
-            Files files = new Files(user.getUserId(), uri , FileNiceUtil.getFileType(fileName),fileName);
+            Files files = new Files
+                    (user.getUserId(), uri , FileNiceUtil.getFileType(fileName),fileName,FileNiceUtil.getFileSizeToString(file));
             affect = filesDao.saveFile(files);
             if(affect <=0){
                 return ServerResponse.getServerResponse(FilesResponse.UPFILE_FAILURE);
@@ -213,15 +214,19 @@ public class FilesServiceImpl implements FilesService {
         }
         //旧文件
         File oldfile = new File(uri);
+
         //文件
         File newFile = new File(newUri);
+
 
         //重命名失败
         if(!FileNiceUtil.fileRename(oldfile,newFile)){
             return ServerResponse.getServerResponse(FilesResponse.RENAME_FILE_FAILURE);
+
         }
 
-        Files files = new Files(FileNiceUtil.getAfterFileUri(newUri),FileNiceUtil.getFileType(fileName), fileName);
+        Files files = new Files
+                (FileNiceUtil.getAfterFileUri(newUri),FileNiceUtil.getFileType(fileName), fileName);
 
         //更新数据库中信息,考虑到更新了硬盘中文件的名字但数据库没更新，所以回滚
         try{

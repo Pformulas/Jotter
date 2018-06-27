@@ -237,6 +237,8 @@ public class FileNiceUtil {
         for(int i = 0; i < files.length; i++){
             fs[i] = new Files();
             fs[i].setType(FileNiceUtil.getFileType(files[i].getName()));
+            fs[i].setSize(FileNiceUtil.getFileSizeToString(files[i]));
+            System.out.println(files[i].lastModified());
             if(files[i].isDirectory()){
                 System.out.println(1);
                 fs[i].setType(Const.Folder_Type);
@@ -247,4 +249,30 @@ public class FileNiceUtil {
         return fs;
     }
 
+    /**
+     * 返回文件大小
+     * @param file 文件
+     * @return 字符串
+     */
+    public static String getFileSizeToString(CommonsMultipartFile file){
+        Long size = file.getSize();
+        if(size / 1024 <= 0){
+            return size  + "Byte";
+        }else if(size/(1024*1024) <= 0){
+            return (size/1024) + "KB";
+        }else{
+            return (size/(1024*1024)) + "MB";
+        }
+    }
+
+    public static String getFileSizeToString(File file){
+        Long size = file.length();
+        if(size / 1024 <= 0){
+            return size  + "Byte";
+        }else if(size/(1024*1024) <= 0){
+            return (size/1024) + "KB";
+        }else{
+            return (size/(1024*1024)) + "MB";
+        }
+    }
 }

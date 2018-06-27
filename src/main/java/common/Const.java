@@ -26,21 +26,21 @@ public final class Const {
     public static final String TEMP_PASSWORD = "tempPassword";
 
     //视频类型码
-    public static final String VIDEO_TYPE = "视频";
+    public static final String VIDEO_TYPE = "vidio";
 
     //音乐类型码
-    public static final String MUSIC_TYPE = "音频";
+    public static final String MUSIC_TYPE = "music";
 
     //图片类型码
-    public static final String PICTURE_TYPE = "图片";
+    public static final String PICTURE_TYPE = "img";
 
     //文本类型码
-    public static final String TEXT_TYPE = "文本";
+    public static final String TEXT_TYPE = "file";
 
-    public static final String Folder_Type = "文件夹";
+    public static final String Folder_Type = "folder";
 
     //其他类型码
-    public static final String OTHER_TYPE = "其他类型";
+    public static final String OTHER_TYPE = "questions";
 
    // 文件保存路径
     public static final String FILE_PATH = "File";

@@ -26,11 +26,12 @@ public class FilesDaoTest {
     @Test
     public void testSaveFile(){
 
-        String currentPath= "D:\\apache-tomcat-8.5.29\\webapps\\Jotter\\File\\imp";
-
-        currentPath = currentPath.substring(0,currentPath.lastIndexOf(File.separator)+1);
-        System.out.println(FileNiceUtil.getAfterFileUri(currentPath));
-        System.out.println(currentPath);
+        String currentPath="D:\\apache-tomcat-8.5.29\\webapps\\Jotter\\File\\imp\\文件操作.txt" ;
+        String newPath = "D:\\apache-tomcat-8.5.29\\webapps\\Jotter\\File\\imp\\哈哈.txt";
+        File oldFile = new File(currentPath);
+        File newFile = new File(newPath);
+        oldFile.renameTo(newFile);
+        System.out.println(newFile.getName());
 
 
     }
