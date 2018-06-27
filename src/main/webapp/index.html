@@ -58,18 +58,22 @@
                                     <img src="./images/account.png" alt="account">
                                     <form action="#" id="registerForm">
                                         <label>
-                                            <input type="text" id="inputUsername" name="username" placeholder="输入用户名" maxlength="32" required>
+                                            <input type="text" id="inputUsername" name="username" placeholder="输入用户名"
+                                                   maxlength="32" required>
                                         </label>
                                         <p style="color: red;display: none;" id="usernameError"></p>
                                         <label>
-                                            <input type="password" id="inputPwd" name="password" placeholder="输入密码" maxlength="32" required>
+                                            <input type="password" id="inputPwd" name="password" placeholder="输入密码"
+                                                   maxlength="32" required>
                                         </label>
                                         <label>
-                                            <input type="password" id="inputEnsurePwd" placeholder="再次输入密码" maxlength="32" required>
+                                            <input type="password" id="inputEnsurePwd" placeholder="再次输入密码"
+                                                   maxlength="32" required>
                                         </label>
                                         <p style="color: red;display: none;" id="pwdError">两次输入的密码不匹配</p>
                                         <label>
-                                            <a href="javascript:" class="btn" id="registerBtn"><i class="fa fa-plus-square-o"></i> 注册</a>
+                                            <a href="javascript:" class="btn" id="registerBtn"><i
+                                                    class="fa fa-plus-square-o"></i> 注册</a>
                                         </label>
                                         <a href="javascript:" class="btn slideToLoginPageBtn dashed-btn"><i
                                                 class="fa fa-sign-in"></i> 我要登陆</a>
@@ -82,13 +86,16 @@
                                     <img src="./images/account.png" alt="account">
                                     <form action="#" id="loginForm">
                                         <label>
-                                            <input type="text" name="username" placeholder="输入用户名" maxlength="32" required>
+                                            <input type="text" name="username" placeholder="输入用户名" maxlength="32"
+                                                   required>
                                         </label>
                                         <label>
-                                            <input type="password" name="password" placeholder="输入密码" maxlength="32" required>
+                                            <input type="password" name="password" placeholder="输入密码" maxlength="32"
+                                                   required>
                                         </label>
                                         <label>
-                                            <a href="javascript:" class="btn" id="loginBtn"><i class="fa fa-sign-in"></i> 登陆</a>
+                                            <a href="javascript:" class="btn" id="loginBtn"><i
+                                                    class="fa fa-sign-in"></i> 登陆</a>
                                         </label>
                                         <a href="javascript:" class="btn slideToRegiterPageBtn dashed-btn"><i
                                                 class="fa fa-plus-square-o"></i> 我要注册</a>
@@ -149,9 +156,27 @@
                                                     <div class="rightBox">
                                                         <!-- 笔记本控制面板 -->
                                                         <div class="notebookPan">
-                                                            <p>JAVA 基础语法</p>
-                                                            <p>2018-6-26 11:23:58</p>
-                                                            <p><a href="javascript:" class="btn dashed-btn">管理笔记本</a>
+                                                            <p id="notebookNameP">JAVA 基础语法</p>
+                                                            <p class="hidden"><input type="text" id="notebookNameInput"
+                                                                      placeholder="输入笔记本名称" required/>
+                                                            </p>
+                                                            <p id="notebookCreateTimeP">2018-6-26 11:23:58</p>
+                                                            <p>
+                                                                <a href="javascript:" class="btn dashed-btn"
+                                                                  id="switchManageNotebookBtn">
+                                                                    <i class="fa fa-tags"></i> 管理笔记本
+                                                                </a>
+                                                            </p>
+                                                            <p class="hidden">
+                                                                <a href="javascript:" class="btn" id="saveNotebookNameBtn">
+                                                                    <i class="fa fa-check"></i> 保存名称
+                                                                </a>
+                                                                <a href="javascript:" class="btn dashed-btn" id="cancelNotebookNameBtn">
+                                                                    <i class="fa fa-close"></i> 取消更改
+                                                                </a>
+                                                            </p>
+                                                            <p class="hidden"><a href="javascript:" class="btn dashed-btn" id="deleteNotebookNameBtn">
+                                                                <i class="fa fa-warning"></i> 删除笔记本</a>
                                                             </p>
                                                         </div>
                                                         <div class="noteList">

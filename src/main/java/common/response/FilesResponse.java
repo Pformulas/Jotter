@@ -20,7 +20,7 @@ public enum FilesResponse implements ResponseStatus {
     URL_IS_WRONG(-4, "URL地址错误"),
     RENAME_FILE_FAILURE(-5, "文件重命名失败"),
     FILE_DELETE_FAIL(-6, "文件删除失败"),
-    FILE_DELETE_SUCCES(-7, "文件删除成功"),
+    FILE_DELETE_SUCCES(ResponseStatus.SUCCESS_CODE, "文件删除成功"),
     GET_FILE_LIST_FAILURE(-8,"获取文件列表失败，请重试"),
     GET_FILE_LIST_SUCCESS(ResponseStatus.SUCCESS_CODE,"获取文件列表成功"),
     NEW_FILE_FOLDER_SUCCESS(ResponseStatus.SUCCESS_CODE,"创建文件夹成功"),
