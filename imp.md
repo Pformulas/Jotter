@@ -6,12 +6,12 @@ url: /upFile.do<br>
 参数：file （需要上传一个文件）
 
     success:
-    {
-    "status": 0,
-    "msg": "文件上传成功",
-    "data": null,
-    "success": true
-    }
+         {
+         "status": 0,
+         "msg": "文件上传成功",
+         "data": null,
+         "success": true
+         }
  
  #####2.文件重命名
  url: /renameFile.do<br>
