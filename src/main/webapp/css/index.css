@@ -198,9 +198,10 @@ input:focus {
 }
 
 .mainBox .repoPage .content .left .leftBox > ul {
+    height: 100%;
     position: absolute;
     right: 0;
-    top: 72px;
+    top: 100px;
     margin-right: 10px;
 }
 
@@ -212,6 +213,10 @@ input:focus {
     right: 0;
     text-align: center;
     margin: 12px 0;
+}
+
+.mainBox .repoPage .content .left .addANotebookDiv p {
+    margin: 0 0 6px 0;
 }
 
 .mainBox .repoPage .content .left .addANotebookDiv a {
@@ -229,18 +234,6 @@ input:focus {
     right: 0;
     top: 0;
     margin-right: 10px;
-}
-
-.mainBox .repoPage .content .left .leftBox .getMoreNotebook a {
-    width: max-content;
-    height: 16px;
-    line-height: 16px;
-    text-decoration: unset;
-    color: #5B4947;
-}
-
-.mainBox .repoPage .content .left .leftBox .getMoreNotebook a:hover {
-    color: #0092C7;
 }
 
 .noteBookP {
