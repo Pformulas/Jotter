@@ -289,18 +289,18 @@ $(function () {
                     $(".welcomePage .operation").hide();
                     $(".welcomePage .afterLogin").show();
 
-                    // 跳转到首页
-                    slideToWelcomePage();
-
                     // 登陆界面和注册界面要被隐藏
                     slideToRepoPage();
 
-                    // 给跳转到笔记界面设置点击事件
-                    $("#turnToRepo").click(slideToRepoPage);
+                    // 跳转到首页
+                    slideToWelcomePage();
                 }
             }
         });
     });
+
+    // 给跳转到笔记界面设置点击事件
+    $("#turnToNotebook").click(slideToRepoPage);
 
     // 得到个人资料
     function getInfo() {
