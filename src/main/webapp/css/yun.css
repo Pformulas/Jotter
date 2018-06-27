@@ -346,3 +346,23 @@ input[type="checkbox"]:checked {
 .act{
     background-color: #308eff;
 }
+
+.mod-status
+{
+    width: 100%;
+    height: 600px;
+    justify-content: center;
+    display: flex;
+    align-items: center;
+    text-align: center;
+}
+
+.empty-box
+{
+    margin-top: 50px;
+}
+
+.empty-box i
+{
+    font-size: 200px;
+}

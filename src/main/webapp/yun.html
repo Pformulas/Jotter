@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:v-bind="http://www.w3.org/1999/xhtml">
 
 <head>
     <meta charset="UTF-8">
@@ -378,204 +378,24 @@
                                 </div>
                             </div>
                             <div class="list-group-bd">
-                                <div class="list-group-wrapper">
+                                <div class="list-group-wrapper" id="app1">
                                     <ul class="list-group">
-                                        <li class="list-group-item">
+                                        <li class="list-group-item" v-for="file in data">
                                             <div class="item-icon">
-                                                <input type="checkbox" name="1"/>
+                                                <input :name="file.url" type="checkbox"/>
                                             </div>
                                             <div class="item-inner">
                                                 <div class="item-tit">
-                                                    <i class="big folder blue icon"></i>
+                                                    <i class="big blue icon" v-bind:class="[file.type]"></i>
                                                     <a href="javascript:void(0)" title="QQ浏览器" data-type="111111">
-                                                        QQ浏览器</a>
+                                                        {{file.fileName}}</a>
                                                 </div>
                                                 <div class="item-info">
                                                     <div class="item-info-list">
-                                                        <span>02月26日 14:44</span>
+                                                        <span>{{file.updateTime}}</span>
                                                     </div>
                                                     <div class="item-info-list">
-                                                        <span>3.6 MB</span>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </li>
-                                        <li class="list-group-item">
-                                            <div class="item-icon">
-                                                <input type="checkbox" name="2"/>
-                                            </div>
-                                            <div class="item-inner">
-                                                <div class="item-tit">
-                                                    <i class="big folder blue icon"></i>
-                                                    <a href="#">
-                                                        网络硬盘收藏夹</a>
-                                                </div>
-                                                <div class="item-info">
-                                                    <div class="item-info-list">
-                                                        <span>02月26日 14:44</span>
-                                                    </div>
-                                                    <div class="item-info-list">
-                                                        <span>3.6 MB</span>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </li>
-                                        <li class="list-group-item">
-                                            <div class="item-icon">
-                                                <input type="checkbox" name="3"/>
-                                            </div>
-                                            <div class="item-inner">
-                                                <div class="item-tit">
-                                                    <i class="big folder blue icon"></i>
-                                                    <a href="#">
-                                                        QQ</a>
-                                                </div>
-                                                <div class="item-info">
-                                                    <div class="item-info-list">
-                                                        <span>02月26日 14:44</span>
-                                                    </div>
-                                                    <div class="item-info-list">
-                                                        <span>3.6 MB</span>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </li>
-                                        <li class="list-group-item">
-                                            <div class="item-icon">
-                                                <input type="checkbox" />
-                                            </div>
-                                            <div class="item-inner">
-                                                <div class="item-tit">
-                                                    <i class="big file icon"></i>
-                                                    <a href="#">
-                                                        MadaoMusicSpider.exe</a>
-                                                </div>
-                                                <div class="item-info">
-                                                    <div class="item-info-list">
-                                                        <span>02月26日 14:44</span>
-                                                    </div>
-                                                    <div class="item-info-list">
-                                                        <span>3.6 MB</span>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </li>
-                                        <li class="list-group-item">
-                                            <div class="item-icon">
-                                                <input type="checkbox" />
-                                            </div>
-                                            <div class="item-inner">
-                                                <div class="item-tit">
-                                                    <i class="big music green icon"></i>
-                                                    <a href="#">
-                                                        夕阳西下</a>
-                                                </div>
-                                                <div class="item-info">
-                                                    <div class="item-info-list">
-                                                        <span>02月26日 14:44</span>
-                                                    </div>
-                                                    <div class="item-info-list">
-                                                        <span>3.6 MB</span>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </li>
-                                        <li class="list-group-item">
-                                            <div class="item-icon">
-                                                <input type="checkbox" />
-                                            </div>
-                                            <div class="item-inner">
-                                                <div class="item-tit">
-                                                    <i class="big file code outline icon"></i>
-                                                    <a href="#">
-                                                        exp06</a>
-                                                </div>
-                                                <div class="item-info">
-                                                    <div class="item-info-list">
-                                                        <span>02月26日 14:44</span>
-                                                    </div>
-                                                    <div class="item-info-list">
-                                                        <span>3.6 MB</span>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </li>
-                                        <li class="list-group-item">
-                                            <div class="item-icon">
-                                                <input type="checkbox" />
-                                            </div>
-                                            <div class="item-inner">
-                                                <div class="item-tit">
-                                                    <i class="big file code outline icon"></i>
-                                                    <a href="#">
-                                                        exp05</a>
-                                                </div>
-                                                <div class="item-info">
-                                                    <div class="item-info-list">
-                                                        <span>02月26日 14:44</span>
-                                                    </div>
-                                                    <div class="item-info-list">
-                                                        <span>3.6 MB</span>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </li>
-                                        <li class="list-group-item">
-                                            <div class="item-icon">
-                                                <input type="checkbox" />
-                                            </div>
-                                            <div class="item-inner">
-                                                <div class="item-tit">
-                                                    <i class="big blue file word icon"></i>
-                                                    <a href="#">
-                                                        QQ浏览器</a>
-                                                </div>
-                                                <div class="item-info">
-                                                    <div class="item-info-list">
-                                                        <span>02月26日 14:44</span>
-                                                    </div>
-                                                    <div class="item-info-list">
-                                                        <span>3.6 MB</span>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </li>
-                                        <li class="list-group-item">
-                                            <div class="item-icon">
-                                                <input type="checkbox" />
-                                            </div>
-                                            <div class="item-inner">
-                                                <div class="item-tit">
-                                                    <i class="big blue file word icon"></i>
-                                                    <a href="#">
-                                                        QQ浏览器</a>
-                                                </div>
-                                                <div class="item-info">
-                                                    <div class="item-info-list">
-                                                        <span>02月26日 14:44</span>
-                                                    </div>
-                                                    <div class="item-info-list">
-                                                        <span>3.6 MB</span>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </li>
-                                        <li class="list-group-item">
-                                            <div class="item-icon">
-                                                <input type="checkbox" />
-                                            </div>
-                                            <div class="item-inner">
-                                                <div class="item-tit">
-                                                    <i class="big file pdf red icon"></i>
-                                                    <a href="#">
-                                                        QQ浏览器</a>
-                                                </div>
-                                                <div class="item-info">
-                                                    <div class="item-info-list">
-                                                        <span>02月26日 14:44</span>
-                                                    </div>
-                                                    <div class="item-info-list">
-                                                        <span>3.6 MB</span>
+                                                        <span>{{file.size}}</span>
                                                     </div>
                                                 </div>
                                             </div>
@@ -2620,27 +2440,37 @@
     </div>
     <script src="js/jquery-3.3.1.min.js"></script>
     <script src="https://cdn.bootcss.com/semantic-ui/2.3.1/semantic.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
     <script src="js/yun.js"></script>
     <script>
-        function getFileName(fileName)
-        {
-            $.ajax({
-                url: '/getFileList.do',
-                type: 'GET',
-                data: {
-                    "fileName": fileName,
-                },
-                success: function (data)
-                {
-                    console.log(data);
-                },
-                error: function ()
-                {
-                    console.log("错误");
-                }
-            });
-        };
-        getFileName(null);
+        /*var app1 = new Vue({
+            el: '#app1',
+            data: {
+                files: [
+                    {
+                        id: 1,
+                        fileName: 'QQ浏览器',
+                        time: new Date().toLocaleString(),
+                        size: "3.6MB",
+                        type: "green music"
+                    },
+                    {
+                        id: 2,
+                        fileName: 'QQ浏览器1',
+                        time: new Date().toLocaleString(),
+                        size: "3.7MB",
+                        type: "blue folder"
+                    },
+                    {
+                        id: 3,
+                        fileName: 'QQ浏览器2',
+                        time: new Date().toLocaleString(),
+                        size: "3.9MB",
+                        type: "file"
+                    }
+                ]
+            }
+        });*/
     </script>
 </body>
 

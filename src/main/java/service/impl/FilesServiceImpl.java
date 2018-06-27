@@ -329,6 +329,7 @@ public class FilesServiceImpl implements FilesService {
 
         //创建文件夹
         File file = new File(currentPath);
+        System.out.println(currentPath);
         if(!file.mkdir()){
             return ServerResponse.getServerResponse(FilesResponse.NEW_FILE_FOLDER_FAILURE);
         }
