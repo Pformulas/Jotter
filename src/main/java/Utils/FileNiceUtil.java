@@ -12,6 +12,7 @@ import org.springframework.util.StringUtils;
 import org.springframework.web.multipart.commons.CommonsMultipartFile;
 
 import java.io.*;
+import java.util.Date;
 import java.util.List;
 import java.util.UUID;
 import java.util.zip.ZipEntry;
@@ -238,9 +239,8 @@ public class FileNiceUtil {
             fs[i] = new Files();
             fs[i].setType(FileNiceUtil.getFileType(files[i].getName()));
             fs[i].setSize(FileNiceUtil.getFileSizeToString(files[i]));
-            System.out.println(files[i].lastModified());
+           fs[i].setUpdateTime(new Date(files[i].lastModified()));
             if(files[i].isDirectory()){
-                System.out.println(1);
                 fs[i].setType(Const.Folder_Type);
             }
             fs[i].setFileName(files[i].getName());

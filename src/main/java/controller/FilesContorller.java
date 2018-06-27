@@ -66,7 +66,7 @@ public class FilesContorller {
     @ResponseBody
     @RequestMapping(value =  "/renameFile.do")
     public ServerResponse reNameFile(String partUri, String fileName, HttpSession session){
-       
+
         //未收到前台传过来的部分uri
         if( partUri == null){
             return ServerResponse.getServerResponse(FilesResponse.RENAME_FILE_FAILURE);
