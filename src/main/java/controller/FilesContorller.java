@@ -83,7 +83,7 @@ public class FilesContorller {
     }
 
     @ResponseBody
-    @RequestMapping(value = "/getFileList.do", method = RequestMethod.GET)
+    @RequestMapping(value = "/getFileList.do", method = RequestMethod.POST)
     public ServerResponse getFileList(HttpServletRequest request, HttpSession session, String fileName, Integer back){
 
 
@@ -109,7 +109,7 @@ public class FilesContorller {
     }
 
     @ResponseBody
-    @RequestMapping(value = "/newFolder.do", method = RequestMethod.GET)
+    @RequestMapping(value = "/newFolder.do", method = RequestMethod.POST)
     public ServerResponse newFolder(String folderName, HttpSession session){
 
         //得到当前访问路径
