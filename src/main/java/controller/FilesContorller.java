@@ -104,6 +104,7 @@ public class FilesContorller {
             currentPath = currentPath + File.separator + fileName;
         }
 
+
         //保存当前访问到的路径
         session.setAttribute(Const.CURRENT_PATH,currentPath);
 
