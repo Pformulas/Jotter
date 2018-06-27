@@ -231,6 +231,18 @@ input:focus {
     margin-right: 10px;
 }
 
+.mainBox .repoPage .content .left .leftBox .getMoreNotebook a {
+    width: max-content;
+    height: 16px;
+    line-height: 16px;
+    text-decoration: unset;
+    color: #5B4947;
+}
+
+.mainBox .repoPage .content .left .leftBox .getMoreNotebook a:hover {
+    color: #0092C7;
+}
+
 .noteBookP {
     width: 80%;
     height: 36px;
