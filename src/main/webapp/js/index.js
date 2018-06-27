@@ -364,4 +364,26 @@ $(function () {
         // 如果是邮箱，返回 true
         return reg.test(str);
     }
+
+    // 切换笔记本名称和输入笔记本名称
+    function switchManageNotebook() {
+        const hiddenPs = $(".notebookPan p[class='hidden']");
+        const showPs = $(".notebookPan p[class!='hidden']");
+
+        // 将隐藏的显示出来
+        hiddenPs.each(function (index, item) {
+            $(item).removeClass("hidden");
+        });
+
+        // 将显示的隐藏掉
+        showPs.each(function (index, item) {
+            $(item).addClass("hidden");
+        });
+
+        $("#notebookCreateTimeP").removeClass("hidden");
+    }
+
+    // 给切换按钮绑定切换响应事件
+    $("#switchManageNotebookBtn").click(switchManageNotebook);
+    $("#cancelNotebookNameBtn").click(switchManageNotebook);
 });
