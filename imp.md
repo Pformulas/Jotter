@@ -39,6 +39,9 @@ url: /upFile.do<br>
     "url": "\\imp\\文件操作.txt",
     "type": "文本",
     "fileName": "文件操作.txt"
+    "size": "102Byte",
+    "createTime": null,
+    "updateTime": 1530088289210
     }
     ],
     "success": true
