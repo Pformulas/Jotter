@@ -26,13 +26,13 @@ public final class Const {
     public static final String TEMP_PASSWORD = "tempPassword";
 
     //视频类型码
-    public static final String VIDEO_TYPE = "vidio";
+    public static final String VIDEO_TYPE = "video";
 
     //音乐类型码
     public static final String MUSIC_TYPE = "music";
 
     //图片类型码
-    public static final String PICTURE_TYPE = "img";
+    public static final String PICTURE_TYPE = "image";
 
     //文本类型码
     public static final String TEXT_TYPE = "file";

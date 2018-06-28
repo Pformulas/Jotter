@@ -101,7 +101,7 @@ public class FilesContorller {
         }
 
         if(fileName != null){
-            currentPath = currentPath + File.separator + fileName;
+            currentPath = currentPath + fileName;
         }
 
 

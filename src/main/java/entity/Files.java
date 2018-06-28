@@ -30,6 +30,7 @@ public class Files {
     //修改时间
     private Date updateTime;
 
+
    public Files(){}
 
     public Files(String userId, String url, String type, String fileName, String size) {
