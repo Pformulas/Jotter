@@ -2,6 +2,7 @@ package controller;
 
 import common.Const;
 import common.ServerResponse;
+import common.response.UserResponse;
 import entity.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -137,5 +138,27 @@ public class UserController {
 
         // 得到目前登陆信息，然后获取全部信息
         return userService.updateUser(user);
+    }
+
+    /**
+     * 检查登陆登录状态
+     *
+     * @param session 用户登陆信息来源
+     * @return 返回登陆状态
+     */
+    @RequestMapping(
+            value = "/is_login.do",
+            method = {RequestMethod.POST},
+            produces = {"application/json; charset=UTF8"}
+    )
+    @ResponseBody
+    public ServerResponse isLogin(HttpSession session) {
+        // 如果 session 里面没有 user 对象，说明没有登陆
+        if (session.getAttribute(Const.USER_KEY) == null) {
+            return ServerResponse.getServerResponse(UserResponse.NEED_LOGIN);
+        }
+
+        // 已经登陆了，返回登陆成功
+        return ServerResponse.getServerResponse(UserResponse.LOGIN_SUCCESS);
     }
 }

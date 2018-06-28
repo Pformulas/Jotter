@@ -29,16 +29,45 @@ $(function () {
     // 切换菜单速度，单位：ms
     const SLIDE_SPEED = 800;
 
-    // 从 localStorage 中获取登陆信息时用到的 key 值
+    // 从 sessionStorage 中获取登陆信息时用到的 key 值
     const LOGIN_KEY = "isLogin";
+
+    // 从 sessionStorage 中获取验证刷新页面信息时用到的 key 值
+    const CHECK_LOGIN_KEY = "checkLogin";
 
     // 当登陆之后，将登陆信息存在 localStorage 中
     function loginSuccess() {
         sessionStorage.setItem(LOGIN_KEY, "true");
     }
 
+    // 如果原本没有检查标志，说明是第一次打开页面，这时候就直接设置标识
+    if (sessionStorage.getItem(CHECK_LOGIN_KEY) == null) {
+        sessionStorage.setItem(CHECK_LOGIN_KEY, "false");
+    }
+
     // 判断是否登陆的方法
     function isLogin() {
+        if (sessionStorage.getItem(LOGIN_KEY) == null) {
+            return false;
+        }
+
+        // 发送请求去查看 session 是否有登陆信息
+        $.ajax({
+            url: "user/is_login.do",
+            type: "POST",
+            success: function (resp) {
+                // 没有登陆
+                if (!(resp.status === 0)) {
+                    sessionStorage.removeItem(LOGIN_KEY);
+
+                    if (!(sessionStorage.getItem(CHECK_LOGIN_KEY) === "true")) {
+                        window.location.reload();
+                        sessionStorage.setItem(CHECK_LOGIN_KEY, "true");
+                    }
+                }
+            }
+        });
+
         return sessionStorage.getItem(LOGIN_KEY) === "true";
     }
 
