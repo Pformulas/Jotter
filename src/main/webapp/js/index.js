@@ -40,6 +40,7 @@ $(function () {
         sessionStorage.setItem(LOGIN_KEY, "true");
     }
 
+    // 如果原本没有检查标志，说明是第一次打开页面，这时候就直接设置标识
     if (sessionStorage.getItem(CHECK_LOGIN_KEY) == null) {
         sessionStorage.setItem(CHECK_LOGIN_KEY, "false");
     }
@@ -50,6 +51,7 @@ $(function () {
             return false;
         }
 
+        // 发送请求去查看 session 是否有登陆信息
         $.ajax({
             url: "user/is_login.do",
             type: "POST",
