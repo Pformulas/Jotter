@@ -86,7 +86,6 @@ public class FilesServiceImpl implements FilesService {
 
         //得到保存文件的uri
         String uri = path + File.separator + fileName;
-
         String deleteUri = uri;
         //如果该文件存在，提示重复
         if(FileNiceUtil.fileIsExits(uri)){
@@ -154,6 +153,7 @@ public class FilesServiceImpl implements FilesService {
      */
     @Override
     public ServerResponse deleteFile(HttpServletRequest request, String[] urls, User user) {
+
         if(urls == null){
             return ServerResponse.getServerResponse(FilesResponse.URL_IS_WRONG);
         }
@@ -175,7 +175,6 @@ public class FilesServiceImpl implements FilesService {
         List<String> failFileNames = new ArrayList<>();
         for (String url : urlList) {
             String realFileName = path + url;
-            System.out.println(realFileName);
             File targetFile = new File(realFileName);
             if(targetFile.exists()){
                 targetFile.delete();

@@ -101,13 +101,12 @@ public class FilesContorller {
         }
 
         if(fileName != null){
-            currentPath = currentPath + File.separator + fileName;
+            currentPath = currentPath +  fileName;
         }
 
 
         //保存当前访问到的路径
         session.setAttribute(Const.CURRENT_PATH,currentPath);
-
         return filesService.getFileList(currentPath);
     }
 
@@ -147,8 +146,9 @@ public class FilesContorller {
      */
     @ResponseBody
     @RequestMapping(path = "/multipleDownload.do", produces = {"application/json;charset=UTF8"})
-    public Object multipleDownload(HttpServletRequest request, String[] fileNames, User user)
+    public Object multipleDownload(HttpServletRequest request, String[] fileNames, HttpSession session)
     {
+        User user = (User) session.getAttribute(Const.USER_KEY);
         if(fileNames == null){
             return ServerResponse.getServerResponse(FilesResponse.URL_IS_WRONG);
         }
@@ -180,20 +180,22 @@ public class FilesContorller {
      */
     @ResponseBody
     @RequestMapping(path = "/deleteFile.do", produces = {"application/json;charset=UTF8"})
-    public ServerResponse deleteFile(HttpServletRequest request, String[] urls, User user){
+    public ServerResponse deleteFile(HttpServletRequest request, String[] urls, HttpSession session){
+        User user = (User) session.getAttribute(Const.USER_KEY);
         return filesService.deleteFile(request, urls, user);
     }
 
     /**
      * 根据文件的类型来列表
      * 参数 user的userId   type是字符串，表示类别
-     * @param user
+     * @param session
      * @param type
      * @return
      */
     @ResponseBody
     @RequestMapping(path = "/listFilesByType.do", produces = {"application/json;charset=UTF8"})
-    public ServerResponse listFilesByType(User user, String type){
+    public ServerResponse listFilesByType(HttpSession session, String type){
+        User user = (User) session.getAttribute(Const.USER_KEY);
         return filesService.listFile(user, type);
     }
 }

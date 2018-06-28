@@ -6,6 +6,7 @@ $(function ()
 {
     var count = 0;
     var id_list = new Array();
+    let deleteUrls = [];
     $('#_menu_list li:eq("1")').addClass('cur').show();
     $('#_main_body div.mod-list-group').hide();
     $('#_main_body div.mod-list-group:eq("1")').show();
@@ -19,33 +20,7 @@ $(function ()
         $('#_main_body div.mod-list-group').hide();
         var activeTab = $(this).find('a').attr('data-type');
         $("#_main_body [data-type=" + activeTab + "]").show();
-        getFileName(null,activeTab);
-
-    });
-    // 点击打勾，显示下载，分享，删除，更多的button,count用来表示当最后一个勾取消时，button消失
-    $('.item-icon input').click(function ()
-    {
-        if ($(this).parent().parent().attr('class') == 'list-group-item act')
-        {
-            count--;
-            if (count == 0)
-            {
-                $('div.ui.icon.basic.buttons').css({
-                    'display': 'none',
-                });
-            }
-            $(this).parent().parent().removeClass('act');
-        } else
-        {
-            count++;
-            $(this).parent().parent().addClass('act');
-            $('div.ui.icon.basic.buttons').css({
-                'display': 'inline-flex',
-                'margin-left': '10px',
-            });
-
-            console.log($(this).attr('name'));
-        }
+        getFileName(null, activeTab);
     });
 
     //跳转
@@ -56,10 +31,13 @@ $(function ()
         var $title1 = $(this).attr('title');
         //$(this).attr('href',"https://www.weiyun.com/disk");
     });
-    fileUpload = function ()
+
+    //文件上传
+
+    $("#upload").click(function ()
     {
-        $('#File').click();
-    };
+        $("#File").click();
+    });
 
     //新建
     $('#plus').click(function ()
@@ -90,9 +68,30 @@ $(function ()
         $('#plus_modal').modal('hide');
     });
 
+
+    //下载
+    let downFileName = [];
+    $('#download').click(function ()
+    {
+        let downloadArrays = $('.item-icon input[data-type-click="true"]');
+        for (let i = 0; i < downloadArrays.length; i++)
+        {
+            downFileName.push($(downloadArrays[i]).attr("data-type-name"));
+        }
+        console.log("下载开始");
+        console.log(downFileName);
+    });
+
     //删除
     $('#delete').click(function ()
     {
+        let deleteArrays = $('.item-icon input[data-type-click="true"]');
+        for (let i = 0; i < deleteArrays.length; i++)
+        {
+            deleteUrls.push($(deleteArrays[i]).attr("name"));
+            console.log("我是删除里面的" + $(deleteArrays[i]).attr("name"));
+        }
+        console.log(deleteUrls);
         if (count >= 2)
         {
             $('#delete_modal .content .ui.header').text("你确定要删除这些文件(夹)?");
@@ -105,15 +104,29 @@ $(function ()
     $('#delete_ensure').click(function ()
     {
         $('#delete_modal').modal('hide');
+        $.ajax({
+                type: "POST",
+                url: "deleteFile.do",
+                data: {"urls":deleteUrls},
+                traditional: true,
+                success: function (response)
+                {
+                    console.log(response);
+                    window.location.reload();
+                },
+                error: function ()
+                {
+                    console.log("删除操作失败了,就很烦");
+                },
+            }
+        );
     });
-    $('#delete_modal').click(function ()
+    $('#delete_console').click(function ()
     {
-        $('#delete_console').click(function ()
-        {
-            $('#delete_modal').modal('hide');
-        })
+        deleteUrls = [];
+        $('#delete_modal').modal('hide');
     });
-    getFileName = function (fileName,type)
+    getFileName = function (fileName, type)
     {
         $.ajax({
             url: 'getFileList.do',
@@ -125,7 +138,7 @@ $(function ()
             {
                 if (response.data == null || response.data.length == 0)
                 {
-                    $('.mod-list-group[data-type='+type+']').html("<div class=\"mod-status\">\n" +
+                    $('.mod-list-group[data-type=' + type + ']').html("<div class=\"mod-status\">\n" +
                         "                                <div class=\"empty-box\">\n" +
                         "                                    <div class=\"status-inner\">\n" +
                         "                                        <i class=\"icon image\">\n" +
@@ -136,25 +149,27 @@ $(function ()
                         "                                </div>\n" +
                         "                            </div>")
                 }
-                let app1=new Vue({
+                let app1 = new Vue({
                     el: '#app1',
-                    data:response,
-                    methods:{
-                        showUpdateTime:function ()
+                    data: response,
+                    methods: {
+                        showUpdateTime: function ()
                         {
                             const files = this.data;
-                            if (files == null) {
+                            if (files == null)
+                            {
                                 return;
                             }
 
-                            for (let i = 0; i < files.length; i++) {
+                            for (let i = 0; i < files.length; i++)
+                            {
                                 files[i].updateTime = new Date(files[i].updateTime).toLocaleString();
                             }
                         }
                     }
                 });
-                console.log(app1);
                 app1.showUpdateTime();
+                console.log(response.data);
             },
             error: function ()
             {
@@ -172,7 +187,8 @@ $(function ()
             },
             success: function (response)
             {
-                if(response.status == 0){
+                if (response.status == 0)
+                {
                     window.location.replace('http://localhost:8080/Jotter/yun.html');
                 }
                 console.log(response);
@@ -184,6 +200,34 @@ $(function ()
 
         });
     };
-    getFileName(null,"2");
+    getFileName(null, "2");
+
+    //因为Dom元素是用ajax异步请求的，所以要用动态加载元素绑定事件
+    // 点击打勾，显示下载，分享，删除，更多的button,count用来表示当最后一个勾取消时，button消失
+    $(document).on('click', '.item-icon input', function ()
+    {
+        if ($(this).parent().parent().attr('class') == 'list-group-item act')
+        {
+            count--;
+            if (count == 0)
+            {
+                $('div.ui.icon.basic.buttons').css({
+                    'display': 'none',
+                });
+            }
+            $(this).parent().parent().removeClass('act');
+            $(this).attr("data-type-click", "false");
+        } else
+        {
+            count++;
+            $(this).parent().parent().addClass('act');
+            $(this).attr("data-type-click", "true");
+            $('div.ui.icon.basic.buttons').css({
+                'display': 'inline-flex',
+                'margin-left': '10px',
+            });
+            console.log($(this).attr('name'));
+        }
+    });
 });
 
