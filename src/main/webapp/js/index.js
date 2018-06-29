@@ -193,22 +193,13 @@ $(function () {
     }
 
     // 给跳转到登陆界面的按钮绑定事件
-    const loginBtns = $(".slideToLoginPageBtn");
-    for (let i = 0; i < loginBtns.length; i++) {
-        $(loginBtns[i]).click(slideToLoginPage);
-    }
+    $(".slideToLoginPageBtn").click(slideToLoginPage);
 
     // 给跳转到注册界面的按钮绑定事件
-    const registerBtns = $(".slideToRegiterPageBtn");
-    for (let i = 0; i < registerBtns.length; i++) {
-        $(registerBtns[i]).click(slideToRegisterPage);
-    }
+    $(".slideToRegiterPageBtn").click(slideToRegisterPage);
 
     // 给切换按钮添加事件
-    const switchBtns = $(".switchBtn");
-    for (let i = 0; i < switchBtns.length; i++) {
-        $(switchBtns[i]).click(switchShowOrUpdate);
-    }
+    $(".switchBtn").click(switchShowOrUpdate);
 
     // 用户业务
     // 给用户名输入框加样式，设置错误信息
@@ -354,6 +345,33 @@ $(function () {
             }
         });
     });
+
+    // 退出登录按钮事件
+    function logout() {
+        if (!isLogin()) {
+            return;
+        }
+
+        $.ajax({
+            url: "user/logout.do",
+            type: "GET",
+            success: function (resp) {
+                // 当服务器端成功退出登陆，才对客户端进行退出登陆操作
+                if (resp.status === 0) {
+                    sessionStorage.removeItem(LOGIN_KEY);
+                    sessionStorage.removeItem(CHECK_LOGIN_KEY);
+
+                    // 刷新页面
+                    window.location.reload();
+                }
+            },
+            error: function () {
+                alert("网络错误！");
+            }
+        });
+    }
+
+    $(".logout").click(logout);
 
     // 给跳转到笔记界面设置点击事件
     $("#turnToNotebook").click(slideToRepoPage);

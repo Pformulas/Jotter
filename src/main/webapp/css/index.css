@@ -454,6 +454,17 @@ ul.noteBookList li.noteBookListChosen:before {
     text-indent: 12px;
 }
 
+/* 退出登陆标识样式 */
+.logout {
+    text-decoration: unset;
+    color: #5B4947;
+    font-size: 14px;
+}
+
+.logout:hover {
+    color: #0092C7;
+}
+
 /* 响应式样式 */
 @media screen and (max-width: 640px) {
     /* 输入框样式 */

@@ -161,4 +161,22 @@ public class UserController {
         // 已经登陆了，返回登陆成功
         return ServerResponse.getServerResponse(UserResponse.LOGIN_SUCCESS);
     }
+
+    /**
+     * 退出登录
+     *
+     * @param session 登陆信息来源
+     * @return 返回退出状态
+     */
+    @RequestMapping(
+            value = "/logout.do",
+            method = {RequestMethod.GET},
+            produces = {"application/json; charset=UTF8"}
+    )
+    @ResponseBody
+    public ServerResponse logout(HttpSession session) {
+        // 从 session 中清除登陆信息
+        session.removeAttribute(Const.USER_KEY);
+        return ServerResponse.getServerResponse(UserResponse.SUCCESS);
+    }
 }
