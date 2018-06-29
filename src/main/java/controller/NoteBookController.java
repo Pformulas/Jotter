@@ -2,7 +2,6 @@ package controller;
 
 import common.Const;
 import common.ServerResponse;
-import common.response.UserResponse;
 import entity.Note;
 import entity.NoteBook;
 import entity.User;
@@ -106,6 +105,7 @@ public class NoteBookController
     /**
      * 获取这个用户的所有笔记本
      *
+     * @param
      * @return
      */
     @ResponseBody
@@ -113,10 +113,6 @@ public class NoteBookController
     public ServerResponse showNoteBookOfUserId(Integer page, HttpSession session)
     {
         User user = (User) session.getAttribute(Const.USER_KEY);
-        if (user == null) {
-            return ServerResponse.getServerResponse(UserResponse.NEED_LOGIN);
-        }
-
         return iNoteBookService.selectNoteBooksByUserId(page, user.getUserId());
     }
 
@@ -127,8 +123,10 @@ public class NoteBookController
      */
     @ResponseBody
     @RequestMapping(path = "/update_notebook.do", produces = {"application/json;charset=UTF8"})
-    public ServerResponse updateNotebook(NoteBook noteBook)
+    public ServerResponse updateNotebook(HttpSession session, NoteBook noteBook)
     {
+        User user = (User) session.getAttribute(Const.USER_KEY);
+        noteBook.setUserId(user.getUserId());
         return iNoteBookService.updateNoteBook(noteBook);
     }
 
@@ -139,8 +137,10 @@ public class NoteBookController
      */
     @ResponseBody
     @RequestMapping(path = "/update_note.do", produces = {"application/json;charset=UTF8"})
-    public ServerResponse updateNote(Note note)
+    public ServerResponse updateNote(HttpSession session, Note note)
     {
+        User user = (User) session.getAttribute(Const.USER_KEY);
+        note.setUserId(user.getUserId());
         return iNoteBookService.updateNote(note);
     }
 
@@ -153,8 +153,10 @@ public class NoteBookController
      */
     @ResponseBody
     @RequestMapping(path = "/move_note_to.do", produces = {"application/json;charset=UTF8"})
-    public ServerResponse moveNoteTo(Note note)
+    public ServerResponse moveNoteTo(HttpSession session, Note note)
     {
+        User user = (User) session.getAttribute(Const.USER_KEY);
+        note.setUserId(user.getUserId());
         return iNoteBookService.moveNoteTo(note);
     }
 
@@ -166,8 +168,10 @@ public class NoteBookController
      */
     @ResponseBody
     @RequestMapping(path = "/delete_note.do", produces = {"application/json;charset=UTF8"})
-    public ServerResponse deleteNote(Note note)
+    public ServerResponse deleteNote(HttpSession session, Note note)
     {
+        User user = (User) session.getAttribute(Const.USER_KEY);
+        note.setUserId(user.getUserId());
         return iNoteBookService.deleteNote(note);
     }
 
@@ -179,8 +183,10 @@ public class NoteBookController
      */
     @ResponseBody
     @RequestMapping(path = "/delete_notebook.do", produces = {"application/json;charset=UTF8"})
-    public ServerResponse deleteNotebook(NoteBook noteBook)
+    public ServerResponse deleteNotebook(HttpSession session, NoteBook noteBook)
     {
+        User user = (User) session.getAttribute(Const.USER_KEY);
+        noteBook.setUserId(user.getUserId());
         return iNoteBookService.deleteNotebook(noteBook);
     }
 
