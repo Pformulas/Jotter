@@ -4,8 +4,12 @@
 /*侧边栏和主体内容的tab切换*/
 $(function ()
 {
-    var count = 0;
-    var id_list = new Array();
+    let count = 0;
+    let id_list = [];
+    let activeTabs = sessionStorage.getItem("activeTabs");
+    if(activeTabs == null){
+        activeTabs = 2;
+    }
     let deleteUrls = [];
     $('#_menu_list li:eq("1")').addClass('cur').show();
     $('#_main_body div.mod-list-group').hide();
@@ -18,10 +22,53 @@ $(function ()
         /*let type = $.trim($(this).children('a').text());
         alert(type);*/
         $('#_main_body div.mod-list-group').hide();
-        var activeTab = $(this).find('a').attr('data-type');
+        let activeTab = $(this).find('a').attr('data-type');
+        //获取当前被点击的tab的data-type
+        id_list = $("#_menu_list li");
+        for (let i = 0; i < id_list.length; i++)
+        {
+            if ($(id_list[i]).attr("class") == 'cur')
+            {
+                activeTabs = $(id_list[i]).find("a").attr("data-type");
+                console.log("当前被点击的" + activeTabs);
+            }
+        }
+
+        //通过类型来获得对应类型的列表
+
         $("#_main_body [data-type=" + activeTab + "]").show();
-        getFileName(null, activeTab);
+        if (activeTab == 2)
+        {
+            getFileName(null, activeTab);
+        } else
+        {
+            getFileNameByType(activeTab);
+        }
     });
+
+    //跳转tab
+     function reloadTab(type){
+        $('#_menu_list li').removeClass("cur");
+        $("#_menu_list li a[data-type=" + type + "]").parent().addClass('cur');
+        console.log($("#_menu_list li a[data-type=" + type + "]").parent());
+        $('#_main_body div.mod-list-group').hide();
+        //通过类型来获得对应类型的列表
+
+        $("#_main_body [data-type=" + type + "]").show();
+        console.log("222222222222222");
+        console.log("roloadFunction----"+type);
+        if (type == 2)
+        {
+            console.log("11111我被调用了" + type);
+            getFileName(null, type);
+        } else
+        {
+            console.log("我被调用了" + type);
+            getFileNameByType(type);
+        }
+    };
+
+    reloadTab(activeTabs);
 
     //跳转
     $('.item-tit a').click(function ()
@@ -59,8 +106,6 @@ $(function ()
             $('#plus_modal').modal('hide');
             let folderName = $('input[name="fileName"]').val();
             createNewFolder(folderName);
-            alert("创建成功");
-            alert(folderName);
         }
     });
     $('#plus_console').click(function ()
@@ -70,16 +115,88 @@ $(function ()
 
 
     //下载
-    let downFileName = [];
+    let downFileNames = "";
     $('#download').click(function ()
     {
         let downloadArrays = $('.item-icon input[data-type-click="true"]');
         for (let i = 0; i < downloadArrays.length; i++)
         {
-            downFileName.push($(downloadArrays[i]).attr("data-type-name"));
+            let downFileName ="fileNames=" + $(downloadArrays[i]).attr("data-type-name")+"&";
+            downFileNames+=downFileName;
         }
-        console.log("下载开始");
-        console.log(downFileName);
+        downFileNames = downFileNames.substring(0,downFileNames.lastIndexOf("&"));
+        let url = document.location.href;
+        let downUrl = url.substring(0, url.lastIndexOf("/"));
+        downUrl = downUrl +"/multipleDownload.do?"+downFileNames;
+        window.open(downUrl,"_blank");
+        downFileNames="";
+    });
+    let renameArrays = [];
+    //重命名
+    $("#rename").click(function ()
+    {
+        renameArrays = $('.item-icon input[data-type-click="true"]');
+        if (renameArrays.length > 1)
+        {
+            $('#rename_modal').modal({
+                keyboardShortcuts: false,
+                closable: false,
+            }).modal('show');
+            renameArrays = [];
+        } else
+        {
+            $("#rename_modal_true").modal({
+                keyboardShortcuts:false,
+                closable:false,
+            }).modal("show");
+        }
+
+        $("#rename_modal_true_ensure").click(function ()
+        {
+            let preName = $(renameArrays).attr("data-type-name");
+            let suffix = preName.substr(preName.lastIndexOf("."));
+            let fileName = $("#rename_modal_true input[name='renameFile']").val();
+            if (fileName == "")
+            {
+                $("#rename_modal_true input[name='renameFile']").attr("placeholder", "文件名不能为空");
+            }
+            else{
+                $("#rename_modal_true").modal("hide");
+                let uri = $(renameArrays).attr("name");
+                fileName = fileName+suffix;
+                renameFile(uri,fileName);
+            }
+        });
+
+        $('#rename_modal_true_console').click(function ()
+        {
+            $("#rename_modal_true").modal("hide");
+        });
+        renameFile = function (uri,fileName)
+        {
+            $.ajax({
+                type: "POST",
+                url: "renameFile.do",
+                data: {
+                    "partUri": uri,
+                    "fileName": fileName,
+                },
+                success: function (response)
+                {
+                    sessionStorage.setItem("activeTabs", activeTabs);
+                    window.location.reload();
+                },
+                error: function ()
+                {
+                    console.log("rename 失败");
+                },
+            });
+        };
+
+    });
+    $('#rename_ensure').click(function ()
+    {
+        $('#rename_modal').modal('hide');
     });
 
     //删除
@@ -89,9 +206,7 @@ $(function ()
         for (let i = 0; i < deleteArrays.length; i++)
         {
             deleteUrls.push($(deleteArrays[i]).attr("name"));
-            console.log("我是删除里面的" + $(deleteArrays[i]).attr("name"));
         }
-        console.log(deleteUrls);
         if (count >= 2)
         {
             $('#delete_modal .content .ui.header').text("你确定要删除这些文件(夹)?");
@@ -107,11 +222,11 @@ $(function ()
         $.ajax({
                 type: "POST",
                 url: "deleteFile.do",
-                data: {"urls":deleteUrls},
+                data: {"urls": deleteUrls},
                 traditional: true,
                 success: function (response)
                 {
-                    console.log(response);
+                    sessionStorage.setItem("activeTabs", activeTabs);
                     window.location.reload();
                 },
                 error: function ()
@@ -126,7 +241,7 @@ $(function ()
         deleteUrls = [];
         $('#delete_modal').modal('hide');
     });
-    getFileName = function (fileName, type)
+    function getFileName(fileName, type)
     {
         $.ajax({
             url: 'getFileList.do',
@@ -149,27 +264,29 @@ $(function ()
                         "                                </div>\n" +
                         "                            </div>")
                 }
-                let app1 = new Vue({
-                    el: '#app1',
-                    data: response,
-                    methods: {
-                        showUpdateTime: function ()
-                        {
-                            const files = this.data;
-                            if (files == null)
+                else{
+                    let app1 = new Vue({
+                        el: '#app1',
+                        data: response,
+                        methods: {
+                            showUpdateTime: function ()
                             {
-                                return;
-                            }
+                                const files = this.data;
+                                if (files == null)
+                                {
+                                    return;
+                                }
 
-                            for (let i = 0; i < files.length; i++)
-                            {
-                                files[i].updateTime = new Date(files[i].updateTime).toLocaleString();
+                                for (let i = 0; i < files.length; i++)
+                                {
+                                    files[i].updateTime = new Date(files[i].updateTime).toLocaleString();
+                                }
                             }
                         }
-                    }
-                });
-                app1.showUpdateTime();
-                console.log(response.data);
+                    });
+                    app1.showUpdateTime();
+                    console.log(response.data);
+                }
             },
             error: function ()
             {
@@ -177,7 +294,7 @@ $(function ()
             }
         });
     };
-    createNewFolder = function (folderName)
+    function createNewFolder(folderName)
     {
         $.ajax({
             url: 'newFolder.do',
@@ -189,7 +306,8 @@ $(function ()
             {
                 if (response.status == 0)
                 {
-                    window.location.replace('http://localhost:8080/Jotter/yun.html');
+                    sessionStorage.setItem("activeTabs", activeTabs);
+                    window.location.reload();
                 }
                 console.log(response);
             },
@@ -201,6 +319,60 @@ $(function ()
         });
     };
     getFileName(null, "2");
+
+    function getFileNameByType(type)
+    {
+        $.ajax({
+            type: "POST",
+            url: "listFilesByType.do",
+            data: {
+                "type": type,
+            },
+            success: function (response)
+            {
+                if (response.data == null || response.data.length == 0)
+                {
+                    $('.mod-list-group[data-type=' + type + ']').html("<div class=\"mod-status\">\n" +
+                        "                                <div class=\"empty-box\">\n" +
+                        "                                    <div class=\"status-inner\">\n" +
+                        "                                        <i class=\"icon image\">\n" +
+                        "                                        </i>\n" +
+                        "                                    </div>\n" +
+                        "                                    <h3 class=\"ui header\">暂无文件</h3>\n" +
+                        "                                    <h5 class=\"ui header\">请点击左上角的\"上传\"按钮添加</h5>\n" +
+                        "                                </div>\n" +
+                        "                            </div>")
+                }else{
+                    let _app = "#app-" + type;
+                    let app1 = new Vue({
+                        el: _app,
+                        data: response,
+                        methods: {
+                            showUpdateTime: function ()
+                            {
+                                const files = this.data;
+                                if (files == null)
+                                {
+                                    return;
+                                }
+
+                                for (let i = 0; i < files.length; i++)
+                                {
+                                    files[i].updateTime = new Date(files[i].updateTime).toLocaleString();
+                                }
+                            }
+                        }
+                    });
+                    app1.showUpdateTime();
+                    console.log(response);
+                }
+            },
+            error: function ()
+            {
+                console.log("getFileNameByType失败");
+            },
+        });
+    };
 
     //因为Dom元素是用ajax异步请求的，所以要用动态加载元素绑定事件
     // 点击打勾，显示下载，分享，删除，更多的button,count用来表示当最后一个勾取消时，button消失
