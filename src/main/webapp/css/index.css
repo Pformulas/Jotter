@@ -245,6 +245,26 @@ input:focus {
     border-bottom: 1px dashed #5B4947;
 }
 
+.noteBookP a {
+    text-decoration: unset;
+    color: #5B4947;
+    float: right;
+}
+
+.noteBookP a:hover {
+    color: #0092C7;
+}
+
+a:hover i {
+    transition: transform 700ms;
+    transform: rotateZ(360deg);
+}
+
+li:hover p:nth-of-type(2) {
+    transition: transform 700ms;
+    transform: rotateX(360deg);
+}
+
 /* 交集选择器，只有 class 为 noteBookList 的 ul 才有效 */
 /* 笔记本列表样式 */
 ul.noteBookList {

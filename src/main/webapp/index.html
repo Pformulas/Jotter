@@ -110,15 +110,17 @@
                                         <div class="swiper-container" id="notebookListSwiper">
                                             <div class="swiper-wrapper">
                                                 <div class="swiper-slide leftBox">
+                                                    <!-- 笔记本列表 -->
                                                     <p class="noteBookP">笔记本列表</p>
                                                     <div class="addANotebookDiv">
                                                         <p>
-                                                            <a href="javascript:"><i class="fa fa-plus-circle"></i>
+                                                            <a href="javascript:" id="addANewNotebookBtn"><i class="fa fa-plus-circle"></i>
                                                                 添加笔记本</a>
                                                         </p>
                                                         <p>
-                                                            <a href="javascript:"><i class="fa fa-refresh"></i>
-                                                                点击加载更多...</a>
+                                                            <a href="javascript:"><i class="fa fa-hand-o-left"></i> 上一页</a>
+                                                            &nbsp;&nbsp;
+                                                            <a href="javascript:">下一页 <i class="fa fa-hand-o-right"></i></a>
                                                         </p>
                                                     </div>
                                                     <ul class="noteBookList">
@@ -134,13 +136,20 @@
                                                         <li>JAVA 服务器开发</li>
                                                     </ul>
                                                 </div>
+                                                <!-- 笔记列表 -->
                                                 <div class="swiper-slide leftBox">
-                                                    <p>笔记列表</p>
+                                                    <p class="noteBookP">笔记列表</p>
                                                     <div class="addANotebookDiv">
-                                                        <a href="javascript:"><i class="fa fa-plus-circle"></i>
-                                                            添加笔记</a>
+                                                        <p>
+                                                            <a href="javascript:" id="addANewNoteBtn"><i class="fa fa-plus-circle"></i> 添加笔记</a>
+                                                        </p>
+                                                        <p>
+                                                            <a href="javascript:"><i class="fa fa-hand-o-left"></i> 上一页</a>
+                                                            &nbsp;&nbsp;
+                                                            <a href="javascript:">下一页 <i class="fa fa-hand-o-right"></i></a>
+                                                        </p>
                                                     </div>
-                                                    <ul class="noteBookList">
+                                                    <ul class="noteBookList" id="leftNoteBookListUl">
                                                         <li class="noteBookListChosen">基础数据类型</li>
                                                         <li>循环结构</li>
                                                         <li>面向对象</li>
@@ -149,17 +158,6 @@
                                                 </div>
                                             </div>
                                         </div>
-                                        <!--<p>笔记本列表</p>
-                                        <div class="addANotebookDiv">
-                                            <a href="javascript:"><i class="fa fa-plus-circle"></i> 添加笔记本</a>
-                                        </div>
-                                        <ul class="noteBookList">
-                                            <li class="noteBookListChosen">JAVA 基础语法</li>
-                                            <li>MySQL 基础使用</li>
-                                            <li>HTML\CSS\JS 入门</li>
-                                            <li>JAVA WEB 实战</li>
-                                            <li>JAVA 服务器开发</li>
-                                        </ul>-->
                                     </div>
                                     <div class="right">
                                         <div class="swiper-container" id="noteListSwiper">
@@ -192,8 +190,13 @@
                                                             </p>
                                                         </div>
                                                         <div class="noteList">
-                                                            <p class="noteBookP">笔记列表</p>
-                                                            <ul class="noteBookList">
+                                                            <p class="noteBookP">
+                                                                笔记列表
+                                                                <a href="javascript:">下一页 <i class="fa fa-arrow-right"></i></a>
+                                                                <a href="javascript:" style="cursor: default;">&nbsp;&nbsp;&nbsp;</a>
+                                                                <a href="javascript:"><i class="fa fa-arrow-left"></i> 上一页</a>
+                                                            </p>
+                                                            <ul class="noteBookList" id="rightNoteBookListUl">
                                                                 <li><p>基础语法</p>
                                                                     <p>2018-6-26 11:23:58</p></li>
                                                                 <li><p>循环结构</p>
@@ -211,7 +214,6 @@
                                                     </div>
                                                 </div>
                                                 <div class="swiper-slide">slider2</div>
-                                                <div class="swiper-slide">slider3</div>
                                             </div>
                                         </div>
                                     </div>
