@@ -135,6 +135,9 @@ $(function () {
 
         // 导航栏也要切换
         removeAndAddClass(navBtns[1]);
+
+        // 获得笔记本列表
+        getNoteBookList();
     }
 
     // 切换到个人信息页面
@@ -181,6 +184,10 @@ $(function () {
 
             // 切换到指定页面
             mainSwiper.slideTo(i, SLIDE_SPEED);
+            if (i === 1) {
+                // 获取笔记本列表
+                getNoteBookList();
+            }
 
             if (i === 1) {
                 repoSwiper.slideTo(1, SLIDE_SPEED);
@@ -372,6 +379,7 @@ $(function () {
         });
     }
 
+    // 给退出登录按钮加响应事件
     $(".logout").click(logout);
 
     // 给跳转到笔记界面设置点击事件
@@ -512,5 +520,50 @@ $(function () {
         });
     });
 
+    // 返回笔记列表
     $("#backToNoteListBtn").click(slideToNoteList);
+
+    // 将获取到的笔记本列表加载到页面
+    const noteBookListUl = $("#noteBookListUl");
+    function putNoteBookListOnPage(data) {
+        if (data == null) {
+            return;
+        }
+
+        // 遍历拿到的笔记本列表
+        for (let i = 0; i < data.length; i++) {
+            let li = $("<li></li>").append(data[i].notebookName);
+            li.attr("notebookId", data[i].notebookId).attr("notebookCreateTime", data[i].notebookCreateTime);
+            li.appendTo(noteBookListUl);
+        }
+    }
+
+    // 获取这个用户的所有笔记本
+    function getNoteBookList() {
+        if (!isLogin()) {
+            return;
+        }
+
+        // 有登陆才去获取
+        $.ajax({
+            url: "notebook/show_notebook_of_userId.do",
+            type: "POST",
+            data: {
+                "page":noteBookListUl.attr("currentPage")
+            },
+            success: function (resp) {
+                // 如果获取成功就显示
+                if (resp.status === 0) {
+                    putNoteBookListOnPage(resp.data.list);
+                } else {
+                    alert(resp.msg);
+                }
+            },
+            error: function () {
+                alert("网络错误！");
+            }
+        });
+    }
+
+
 });

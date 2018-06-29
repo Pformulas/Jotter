@@ -2,6 +2,7 @@ package controller;
 
 import common.Const;
 import common.ServerResponse;
+import common.response.UserResponse;
 import entity.Note;
 import entity.NoteBook;
 import entity.User;
@@ -105,14 +106,18 @@ public class NoteBookController
     /**
      * 获取这个用户的所有笔记本
      *
-     * @param userId
      * @return
      */
     @ResponseBody
     @RequestMapping(path = "/show_notebook_of_userId.do", produces = {"application/json;charset=UTF8"})
-    public ServerResponse showNoteBookOfUserId(Integer page, String userId)
+    public ServerResponse showNoteBookOfUserId(Integer page, HttpSession session)
     {
-        return iNoteBookService.selectNoteBooksByUserId(page, userId);
+        User user = (User) session.getAttribute(Const.USER_KEY);
+        if (user == null) {
+            return ServerResponse.getServerResponse(UserResponse.NEED_LOGIN);
+        }
+
+        return iNoteBookService.selectNoteBooksByUserId(page, user.getUserId());
     }
 
     /**
