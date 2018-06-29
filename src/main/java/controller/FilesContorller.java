@@ -12,6 +12,7 @@ import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
+import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -58,6 +59,10 @@ public class FilesContorller {
         //得到当前访问的路径
          currentPath = (String)session.getAttribute(Const.CURRENT_PATH);
 
+
+        System.out.println("=================");
+        System.out.println("currentPath"+currentPath);
+
         ServerResponse<String> serverResponse = filesService.saveFile(file, currentPath, user);
         //TODO 返回上传文件的状态
         return  "redirect:yun.html";
@@ -92,18 +97,23 @@ public class FilesContorller {
         //得到当前访问到的路径
         String currentPath = (String) session.getAttribute(Const.CURRENT_PATH);
 
+        System.out.println(currentPath);
+        System.out.println(fileName+"++");
+
         User user = (User)session.getAttribute(Const.USER_KEY);
 
         //如果点击了回退按钮,退回到主目录就不可回退
         if(back != null && back == Const.BACK
                 && FileNiceUtil.getAfterFileUri(currentPath).length() > (File.separator + user.getUsername()) .length()){
-            currentPath = currentPath.substring(0,currentPath.lastIndexOf(File.separator)+1);
+            currentPath = currentPath.substring(0,currentPath.lastIndexOf(File.separator));
         }
 
-        if(fileName != null){
-            currentPath = currentPath +  fileName;
+        if(!StringUtils.isEmpty(fileName)){
+            currentPath = currentPath + File.separator + fileName;
         }
 
+//        System.out.println("getfileList=================");
+//        System.out.println("currentPath:" + currentPath);
 
         //保存当前访问到的路径
         session.setAttribute(Const.CURRENT_PATH,currentPath);

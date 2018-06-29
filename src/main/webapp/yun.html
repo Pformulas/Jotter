@@ -124,6 +124,10 @@
                             </div>
                         </div>
 
+                        <button class="ui green button" id="back">
+                            <i class="backward icon"></i>返回
+                        </button>
+
                         <!-- 按钮组
                             下载，分享，删除，更多
                         -->
@@ -412,12 +416,14 @@
                                 <ul class="list-group">
                                     <li class="list-group-item" v-for="file in data">
                                         <div class="item-icon">
-                                            <input :name="file.url" type="checkbox" data-type-click="false" :data-type-name="file.fileName"/>
+                                            <input :name="file.url" type="checkbox" data-type-click="false"
+                                                   :data-type-name="file.fileName"/>
                                         </div>
                                         <div class="item-inner">
                                             <div class="item-tit">
                                                 <i class="big blue icon" v-bind:class="[file.type]"></i>
-                                                <a href="javascript:void(0)" title="file.fileName" :data-type="file.url">
+                                                <a href="javascript:void(0)" :title="file.fileName"
+                                                   :data-type="file.url" :data-file="file.type">
                                                     {{file.fileName}}</a>
                                             </div>
                                             <div class="item-info">
@@ -459,7 +465,7 @@
                                         <div class="item-inner">
                                             <div class="item-tit">
                                                 <i class="big blue icon" v-bind:class="[file.type]"></i>
-                                                <a href="javascript:void(0)" title="file.fileName"
+                                                <a href="javascript:void(0)" :title="file.fileName"
                                                    :data-type="file.url">
                                                     {{file.fileName}}</a>
                                             </div>
@@ -502,7 +508,7 @@
                                         <div class="item-inner">
                                             <div class="item-tit">
                                                 <i class="big blue icon" v-bind:class="[file.type]"></i>
-                                                <a href="javascript:void(0)" title="file.fileName"
+                                                <a href="javascript:void(0)" :title="file.fileName"
                                                    :data-type="file.url">
                                                     {{file.fileName}}</a>
                                             </div>
@@ -545,7 +551,7 @@
                                         <div class="item-inner">
                                             <div class="item-tit">
                                                 <i class="big blue icon" v-bind:class="[file.type]"></i>
-                                                <a href="javascript:void(0)" title="file.fileName"
+                                                <a href="javascript:void(0)" :title="file.fileName"
                                                    :data-type="file.url">
                                                     {{file.fileName}}</a>
                                             </div>
@@ -588,7 +594,7 @@
                                         <div class="item-inner">
                                             <div class="item-tit">
                                                 <i class="big blue icon" v-bind:class="[file.type]"></i>
-                                                <a href="javascript:void(0)" title="file.fileName"
+                                                <a href="javascript:void(0)" :title="file.fileName"
                                                    :data-type="file.url">
                                                     {{file.fileName}}</a>
                                             </div>

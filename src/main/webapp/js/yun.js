@@ -59,11 +59,9 @@ $(function ()
         console.log("roloadFunction----"+type);
         if (type == 2)
         {
-            console.log("11111我被调用了" + type);
             getFileName(null, type);
         } else
         {
-            console.log("我被调用了" + type);
             getFileNameByType(type);
         }
     };
@@ -71,12 +69,127 @@ $(function ()
     reloadTab(activeTabs);
 
     //跳转
-    $('.item-tit a').click(function ()
+    $(document).on("click",'.item-tit a',function ()
     {
         //title用数据库中的filename
         //到时候就用这个，title来获取，是哪个文件，然后用来跳转到指定的页面
-        var $title1 = $(this).attr('title');
+        let $title1 = $(this).attr('title');
+        let type = $(this).parent().parent().parent().parent().parent().parent().parent().attr("data-type");
+        let fileType = $(this).attr("data-file");
+        if(fileType == "folder"){
+            $.ajax({
+                type: "POST",
+                url: "getFileList.do",
+                data: {
+                    "fileName": $title1,
+                    "back": 0,
+                },
+                success: function (response)
+                {
+                    if (response.data == null || response.data.length == 0)
+                    {
+                        $('.mod-list-group[data-type=' + type + ']').html("<div class=\"mod-status\">\n" +
+                            "                                <div class=\"empty-box\">\n" +
+                            "                                    <div class=\"status-inner\">\n" +
+                            "                                        <i class=\"icon image\">\n" +
+                            "                                        </i>\n" +
+                            "                                    </div>\n" +
+                            "                                    <h3 class=\"ui header\">暂无文件</h3>\n" +
+                            "                                    <h5 class=\"ui header\">请点击左上角的\"上传\"按钮添加</h5>\n" +
+                            "                                </div>\n" +
+                            "                            </div>")
+                    }
+                    else
+                    {
+                        let app1 = new Vue({
+                            el: '#app1',
+                            data: response,
+                            methods: {
+                                showUpdateTime: function ()
+                                {
+                                    const files = this.data;
+                                    if (files == null)
+                                    {
+                                        return;
+                                    }
+
+                                    for (let i = 0; i < files.length; i++)
+                                    {
+                                        files[i].updateTime = new Date(files[i].updateTime).toLocaleString();
+                                    }
+                                }
+                            }
+                        });
+                        app1.showUpdateTime();
+                        console.log(response.data);
+                        window.location.reload();
+                    }
+                    console.log(response.data);
+                },
+                error: function ()
+                {
+                    console.log("失败");
+                },
+            });
+        }
+        $("#back").show();
         //$(this).attr('href',"https://www.weiyun.com/disk");
+    });
+
+    $("#back").click(function ()
+    {
+        $.ajax({
+            type: "POST",
+            url: "getFileList.do",
+            data: {
+                "back": 1,
+            },
+            success: function (response)
+            {
+                if (response.data == null || response.data.length == 0)
+                {
+                    $('.mod-list-group[data-type=' + type + ']').html("<div class=\"mod-status\">\n" +
+                        "                                <div class=\"empty-box\">\n" +
+                        "                                    <div class=\"status-inner\">\n" +
+                        "                                        <i class=\"icon image\">\n" +
+                        "                                        </i>\n" +
+                        "                                    </div>\n" +
+                        "                                    <h3 class=\"ui header\">暂无文件</h3>\n" +
+                        "                                    <h5 class=\"ui header\">请点击左上角的\"上传\"按钮添加</h5>\n" +
+                        "                                </div>\n" +
+                        "                            </div>")
+                }
+                else
+                {
+                    let app1 = new Vue({
+                        el: '#app1',
+                        data: response,
+                        methods: {
+                            showUpdateTime: function ()
+                            {
+                                const files = this.data;
+                                if (files == null)
+                                {
+                                    return;
+                                }
+
+                                for (let i = 0; i < files.length; i++)
+                                {
+                                    files[i].updateTime = new Date(files[i].updateTime).toLocaleString();
+                                }
+                            }
+                        }
+                    });
+                    app1.showUpdateTime();
+                }
+                console.log(response.data);
+                window.location.reload();
+            },
+            error: function ()
+            {
+                console.log("失败");
+            },
+        });
     });
 
     //文件上传
@@ -241,13 +354,14 @@ $(function ()
         deleteUrls = [];
         $('#delete_modal').modal('hide');
     });
-    function getFileName(fileName, type)
+    function getFileName(fileName, type,back=0)
     {
         $.ajax({
             url: 'getFileList.do',
             type: 'GET',
             data: {
                 "fileName": fileName,
+                "back":back,
             },
             success: function (response)
             {
