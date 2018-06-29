@@ -23,12 +23,12 @@
     <context:component-scan base-package="controller" />
 
     <!--配置视图解析器->显示jsp 	-->
-    <!--<bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+    <bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
         <property name="viewClass" value="org.springframework.web.servlet.view.JstlView" />
-        &lt;!&ndash; 配置视图解析器的前缀和后缀 &ndash;&gt;
-        <property name="prefix" value="/WEB-INF/" />
+        <!-- 配置视图解析器的前缀和后缀 -->
+        <!--<property name="prefix" value="/WEB-INF/" />-->
         <property name="suffix" value=".html" />
-    </bean>-->
+    </bean>
 
     <!-- 静态资源管理器 -->
     <mvc:resources location="/js/" mapping="/js/**"/>

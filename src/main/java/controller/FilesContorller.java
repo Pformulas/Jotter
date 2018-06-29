@@ -46,8 +46,8 @@ public class FilesContorller {
     }
 
     @RequestMapping(value = "/upFile.do")
-    @ResponseBody
-    public ServerResponse<String> upFile(@RequestParam("file")CommonsMultipartFile file,
+    //@ResponseBody
+    public String upFile(@RequestParam("file")CommonsMultipartFile file,
             HttpServletRequest request, HttpSession session)  {
 
         String currentPath = null;
@@ -59,8 +59,8 @@ public class FilesContorller {
          currentPath = (String)session.getAttribute(Const.CURRENT_PATH);
 
         ServerResponse<String> serverResponse = filesService.saveFile(file, currentPath, user);
-
-        return  serverResponse;
+        //TODO 返回上传文件的状态
+        return  "redirect:yun.html";
     }
 
     @ResponseBody
