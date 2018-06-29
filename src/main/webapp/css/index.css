@@ -418,8 +418,11 @@ ul.noteBookList li.noteBookListChosen:before {
 
 /* 富文本输入区域 */
 #noteContentEditDiv #editorBox {
-    height: 540px;
-    border: 1px dashed #5B4947;
+    height: 600px;
+    border: 2px dashed #5B4947;
+    box-shadow: 0 1px 10px #999999;
+    margin-top: 10px;
+    letter-spacing: 4px;
 }
 
 /* 设置区域 */
