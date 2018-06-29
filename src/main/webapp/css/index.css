@@ -207,7 +207,7 @@ input:focus {
 
 /* 添加笔记本按钮 */
 .mainBox .repoPage .content .left .addANotebookDiv {
-    width: 50%;
+    width: 60%;
     position: absolute;
     top: 36px;
     right: 0;
@@ -229,7 +229,7 @@ input:focus {
 }
 
 .mainBox .repoPage .content .left .leftBox > p {
-    width: 50%;
+    width: 60%;
     position: absolute;
     right: 0;
     top: 0;
@@ -268,7 +268,7 @@ li:hover p:nth-of-type(2) {
 /* 交集选择器，只有 class 为 noteBookList 的 ul 才有效 */
 /* 笔记本列表样式 */
 ul.noteBookList {
-    width: 50%;
+    width: 60%;
     height: max-content;
 }
 
@@ -279,7 +279,7 @@ ul.noteBookList li {
     list-style: none;
     border: 1px dashed #5B4947;
     color: #5B4947;
-    padding-left: 1em;
+    padding: 0 0.5em;
     margin: 10px 0;
     box-sizing: border-box;
     transition: border 200ms;

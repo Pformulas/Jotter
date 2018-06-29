@@ -475,8 +475,38 @@ $(function () {
         // 新建笔记本输入框
         const newNotebookName = prompt("请输入新建笔记本的名称：", "新建笔记本 " + new Date().toLocaleString());
 
-        // TODO 新建笔记本
+        // 当用户点击取消时返回 null
+        if (newNotebookName == null) {
+            return;
+        }
+
+        // 判断笔记本名称是否为空
+        if (newNotebookName.trim() === "") {
+            alert("笔记本名称不能为空！");
+            return;
+        }
+
+        // 新建笔记本
+        $.ajax({
+            url: "notebook/insert_notebook.do",
+            type: "POST",
+            data: {
+                "notebookName":newNotebookName
+            },
+            success: function (resp) {
+                if (resp.status === 0) {
+                    // 添加成功就刷新列表
+                    getNoteBookList();
+                } else {
+                    alert(resp.msg);
+                }
+            },
+            error: function () {
+                alert("网络错误！");
+            }
+        });
     });
+
     $("#addANewNoteBtn").click(function () {
         // 新建笔记本输入框
         const newNoteName = prompt("请输入新建笔记的名称：", "新建笔记 " + new Date().toLocaleString());
@@ -530,6 +560,9 @@ $(function () {
             return;
         }
 
+        // 放数据之前先清空列表
+        noteBookListUl.empty();
+
         // 遍历拿到的笔记本列表
         for (let i = 0; i < data.length; i++) {
             let li = $("<li></li>").append(data[i].notebookName);
@@ -555,8 +588,18 @@ $(function () {
                 // 如果获取成功就显示
                 if (resp.status === 0) {
                     putNoteBookListOnPage(resp.data.list);
-                } else {
-                    alert(resp.msg);
+
+                    // 为笔记列表添加点击事件
+                    const noteBookListUlLis = $("#noteBookListUl li");
+                    noteBookListUlLis.each(function (index, item) {
+                        $(item).click(function () {
+                            // 先清除原来的样式
+                            $("#noteBookListUl li.noteBookListChosen").removeClass("noteBookListChosen");
+
+                            // 再给被点击的 li 加样式
+                            $(item).addClass("noteBookListChosen");
+                        });
+                    });
                 }
             },
             error: function () {
@@ -564,6 +607,4 @@ $(function () {
             }
         });
     }
-
-
 });
