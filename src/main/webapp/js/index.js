@@ -18,8 +18,13 @@ const noteBookListSwiper = new Swiper('#notebookListSwiper', {
 
 // 笔记内部右边界面的切换器
 const noteListSwiper = new Swiper('#noteListSwiper', {
-    allowTouchMove: true, // 只能通过点击导航栏来切换，不允许直接切换
+    allowTouchMove: false, // 只能通过点击导航栏来切换，不允许直接切换
 });
+
+// 笔记内容编辑器（富文本）
+const wangEditor = window.wangEditor;
+const editor = new wangEditor("#editorTool", "#editorBox");
+editor.create();
 
 $(function () {
 
@@ -434,19 +439,19 @@ $(function () {
     // 打开笔记内容区域
     function slideToNote() {
         // 切换选项卡到笔记内容区域
-        noteListSwiper.slideTo(2, SLIDE_SPEED);
+        noteListSwiper.slideTo(1, SLIDE_SPEED);
 
         // 切换笔记本列表到笔记列表
-        noteBookListSwiper.slideTo(2, SLIDE_SPEED);
+        noteBookListSwiper.slideTo(1, SLIDE_SPEED);
     }
 
     // 打开笔记列表区域
     function slideToNoteList() {
         // 切换选项卡到笔记列表区域
-        noteListSwiper.slideTo(1, SLIDE_SPEED);
+        noteListSwiper.slideTo(0, SLIDE_SPEED);
 
         // 切换笔记列表到笔记本列表
-        noteBookListSwiper.slideTo(1, SLIDE_SPEED);
+        noteBookListSwiper.slideTo(0, SLIDE_SPEED);
     }
 
     // 打开一本笔记
@@ -465,4 +470,6 @@ $(function () {
             getANewNote();
         });
     });
+
+    $("#backToNoteListBtn").click(slideToNoteList);
 });

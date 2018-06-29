@@ -344,6 +344,7 @@ ul.noteBookList li.noteBookListChosen:before {
     margin-bottom: 10px;
 }
 
+/* 笔记界面控制面板的按钮 */
 .mainBox .repoPage .content .right .rightBox .notebookPan p .btn {
     width: 130px;
     height: 30px;
@@ -354,6 +355,7 @@ ul.noteBookList li.noteBookListChosen:before {
     margin-bottom: 0;
 }
 
+/* 删除按钮样式 */
 #deleteNotebookNameBtn.btn {
     border: unset;
 }
@@ -382,6 +384,42 @@ ul.noteBookList li.noteBookListChosen:before {
 .mainBox .repoPage .content .right ul.noteBookList li p:nth-of-type(2) {
     line-height: 24px;
     font-size: 12px;
+}
+
+#backToNoteListBtn {
+    width: max-content;
+    height: max-content;
+    border: unset;
+    float: left;
+}
+
+/* 笔记界面富文本区域样式 */
+#noteContentEditDiv {
+    width: 80%;
+    height: 100%;
+    margin-left: 10px;
+}
+/* 标题区域 */
+#noteContentEditDiv .noteTitle {
+    text-align: center;
+}
+
+#noteContentEditDiv .noteTitle input {
+    height: 36px;
+    margin: 16px 0;
+    border-radius: unset;
+    text-indent: 10px;
+}
+
+#noteContentEditDiv .noteTitle input:focus {
+    border: unset;
+    margin: 17px 0;
+}
+
+/* 富文本输入区域 */
+#noteContentEditDiv #editorBox {
+    height: 540px;
+    border: 1px dashed #5B4947;
 }
 
 /* 设置区域 */
