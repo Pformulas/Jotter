@@ -348,6 +348,7 @@ $(function () {
 
     // 退出登录按钮事件
     function logout() {
+        // 没有登陆还退个屁啊。。。
         if (!isLogin()) {
             return;
         }
