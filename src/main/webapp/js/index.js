@@ -415,4 +415,54 @@ $(function () {
     // 给切换按钮绑定切换响应事件
     $("#switchManageNotebookBtn").click(switchManageNotebook);
     $("#cancelNotebookNameBtn").click(switchManageNotebook);
+
+    // 给新建笔记本和新建笔记添加输入框事件
+    $("#addANewNotebookBtn").click(function () {
+        // 新建笔记本输入框
+        const newNotebookName = prompt("请输入新建笔记本的名称：", "新建笔记本 " + new Date().toLocaleString());
+
+        // TODO 新建笔记本
+    });
+    $("#addANewNoteBtn").click(function () {
+        // 新建笔记本输入框
+        const newNoteName = prompt("请输入新建笔记的名称：", "新建笔记 " + new Date().toLocaleString());
+
+        // TODO 新建笔记
+        console.log(newNoteName);
+    });
+
+    // 打开笔记内容区域
+    function slideToNote() {
+        // 切换选项卡到笔记内容区域
+        noteListSwiper.slideTo(2, SLIDE_SPEED);
+
+        // 切换笔记本列表到笔记列表
+        noteBookListSwiper.slideTo(2, SLIDE_SPEED);
+    }
+
+    // 打开笔记列表区域
+    function slideToNoteList() {
+        // 切换选项卡到笔记列表区域
+        noteListSwiper.slideTo(1, SLIDE_SPEED);
+
+        // 切换笔记列表到笔记本列表
+        noteBookListSwiper.slideTo(1, SLIDE_SPEED);
+    }
+
+    // 打开一本笔记
+    function getANewNote() {
+
+    }
+
+    // 为笔记列表添加点击事件
+    const rightNoteBookListUlLis = $("#rightNoteBookListUl li");
+    rightNoteBookListUlLis.each(function (index, item) {
+        $(item).click(function () {
+            // 打开笔记内容区域
+            slideToNote();
+
+            // 显示一本笔记内容
+            getANewNote();
+        });
+    })
 });
