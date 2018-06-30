@@ -986,7 +986,6 @@ $(function () {
 
                     // 返回笔记列表
                     $("#backToNoteListBtn")[0].click();
-
                 } else {
                     alert(resp.msg);
                 }
