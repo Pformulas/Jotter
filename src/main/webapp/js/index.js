@@ -692,16 +692,21 @@ $(function () {
         // 显示标题
         const title = item.attr("noteTitle");
         $(".noteTitle p").text(title);
-        $(".noteTitle input").val(title);
+        $("#editorTitleInput").val(title);
 
         // 将笔记内容显示出来
         const content = item.attr("noteDetail");
-        $(".noteBox").html(content);
+        $("#noteContentShowDiv .noteBox").html(content);
+        editor.txt.html(content); // 富文本设置内容
+
+        // 给编辑器加上 noteId
+        $("#noteContentEditDiv").attr("noteId", item.attr("noteId"));
     }
 
     // 为笔记列表添加点击事件
-    const rightNoteBookListUlLis = $("#rightNoteBookListUl li");
-    $("#rightNoteBookListUl").on("click", "li", function () {
+    // 未来绑定事件
+    const rightNoteBookListUl = $("#rightNoteBookListUl");
+    rightNoteBookListUl.on("click", "li", function () {
         // 打开笔记内容区域
         slideToNote();
 
@@ -785,7 +790,6 @@ $(function () {
     $("#saveNotebookNameBtn").click(updateNotebookName);
 
     // 通过笔记本 id 获取所属的笔记
-    const rightNoteBookListUl = $("#rightNoteBookListUl");
     function getNotesByNotebookId() {
         $.ajax({
             url: "notebook/show_notes_of_notebook.do",
@@ -819,4 +823,83 @@ $(function () {
             }
         });
     }
+
+    // 修改笔记
+    $("#editNoteBtn").click(function () {
+        // 切换展示视图和编辑视图
+        $("#noteContentShowDiv").addClass("hidden");
+        $("#noteContentEditDiv").removeClass("hidden");
+
+        // 编辑按钮和保存按钮样式切换
+        $("#saveNoteBtn").removeClass("hidden");
+        $("#editNoteBtn").addClass("hidden");
+    });
+
+    // 保存更改按钮
+    $("#saveNoteBtn").click(function () {
+        $.ajax({
+            url: "notebook/update_note.do",
+            type: "POST",
+            data: {
+                notebookId: getCurrentNotebookId(),
+                noteTitle: $("#editorTitleInput").val(),
+                noteDetail: editor.txt.html(),
+                noteId: $("#noteContentEditDiv").attr("noteId")
+            },
+            success: function (resp) {
+                if (resp.status === 0) {
+                    // 切换展示视图和编辑视图
+                    $("#noteContentEditDiv").addClass("hidden");
+                    $("#noteContentShowDiv").removeClass("hidden");
+
+                    // 编辑按钮和保存按钮样式切换
+                    $("#editNoteBtn").removeClass("hidden");
+                    $("#saveNoteBtn").addClass("hidden");
+
+                    // 更新现有笔记内容
+                    updateCurrentNote();
+                }
+            },
+            error: function () {
+                alert("网络错误！");
+            }
+        });
+    });
+
+    // 更新现有笔记内容
+    function updateCurrentNote() {
+        // 当前笔记 id
+        const currentNoteId = $("#noteContentEditDiv").attr("noteId");
+
+        $.ajax({
+            url: "notebook/show_note.do",
+            type: "POST",
+            data: {
+                noteId: currentNoteId
+            },
+            success: function (resp) {
+                if (resp.status === 0) {
+                    // 更新数据
+                    // 笔记列表的 li 要进行同步更新
+                    $("#rightNoteBookListUl li").each(function (index, item) {
+                        item = $(item);
+                        if (item.attr("noteId") === currentNoteId) {
+                            // 找到这个 id 的 li
+                            item.attr("noteTitle", resp.data.noteTitle);
+                            item.attr("noteDetail", resp.data.noteDetail);
+
+                            $(item.firstChild).text(resp.data.noteTitle);
+                            $(item.lastChild).text(resp.data.noteCreateTime);
+                        }
+                    })
+                } else {
+                    alert(resp.msg);
+                }
+            },
+            error: function () {
+                alert("获取最新的笔记内容失败！请检查网络！");
+            }
+        });
+    }
+
 });
