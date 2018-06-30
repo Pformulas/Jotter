@@ -18,7 +18,7 @@ public enum NoteBookResponse implements ResponseStatus {
     NOTE_CREATE_SUCCESS(ResponseStatus.SUCCESS_CODE, "笔记新建成功"),
     NOTE_CREATE_FAIL(8, "笔记新建失败"),
     PARAMETER_NULL(9, "参数为空"),
-    RESULT_IS_NULL(10, "没有查询到需要的记录"),
+    RESULT_IS_NULL(ResponseStatus.SUCCESS_CODE, "没有查询到需要的记录"),
     UPDATE_ID_NULL(11, "更新失败"),
     NOTEBOOK_ID_NULL(12, "笔记本id为空"),
     NOTEBOOK_NAME_NULL(13, "笔记本名字为空"),
