@@ -888,8 +888,11 @@ $(function () {
                             item.attr("noteTitle", resp.data.noteTitle);
                             item.attr("noteDetail", resp.data.noteDetail);
 
-                            $(item.firstChild).text(resp.data.noteTitle);
-                            $(item.lastChild).text(resp.data.noteCreateTime);
+                            // 更新标题
+                            $(item).find("p:nth-of-type(1)").text(resp.data.noteTitle);
+
+                            // 更新数据
+                            getANewNote(item);
                         }
                     })
                 } else {
