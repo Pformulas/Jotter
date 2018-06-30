@@ -671,6 +671,7 @@ $(function () {
 
         // 这个按钮可以重见天日了
         $("#switchManageNotebookBtn").removeClass("hidden");
+        $("#addANewNoteBtn").removeClass("hidden");
 
         // 更新当前访问的笔记本 id
         setCurrentNotebookId(notebookLi.attr("notebookid"));
@@ -764,6 +765,7 @@ $(function () {
                         // 就将就用着吧。。。就一个课设。。。
                         li.attr("noteId", notes[i].noteId).attr("noteDetail", notes[i].noteDetail);
                         li.appendTo(noteBookListUl);
+                        $("#leftNoteBookListUl").append("<li>" + notes[i].noteTitle + "</li>");
                     }
                 }
             },
