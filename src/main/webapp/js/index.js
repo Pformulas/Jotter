@@ -689,14 +689,29 @@ $(function () {
     function getANewNote(item) {
         item = $(item);
 
+        // 切换展示视图和编辑视图
+        $("#noteContentEditDiv").addClass("hidden");
+        $("#noteContentShowDiv").removeClass("hidden");
+
+        // 编辑按钮和保存按钮样式切换
+        $("#editNoteBtn").removeClass("hidden");
+        $("#saveNoteBtn").addClass("hidden");
+
         // 显示标题
         const title = item.attr("noteTitle");
-        $(".noteTitle p").text(title);
-        $("#editorTitleInput").val(title);
+        const noteTitleP = $(".noteTitle p");
+        noteTitleP.empty();
+        noteTitleP.text(title);
+        const editorTitleInput = $("#editorTitleInput");
+        editorTitleInput.val("");
+        editorTitleInput.val(title);
 
         // 将笔记内容显示出来
         const content = item.attr("noteDetail");
-        $("#noteContentShowDiv .noteBox").html(content);
+        const noteContentShowDivNoteBox = $("#noteContentShowDiv .noteBox");
+        noteContentShowDivNoteBox.empty();
+        noteContentShowDivNoteBox.html(content);
+        editor.txt.html("");
         editor.txt.html(content); // 富文本设置内容
 
         // 给编辑器加上 noteId
