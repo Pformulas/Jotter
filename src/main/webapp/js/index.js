@@ -998,4 +998,6 @@ $(function () {
 
     // 删除按钮
     $("#deleteNoteBtn").click(deleteNote);
+
+    // TODO 就剩分页了！！！
 });
