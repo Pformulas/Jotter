@@ -492,7 +492,8 @@ $(function () {
         $("#notebookCreateTimeP").removeClass("hidden");
 
         // 让输入框的内容和标题的一致
-        $("#notebookNameInput").val($("#notebookNameP").text());
+        const notebookNameP = $("#notebookNameP");
+        $("#notebookNameInput").val(notebookNameP.text());
     }
 
     // 给切换按钮绑定切换响应事件
@@ -566,7 +567,19 @@ $(function () {
     $("#backToNoteListBtn").click(slideToNoteList);
 
     // 当前访问的笔记本 id
-    let currentNotebookId = "";
+    const CURRENT_NOTEBOOK_ID = "currentNotebookId";
+
+    // 获得当前访问的笔记本 id
+    function getCurrentNotebookId() {
+        return sessionStorage.getItem(CURRENT_NOTEBOOK_ID);
+    }
+
+    // 设置当前访问的笔记本 id
+    function setCurrentNotebookId(id) {
+        return sessionStorage.setItem(CURRENT_NOTEBOOK_ID, id);
+    }
+
+    setCurrentNotebookId(""); // 每次刷新都重置一下 id
 
     // 将获取到的笔记本列表加载到页面
     const noteBookListUl = $("#noteBookListUl");
@@ -584,6 +597,15 @@ $(function () {
             li.attr("notebookId", data[i].notebookId).attr("notebookCreateTime", data[i].notebookCreateTime);
             li.appendTo(noteBookListUl);
         }
+    }
+
+    // 笔记本列表点击样式切换
+    function notebookListClickStyle(item) {
+        // 先清除原来的样式
+        $("#noteBookListUl li.noteBookListChosen").removeClass("noteBookListChosen");
+
+        // 再给被点击的 li 加样式
+        $(item).addClass("noteBookListChosen");
     }
 
     // 获取这个用户的所有笔记本
@@ -611,14 +633,11 @@ $(function () {
                     const noteBookListUlLis = $("#noteBookListUl li");
                     noteBookListUlLis.each(function (index, item) {
                         $(item).click(function () {
-                            // 先清除原来的样式
-                            $("#noteBookListUl li.noteBookListChosen").removeClass("noteBookListChosen");
+                            // 切换样式
+                            notebookListClickStyle(item);
 
-                            // 再给被点击的 li 加样式
-                            $(item).addClass("noteBookListChosen");
-
-                            // 更新笔记界面
-                            updateNotePage(this);
+                            // 跳转到指定
+                            turnToNotebookById($(item).attr("notebookid"));
                         });
                     });
                 }
@@ -654,9 +673,66 @@ $(function () {
         $("#switchManageNotebookBtn").removeClass("hidden");
 
         // 更新当前访问的笔记本 id
-        currentNotebookId = notebookLi.notebookid;
+        setCurrentNotebookId(notebookLi.attr("notebookid"));
 
-        $("#notebookNameP").text(notebookLi.text());
+        const notebookNameP = $("#notebookNameP");
+        notebookNameP.text(notebookLi.text());
         $("#notebookCreateTimeP").text(new Date(Number(notebookLi.attr("notebookcreatetime"))).toLocaleString());
+
+        // 让输入框的内容和标题的一致
+        $("#notebookNameInput").val(notebookNameP.text());
     }
+
+    // 跳转到指定 id 的笔记本
+    function turnToNotebookById(id) {
+        $(noteBookListUl.children()).each(function (index, item) {
+            if ($(item).attr("notebookid") === id) {
+                // 样式切换
+                notebookListClickStyle(item);
+
+                // 更新笔记界面
+                updateNotePage(item);
+            }
+        });
+    }
+
+    // 更新笔记本名称
+    function updateNotebookName() {
+        // 没有登陆
+        if (!isLogin()) {
+            window.location.reload(); // 去登陆吧您咧
+            return;
+        }
+
+        $.ajax({
+            url: "notebook/update_notebook.do",
+            type: "POST",
+            data: {
+                notebookId: getCurrentNotebookId(),
+                notebookName: $("#notebookNameInput").val()
+            },
+            success: function (resp) {
+                if (resp.status === 0) {
+                    // 刷新笔记本列表
+                    getNoteBookList();
+
+                    // 将控制面板隐藏
+                    switchManageNotebook();
+
+                    // 跳转到更新之前的笔记本
+                    setTimeout(function () {
+                        turnToNotebookById(getCurrentNotebookId());
+                    }, 1000);
+                } else {
+                    alert(resp.msg);
+                }
+            },
+            error: function () {
+                alert("网络错误！");
+            }
+        });
+
+    }
+
+    $("#saveNotebookNameBtn").click(updateNotebookName);
 });
