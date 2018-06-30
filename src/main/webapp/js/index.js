@@ -819,10 +819,10 @@ $(function () {
                     rightNoteBookListUl.empty();
 
                     // 遍历拿到的笔记列表，展示在列表上
-                    const notes = resp.data.list;
-                    if (notes == null) {
+                    if (resp.data == null) {
                         return;
                     }
+                    const notes = resp.data.list;
                     
                     for (let i = 0; i < notes.length; i++) {
                         let li = $("<li></li>");
