@@ -964,4 +964,39 @@ $(function () {
 
     // 删除按钮
     $("#deleteNotebookNameBtn").click(deleteNotebook);
+
+    // 删除笔记
+    function deleteNote() {
+        const sure = window.confirm("这将会删除这篇笔记！！并且无法撤销！！您确定要删除吗？？");
+        if (sure === false) {
+            // 用户反悔了！！
+            return;
+        }
+
+        $.ajax({
+            url: "notebook/delete_note.do",
+            type: "POST",
+            data: {
+                noteId: $("#noteContentEditDiv").attr("noteId")
+            },
+            success: function (resp) {
+                if (resp.status === 0) {
+                    // 删除成功，刷新列表
+                    getNotesByNotebookId();
+
+                    // 返回笔记列表
+                    $("#backToNoteListBtn")[0].click();
+
+                } else {
+                    alert(resp.msg);
+                }
+            },
+            error: function () {
+                alert("网络出错！");
+            }
+        });
+    }
+
+    // 删除按钮
+    $("#deleteNoteBtn").click(deleteNote);
 });
