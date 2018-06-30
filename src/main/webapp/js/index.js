@@ -926,6 +926,33 @@ $(function () {
 
     // 删除笔记本
     function deleteNotebook() {
+        const sure = window.confirm("这将会删除这个笔记本下的所有笔记！！并且无法撤销！！您确定要删除吗？？");
+        if (sure === false) {
+            // 用户反悔了！！
+            return;
+        }
 
+        $.ajax({
+            url: "notebook/delete_notebook.do",
+            type: "POST",
+            data: {
+                notebookId: getCurrentNotebookId()
+            },
+            success: function (resp) {
+                if (resp.status === 0) {
+                    // 删除成功，刷新列表
+                    slideToRepoPage();
+                    turnToNotebookById($("#noteBookListUl").find("li:nth-of-type(1)").attr("notebookid"));
+                } else {
+                    alert(resp.msg);
+                }
+            },
+            error: function () {
+                alert("网络出错！");
+            }
+        });
     }
+
+    // 删除按钮
+    $("#deleteNotebookNameBtn").click(deleteNotebook);
 });
