@@ -820,6 +820,10 @@ $(function () {
 
                     // 遍历拿到的笔记列表，展示在列表上
                     const notes = resp.data.list;
+                    if (notes == null) {
+                        return;
+                    }
+                    
                     for (let i = 0; i < notes.length; i++) {
                         let li = $("<li></li>");
                         li.append("<p>" + notes[i].noteTitle + "</p>")
@@ -920,4 +924,8 @@ $(function () {
         });
     }
 
+    // 删除笔记本
+    function deleteNotebook() {
+
+    }
 });
