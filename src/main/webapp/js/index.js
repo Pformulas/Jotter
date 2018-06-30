@@ -541,8 +541,37 @@ $(function () {
         // 新建笔记本输入框
         const newNoteName = prompt("请输入新建笔记的名称：", "新建笔记 " + new Date().toLocaleString());
 
-        // TODO 新建笔记
-        console.log(newNoteName);
+        // 当用户点击取消时返回 null
+        if (newNoteName == null) {
+            return;
+        }
+
+        // 判断笔记本名称是否为空
+        if (newNoteName.trim() === "") {
+            alert("笔记名称不能为空！");
+            return;
+        }
+
+        // 新建笔记
+        $.ajax({
+            url: "notebook/insert_note.do",
+            type: "POST",
+            data: {
+                noteTitle: newNoteName,
+                notebookId:getCurrentNotebookId()
+            },
+            success: function (resp) {
+                if (resp.status === 0) {
+                    // 添加笔记成功，更新笔记列表
+                    turnToNotebookById(getCurrentNotebookId());
+                } else {
+                    alert(resp.msg);
+                }
+            },
+            error: function () {
+                alert("网络错误！");
+            }
+        });
     });
 
     // 打开笔记内容区域
@@ -552,6 +581,10 @@ $(function () {
 
         // 切换笔记本列表到笔记列表
         noteBookListSwiper.slideTo(1, SLIDE_SPEED);
+
+        // 修改一下布局
+        $(".left").css("flex", "2");
+        $(".right").css("flex", "7");
     }
 
     // 打开笔记列表区域
@@ -561,6 +594,10 @@ $(function () {
 
         // 切换笔记列表到笔记本列表
         noteBookListSwiper.slideTo(0, SLIDE_SPEED);
+
+        // 修改一下布局
+        $(".left").css("flex", "2");
+        $(".right").css("flex", "4");
     }
 
     // 返回笔记列表
@@ -649,20 +686,27 @@ $(function () {
     }
 
     // 打开一本笔记
-    function getANewNote() {
+    function getANewNote(item) {
+        item = $(item);
 
+        // 显示标题
+        const title = item.attr("noteTitle");
+        $(".noteTitle p").text(title);
+        $(".noteTitle input").val(title);
+
+        // 将笔记内容显示出来
+        const content = item.attr("noteDetail");
+        $(".noteBox").html(content);
     }
 
     // 为笔记列表添加点击事件
     const rightNoteBookListUlLis = $("#rightNoteBookListUl li");
-    rightNoteBookListUlLis.each(function (index, item) {
-        $(item).click(function () {
-            // 打开笔记内容区域
-            slideToNote();
+    $("#rightNoteBookListUl").on("click", "li", function () {
+        // 打开笔记内容区域
+        slideToNote();
 
-            // 显示一本笔记内容
-            getANewNote();
-        });
+        // 显示一本笔记内容
+        getANewNote(this);
     });
 
     // 更新右侧笔记界面
@@ -763,8 +807,9 @@ $(function () {
                             .append("<p>" + new Date(notes[i].noteCreateTime).toLocaleString() + "</p>");
                         // 这里说明一下，其实 noteDetail 不应该这时候获得，这样如果文档一大，就会降低速度，但这里后台已经获取到了，
                         // 就将就用着吧。。。就一个课设。。。
-                        li.attr("noteId", notes[i].noteId).attr("noteDetail", notes[i].noteDetail);
-                        li.appendTo(noteBookListUl);
+                        li.attr("noteId", notes[i].noteId).attr("noteDetail", notes[i].noteDetail)
+                            .attr("noteTitle", notes[i].noteTitle);
+                        li.appendTo(rightNoteBookListUl);
                         $("#leftNoteBookListUl").append("<li>" + notes[i].noteTitle + "</li>");
                     }
                 }
