@@ -643,6 +643,7 @@ $(function () {
 
         // 再给被点击的 li 加样式
         $(item).addClass("noteBookListChosen");
+        console.log(item);
     }
 
     // 获取这个用户的所有笔记本
@@ -941,8 +942,16 @@ $(function () {
             success: function (resp) {
                 if (resp.status === 0) {
                     // 删除成功，刷新列表
-                    slideToRepoPage();
-                    turnToNotebookById($("#noteBookListUl").find("li:nth-of-type(1)").attr("notebookid"));
+                    getNoteBookList();
+
+                    // 将控制面板隐藏
+                    switchManageNotebook();
+
+                    // 跳转到删除之后的第一本笔记本
+                    setTimeout(function () {
+                        $("#noteBookListUl li:nth-of-type(1)")[0].click();
+                    }, 1000);
+
                 } else {
                     alert(resp.msg);
                 }
