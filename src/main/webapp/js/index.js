@@ -681,6 +681,9 @@ $(function () {
 
         // 让输入框的内容和标题的一致
         $("#notebookNameInput").val(notebookNameP.text());
+
+        // 获取所属笔记
+        getNotesByNotebookId();
     }
 
     // 跳转到指定 id 的笔记本
@@ -731,8 +734,42 @@ $(function () {
                 alert("网络错误！");
             }
         });
-
     }
 
+    // 更新笔记本按钮
     $("#saveNotebookNameBtn").click(updateNotebookName);
+
+    // 通过笔记本 id 获取所属的笔记
+    const rightNoteBookListUl = $("#rightNoteBookListUl");
+    function getNotesByNotebookId() {
+        $.ajax({
+            url: "notebook/show_notes_of_notebook.do",
+            type: "POST",
+            data: {
+                page: rightNoteBookListUl.attr("currentPage"),
+                notebookId: getCurrentNotebookId()
+            },
+            success: function (resp) {
+                if (resp.status === 0) {
+                    // 先清空原来的列表
+                    rightNoteBookListUl.empty();
+
+                    // 遍历拿到的笔记列表，展示在列表上
+                    const notes = resp.data.list;
+                    for (let i = 0; i < notes.length; i++) {
+                        let li = $("<li></li>");
+                        li.append("<p>" + notes[i].noteTitle + "</p>")
+                            .append("<p>" + new Date(notes[i].noteCreateTime).toLocaleString() + "</p>");
+                        // 这里说明一下，其实 noteDetail 不应该这时候获得，这样如果文档一大，就会降低速度，但这里后台已经获取到了，
+                        // 就将就用着吧。。。就一个课设。。。
+                        li.attr("noteId", notes[i].noteId).attr("noteDetail", notes[i].noteDetail);
+                        li.appendTo(noteBookListUl);
+                    }
+                }
+            },
+            error: function () {
+                alert("网络错误！");
+            }
+        });
+    }
 });
