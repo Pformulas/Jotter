@@ -1000,4 +1000,5 @@ $(function () {
     $("#deleteNoteBtn").click(deleteNote);
 
     // TODO 就剩分页了！！！
+    
 });
