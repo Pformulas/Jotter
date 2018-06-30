@@ -62,6 +62,32 @@ $(function () {
     // 从 sessionStorage 中获取验证刷新页面信息时用到的 key 值
     const CHECK_LOGIN_KEY = "checkLogin";
 
+    // 将笔记本总页数放入 sessionStorage 中
+    const MAX_PAGE_NUMBER_OF_NOTEBOOK_KEY = "maxPageNumberOfNotebook";
+
+    // 将当前笔记本的笔记总页数放入 sessionStorage 中
+    const MAX_PAGE_NUMBER_OF_NOTE_KEY = "maxPageNumberOfNote";
+
+    // 得到笔记本总页数
+    function getMaxPageOfNotebook() {
+        return Number(sessionStorage.getItem(MAX_PAGE_NUMBER_OF_NOTEBOOK_KEY));
+    }
+
+    // 设置笔记本总页数
+    function setMaxPageOfNotebook(number) {
+        sessionStorage.setItem(MAX_PAGE_NUMBER_OF_NOTEBOOK_KEY, number);
+    }
+
+    // 得到笔记总页数
+    function getMaxPageOfNote() {
+        return Number(sessionStorage.getItem(MAX_PAGE_NUMBER_OF_NOTE_KEY));
+    }
+
+    // 设置笔记总页数
+    function setMaxPageOfNote(number) {
+        sessionStorage.setItem(MAX_PAGE_NUMBER_OF_NOTE_KEY, number);
+    }
+
     // 当登陆之后，将登陆信息存在 localStorage 中
     function loginSuccess() {
         sessionStorage.setItem(LOGIN_KEY, "true");
@@ -464,6 +490,9 @@ $(function () {
         });
 
         $("#notebookCreateTimeP").removeClass("hidden");
+
+        // 让输入框的内容和标题的一致
+        $("#notebookNameInput").val($("#notebookNameP").text());
     }
 
     // 给切换按钮绑定切换响应事件
@@ -533,25 +562,11 @@ $(function () {
         noteBookListSwiper.slideTo(0, SLIDE_SPEED);
     }
 
-    // 打开一本笔记
-    function getANewNote() {
-
-    }
-
-    // 为笔记列表添加点击事件
-    const rightNoteBookListUlLis = $("#rightNoteBookListUl li");
-    rightNoteBookListUlLis.each(function (index, item) {
-        $(item).click(function () {
-            // 打开笔记内容区域
-            slideToNote();
-
-            // 显示一本笔记内容
-            getANewNote();
-        });
-    });
-
     // 返回笔记列表
     $("#backToNoteListBtn").click(slideToNoteList);
+
+    // 当前访问的笔记本 id
+    let currentNotebookId = "";
 
     // 将获取到的笔记本列表加载到页面
     const noteBookListUl = $("#noteBookListUl");
@@ -589,6 +604,9 @@ $(function () {
                 if (resp.status === 0) {
                     putNoteBookListOnPage(resp.data.list);
 
+                    // 设置总页数
+                    setMaxPageOfNotebook(resp.data.lastPage);
+
                     // 为笔记列表添加点击事件
                     const noteBookListUlLis = $("#noteBookListUl li");
                     noteBookListUlLis.each(function (index, item) {
@@ -598,6 +616,9 @@ $(function () {
 
                             // 再给被点击的 li 加样式
                             $(item).addClass("noteBookListChosen");
+
+                            // 更新笔记界面
+                            updateNotePage(this);
                         });
                     });
                 }
@@ -606,5 +627,36 @@ $(function () {
                 alert("网络错误！");
             }
         });
+    }
+
+    // 打开一本笔记
+    function getANewNote() {
+
+    }
+
+    // 为笔记列表添加点击事件
+    const rightNoteBookListUlLis = $("#rightNoteBookListUl li");
+    rightNoteBookListUlLis.each(function (index, item) {
+        $(item).click(function () {
+            // 打开笔记内容区域
+            slideToNote();
+
+            // 显示一本笔记内容
+            getANewNote();
+        });
+    });
+
+    // 更新右侧笔记界面
+    function updateNotePage(notebookLi) {
+        notebookLi = $(notebookLi);
+
+        // 这个按钮可以重见天日了
+        $("#switchManageNotebookBtn").removeClass("hidden");
+
+        // 更新当前访问的笔记本 id
+        currentNotebookId = notebookLi.notebookid;
+
+        $("#notebookNameP").text(notebookLi.text());
+        $("#notebookCreateTimeP").text(new Date(Number(notebookLi.attr("notebookcreatetime"))).toLocaleString());
     }
 });
