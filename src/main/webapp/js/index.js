@@ -666,6 +666,19 @@ $(function () {
             success: function (resp) {
                 // 如果获取成功就显示
                 if (resp.status === 0) {
+                    // 列表为空，没必要继续走程序了
+                    if (resp.data == null) {
+                        putNoteBookListOnPage([]);
+
+                        // 清空原来的列表
+                        $("#rightNoteBookListUl").empty();
+                        $("#notebookNameP").text("未打开笔记本");
+                        $("#notebookCreateTimeP").text("没有创建时间");
+                        $("#switchManageNotebookBtn").addClass("hidden");
+                        $("#addANewNoteBtn").addClass("hidden");
+                        return;
+                    }
+
                     putNoteBookListOnPage(resp.data.list);
 
                     // 设置总页数
@@ -958,7 +971,10 @@ $(function () {
 
                     // 跳转到删除之后的第一本笔记本
                     setTimeout(function () {
-                        $("#noteBookListUl li:nth-of-type(1)")[0].click();
+                        const li = $("#noteBookListUl li:nth-of-type(1)")[0];
+                        if (li != null || !li === undefined) {
+                            li.click();
+                        }
                     }, 1000);
 
                 } else {
