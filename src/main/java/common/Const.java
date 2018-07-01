@@ -45,6 +45,9 @@ public final class Const {
    // 文件保存路径
     public static final String FILE_PATH = "File";
 
+    // 文件保存路径
+    public static final String UP_FILE_STATUS= "UP_STATUS";
+
     //文件保存目录
     public static final String BASE_DIR = File.separator + FILE_PATH;
 
