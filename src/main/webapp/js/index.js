@@ -1003,7 +1003,6 @@ $(function () {
     // 删除按钮
     $("#deleteNoteBtn").click(deleteNote);
 
-    // TODO 就剩分页了！！！
     // 首先是笔记本列表的分页
     $("#notebookPrevPageBtn").click(function () {
         const noteBookListUl = $("#noteBookListUl");
@@ -1031,5 +1030,34 @@ $(function () {
         // 获取下一页的列表数据
         noteBookListUl.attr("currentPage", Number(noteBookListUl.attr("currentPage")) + 1);
         getNoteBookList();
+    });
+
+    // 首先是笔记列表的分页
+    $("#notePrevPageBtn").click(function () {
+        const rightNoteBookListUl = $("#rightNoteBookListUl");
+        if (Number(rightNoteBookListUl.attr("currentPage")) <= 1) {
+            // 已经是第一页了，没有上一页了
+            alert("已经是第一页了哦~");
+            rightNoteBookListUl.attr("currentPage", 1);
+            return;
+        }
+
+        // 获取上一页的列表数据
+        rightNoteBookListUl.attr("currentPage", Number(rightNoteBookListUl.attr("currentPage")) - 1);
+        turnToNotebookById(getCurrentNotebookId());
+    });
+
+    $("#noteNextPageBtn").click(function () {
+        const rightNoteBookListUl = $("#rightNoteBookListUl");
+        if (Number(rightNoteBookListUl.attr("currentPage")) >= getMaxPageOfNote()) {
+            // 已经是第一页了，没有上一页了
+            alert("已经是最后一页了哦~");
+            rightNoteBookListUl.attr("currentPage", getMaxPageOfNote());
+            return;
+        }
+
+        // 获取下一页的列表数据
+        rightNoteBookListUl.attr("currentPage", Number(rightNoteBookListUl.attr("currentPage")) + 1);
+        turnToNotebookById(getCurrentNotebookId());
     });
 });
