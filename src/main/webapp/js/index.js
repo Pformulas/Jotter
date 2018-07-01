@@ -677,6 +677,8 @@ $(function () {
                             turnToNotebookById($(item).attr("notebookid"));
                         });
                     });
+                } else {
+                    setMaxPageOfNotebook("1");
                 }
             },
             error: function () {
@@ -823,6 +825,9 @@ $(function () {
                         return;
                     }
                     const notes = resp.data.list;
+
+                    // 设置最大页数
+                    setMaxPageOfNote(resp.data.lastPage);
                     
                     for (let i = 0; i < notes.length; i++) {
                         let li = $("<li></li>");
@@ -999,5 +1004,32 @@ $(function () {
     $("#deleteNoteBtn").click(deleteNote);
 
     // TODO 就剩分页了！！！
-    
+    // 首先是笔记本列表的分页
+    $("#notebookPrevPageBtn").click(function () {
+        const noteBookListUl = $("#noteBookListUl");
+        if (Number(noteBookListUl.attr("currentPage")) <= 1) {
+            // 已经是第一页了，没有上一页了
+            alert("已经是第一页了哦~");
+            noteBookListUl.attr("currentPage", 1);
+            return;
+        }
+
+        // 获取上一页的列表数据
+        noteBookListUl.attr("currentPage", Number(noteBookListUl.attr("currentPage")) - 1);
+        getNoteBookList();
+    });
+
+    $("#notebookNextPageBtn").click(function () {
+        const noteBookListUl = $("#noteBookListUl");
+        if (Number(noteBookListUl.attr("currentPage")) >= getMaxPageOfNotebook()) {
+            // 已经是第一页了，没有上一页了
+            alert("已经是最后一页了哦~");
+            noteBookListUl.attr("currentPage", getMaxPageOfNotebook());
+            return;
+        }
+
+        // 获取下一页的列表数据
+        noteBookListUl.attr("currentPage", Number(noteBookListUl.attr("currentPage")) + 1);
+        getNoteBookList();
+    });
 });
