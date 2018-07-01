@@ -643,7 +643,6 @@ $(function () {
 
         // 再给被点击的 li 加样式
         $(item).addClass("noteBookListChosen");
-        console.log(item);
     }
 
     // 获取这个用户的所有笔记本
