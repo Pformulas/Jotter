@@ -8,34 +8,42 @@
 
     <insert id="insertNote" parameterType="entity.Note">
         INSERT INTO Jo_Note (note_id, notebook_id, user_id, note_title, note_detail, note_create_time, note_update_time)
-        VALUES (#{noteId},#{notebookId},#{userId},#{noteTitle},#{noteDetail},
-        now(),now())
+        VALUES (#{noteId}, #{notebookId}, #{userId}, #{noteTitle}, #{noteDetail},
+                now(), now())
     </insert>
 
 
     <!--  -->
     <select id="selectNoteByNoteId" parameterType="string" resultType="entity.Note">
         SELECT
-        notebook_id,user_id,note_title,note_detail,note_create_time,note_update_time
-        FROM Jo_Note WHERE note_id=#{noteId,jdbcType=VARCHAR}
+            notebook_id,
+            user_id,
+            note_title,
+            note_detail,
+            note_create_time,
+            note_update_time
+        FROM Jo_Note
+        WHERE note_id = #{noteId,jdbcType=VARCHAR}
     </select>
 
     <!--  -->
     <update id="updateNoteByNoteId">
         UPDATE Jo_Note
         SET
-        notebook_id=#{notebookId},
-        user_id=#{userId},
-        note_title=#{noteTitle},
-        note_detail=#{noteDetail},
-        note_create_time=#{noteCreateTime},
-        note_update_time=now()
-        where note_id=#{noteId}
+            notebook_id      = #{notebookId},
+            user_id          = #{userId},
+            note_title       = #{noteTitle},
+            note_detail      = #{noteDetail},
+            note_create_time = #{noteCreateTime},
+            note_update_time = now()
+        where note_id = #{noteId}
     </update>
 
     <!--  -->
     <select id="checkNoteName" resultType="java.lang.Integer">
-        SELECT COUNT(1) FROM Jo_Note WHERE note_title=#{noteTitle}
+        SELECT COUNT(1)
+        FROM Jo_Note
+        WHERE note_title = #{noteTitle}
     </select>
 
     <!-- 更新笔记 -->
@@ -74,7 +82,9 @@
 
     <!--通过userid确认是否有这个笔记本-->
     <select id="checkNoteByUserId" resultType="java.lang.Integer">
-        SELECT COUNT(1) FROM Jo_Note WHERE user_id=#{userId} and note_id=#{noteId}
+        SELECT COUNT(1)
+        FROM Jo_Note
+        WHERE user_id = #{userId} and note_id = #{noteId}
     </select>
 
     <!-- 删除这个笔记本下的所有笔记 -->

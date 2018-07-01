@@ -4,12 +4,14 @@
 <mapper namespace="dao.FilesDao">
 
     <insert id="saveFile" parameterType="entity.Files">
-        INSERT INTO Jo_File(user_id, url, type, file_name,size,create_time,update_time)
-            VALUES (#{userId}, #{url}, #{type}, #{fileName}, #{size}, NOW(), NOW())
+        INSERT INTO Jo_File (user_id, url, type, file_name, size, create_time, update_time)
+        VALUES (#{userId}, #{url}, #{type}, #{fileName}, #{size}, NOW(), NOW())
     </insert>
 
     <select id="listFile" resultType="entity.Files">
-        SELECT * FROM Jo_File WHERE user_id = #{userId} AND type = #{type}
+        SELECT *
+        FROM Jo_File
+        WHERE user_id = #{userId} AND type = #{type}
     </select>
 
     <delete id="deleteFile">
@@ -17,12 +19,12 @@
     </delete>
 
     <!--更新文件信息 !-->
-    <update id="updateFilename" >
+    <update id="updateFilename">
         UPDATE Jo_File
         <set>
-            <if test="files.url != null" > url = #{files.url}, </if>
-            <if test="files.type != null" > type = #{files.type} ,</if>
-            <if test="files.fileName != null" > file_name = #{files.fileName}, </if>
+            <if test="files.url != null">url = #{files.url},</if>
+            <if test="files.type != null">type = #{files.type} ,</if>
+            <if test="files.fileName != null">file_name = #{files.fileName},</if>
         </set>
         WHERE url = #{uri}
     </update>

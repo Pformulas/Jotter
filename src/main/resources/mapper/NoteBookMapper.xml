@@ -2,12 +2,14 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="dao.NoteBookDao">
     <select id="checkNotebookName" resultType="java.lang.Integer">
-        SELECT COUNT(1) FROM Jo_Notebook WHERE notebook_name=#{notebookName}
+        SELECT COUNT(1)
+        FROM Jo_Notebook
+        WHERE notebook_name = #{notebookName}
     </select>
 
     <insert id="insertNotebook" parameterType="entity.NoteBook">
-        INSERT INTO Jo_Notebook (notebook_id,user_id,notebook_name,notebook_create_time,notebook_update_time)
-        VALUES (#{notebookId},#{userId},#{notebookName},now(),now())
+        INSERT INTO Jo_Notebook (notebook_id, user_id, notebook_name, notebook_create_time, notebook_update_time)
+        VALUES (#{notebookId}, #{userId}, #{notebookName}, now(), now())
     </insert>
 
     <delete id="deleteNotebookByNotebookId">
@@ -16,18 +18,29 @@
 
     <select id="selectNotebookByNotebookId" parameterType="String" resultType="entity.NoteBook">
         SELECT
-        notebook_id, user_id, notebook_name, notebook_create_time, notebook_update_time
-        FROM Jo_Notebook WHERE notebook_id=#{notebookId}
+            notebook_id,
+            user_id,
+            notebook_name,
+            notebook_create_time,
+            notebook_update_time
+        FROM Jo_Notebook
+        WHERE notebook_id = #{notebookId}
     </select>
 
     <!-- 通过笔记本id查找笔记本 -->
     <select id="selectNotesByNotebookId" parameterType="String" resultType="entity.Note">
-        SELECT * from  Jo_Note WHERE notebook_id = #{notebookId}
+        SELECT *
+        from Jo_Note
+        WHERE notebook_id = #{notebookId}
+        ORDER BY note_create_time DESC
     </select>
 
     <!-- 通过userId查找笔记本 -->
     <select id="selectNoteBooksByUserId" parameterType="String" resultType="entity.NoteBook">
-        SELECT * FROM Jo_Notebook WHERE user_id = #{userId}
+        SELECT *
+        FROM Jo_Notebook
+        WHERE user_id = #{userId}
+        ORDER BY notebook_create_time DESC
     </select>
 
     <update id="updateNoteBook" parameterType="entity.NoteBook">
@@ -48,6 +61,8 @@
 
     <!--通过userid确认是否有这个笔记本-->
     <select id="checkNoteBookByUserId" resultType="java.lang.Integer">
-        SELECT COUNT(1) FROM Jo_Notebook WHERE user_id=#{userId} and notebook_id=#{notebookId}
+        SELECT COUNT(1)
+        FROM Jo_Notebook
+        WHERE user_id = #{userId} and notebook_id = #{notebookId}
     </select>
 </mapper>
