@@ -46,10 +46,15 @@ public class FilesContorller {
         this.filesService = filesService;
     }
 
+    /**
+     *
+     * @param file 上传的文件
+     * @param session 会话
+     * @return 跳转到云盘界面
+     */
     @RequestMapping(value = "/upFile.do")
     //@ResponseBody
-    public String upFile(@RequestParam("file")CommonsMultipartFile file,
-            HttpServletRequest request, HttpSession session)  {
+    public String upFile(@RequestParam("file")CommonsMultipartFile file, HttpSession session)  {
 
         String currentPath = null;
 
@@ -59,15 +64,30 @@ public class FilesContorller {
         //得到当前访问的路径
          currentPath = (String)session.getAttribute(Const.CURRENT_PATH);
 
-
-        System.out.println("=================");
-        System.out.println("currentPath"+currentPath);
-
-        ServerResponse<String> serverResponse = filesService.saveFile(file, currentPath, user);
-        //TODO 返回上传文件的状态
+        ServerResponse serverResponse = filesService.saveFile(file, currentPath, user);
+        //将文件上传状态放入session中
+        session.setAttribute(Const.UP_FILE_STATUS,serverResponse);
         return  "redirect:yun.html";
     }
 
+    /**
+     *  获得文件上传信息
+     * @param session 会话
+     * @return 文件上传结果
+     */
+    @ResponseBody
+    @RequestMapping(value =  "/getUpStatus.do")
+    public ServerResponse getUpStatus(HttpSession session){
+        return (ServerResponse) session.getAttribute(Const.UP_FILE_STATUS);
+    }
+
+    /**
+     * 重命名文件
+     * @param partUri 保存在数据库中的路径
+     * @param fileName 文件名
+     * @param session 会话
+     * @return 重命名结果
+     */
     @ResponseBody
     @RequestMapping(value =  "/renameFile.do")
     public ServerResponse reNameFile(String partUri, String fileName, HttpSession session){
@@ -89,9 +109,16 @@ public class FilesContorller {
         return filesService.updateFilename(uri, newUri,fileName);
     }
 
+    /**
+     * 得到全部文件，包括文件夹
+     * @param session 会话
+     * @param fileName 文件名
+     * @param back 点击回退
+     * @return 文件列表
+     */
     @ResponseBody
     @RequestMapping(value = "/getFileList.do")
-    public ServerResponse getFileList(HttpServletRequest request, HttpSession session, String fileName, Integer back){
+    public ServerResponse getFileList(HttpSession session, String fileName, Integer back){
 
 
         //得到当前访问到的路径
@@ -112,8 +139,6 @@ public class FilesContorller {
             currentPath = currentPath + File.separator + fileName;
         }
 
-//        System.out.println("getfileList=================");
-//        System.out.println("currentPath:" + currentPath);
 
         //保存当前访问到的路径
         session.setAttribute(Const.CURRENT_PATH,currentPath);
@@ -133,7 +158,6 @@ public class FilesContorller {
 
         return filesService.newFolder(currentPath);
     }
-
 
 
     @ResponseBody

@@ -60,5 +60,15 @@ url: /upFile.do<br>
      }
   
    
-
+   #####5.得到文件上传结果<br>
+    url: /getUpStatus.do<br>
+    参数：无需参数
+  
+    SUCCESS：
+    {
+    "status": 0,
+    "msg": "文件上传成功",
+    "data": null,
+    "success": true
+    }
     
