@@ -527,6 +527,11 @@ $(function () {
                 if (resp.status === 0) {
                     // 添加成功就刷新列表
                     getNoteBookList();
+
+                    // 并且跳转到最新的笔记本
+                    setTimeout(function () {
+                        turnToNotebookById($("#noteBookListUl").find("li:nth-of-type(1)").attr("notebookId"));
+                    }, 1000);
                 } else {
                     alert(resp.msg);
                 }
