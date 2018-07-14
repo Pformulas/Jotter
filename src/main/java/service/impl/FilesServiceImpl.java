@@ -76,14 +76,6 @@ public class FilesServiceImpl implements FilesService {
         //得到文件名
         String fileName = file.getOriginalFilename();
 
-        //创建保存的目录，并得到目录名
-        //String dir = FileNiceUtil.getDirFile(user.getUsername(),path);
-
-        //如果得到为空，则创建失败
-//        if(dir == null){
-//            return ServerResponse.getServerResponse(FilesResponse.UPFILE_FAILURE);
-//        }
-
         //得到保存文件的uri
         String uri = path + File.separator + fileName;
         String deleteUri = uri;

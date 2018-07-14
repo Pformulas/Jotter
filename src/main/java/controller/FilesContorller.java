@@ -124,9 +124,6 @@ public class FilesContorller {
         //得到当前访问到的路径
         String currentPath = (String) session.getAttribute(Const.CURRENT_PATH);
 
-        System.out.println(currentPath);
-        System.out.println(fileName+"++");
-
         User user = (User)session.getAttribute(Const.USER_KEY);
 
         //如果点击了回退按钮,退回到主目录就不可回退
